@@ -10,20 +10,20 @@ import static org.mockito.Mockito.*;
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
 import edu.utn.dds.aterrizar.usuario.Usuario;
-import edu.utn.dds.aterrizar.vuelo.AsientoDisponible;
+import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Vuelo;
 
 public class AerolineaTest {
 
 	private Aerolinea comunicadorDeAerolinea;
 	private Vuelo vuelo;
-	private AsientoDisponible asientoDisponible;
+	private Asiento asientoDisponible;
 	private Usuario usuario;
 
 	@Before
 	public void setUp() throws Exception {
 		vuelo = mock(Vuelo.class);
-		asientoDisponible = mock(AsientoDisponible.class);
+		asientoDisponible = mock(Asiento.class);
 		usuario = mock(Usuario.class);
 		
 		this.comunicadorDeAerolinea = new AerolineaLanchitaWrapper();

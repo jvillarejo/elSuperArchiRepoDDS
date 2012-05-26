@@ -6,6 +6,7 @@ public class Usuario {
 	private String apellido;
 	private String dni;
 	
+	//TODO Agregar tipo de usuario VIP, Estandar, los que no pagan
 	public Usuario(String nombre, String apellido, String dni) {
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -21,6 +22,11 @@ public class Usuario {
 
 	public String getApellido() {
 		return apellido;
+	}
+	
+	public double recargo() {
+		// TODO Implementar recargo segun el tipo de usuario
+		return 0;
 	}
 
 }
