@@ -7,15 +7,15 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.*;
 
-import edu.utn.dds.aterrizar.comunicadoresdeaerolineas.ComunicadorDeAerolinea;
-import edu.utn.dds.aterrizar.comunicadoresdeaerolineas.ComunicadorDeAerolineaLanchita;
+import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
+import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.AsientoDisponible;
 import edu.utn.dds.aterrizar.vuelo.Vuelo;
 
-public class ComunicadorDeAerolineaTest {
+public class AerolineaTest {
 
-	private ComunicadorDeAerolinea comunicadorDeAerolinea;
+	private Aerolinea comunicadorDeAerolinea;
 	private Vuelo vuelo;
 	private AsientoDisponible asientoDisponible;
 	private Usuario usuario;
@@ -26,7 +26,7 @@ public class ComunicadorDeAerolineaTest {
 		asientoDisponible = mock(AsientoDisponible.class);
 		usuario = mock(Usuario.class);
 		
-		this.comunicadorDeAerolinea = new ComunicadorDeAerolineaLanchita();
+		this.comunicadorDeAerolinea = new AerolineaLanchitaWrapper();
 	}
 	
 	@Test
