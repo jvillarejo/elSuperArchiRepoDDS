@@ -6,11 +6,15 @@ import edu.utn.dds.aterrizar.usuario.Usuario;
 
 public class Asiento {
 
-	//TODO Agregar estadoDelAsiento (Disponibilidad), clase, ubicacion
 	private Vuelo vuelo;
 	private Aerolinea aerolinea;
 	private Double precio;
 	private String codigo;
+	//ponele que eventualmente podrían no ser strings 
+	private String clase;
+	private String ubicacion;
+	private String estado;
+
 	
 	public Asiento(Vuelo vuelo) {
 		this.vuelo = vuelo;
@@ -31,6 +35,47 @@ public class Asiento {
 	} 
 	
 	public Double precioTotal(Usuario usuario) {
-		return this.precio + this.precio * this.aerolinea.getPorcentajeDeVenta() + usuario.recargo();
+		return this.getPrecio() + this.getPrecio() * this.aerolinea.getPorcentajeDeVenta() + usuario.recargo();
+	}
+
+	public void setCodigo(String field) {
+		this.codigo= field;
+		
+	}
+
+	public void setPrecio(Double precio) {
+		this.precio= precio;
+		
+	}
+
+	public void setClase(String string) {
+		this.clase= string;
+		
+	}
+
+	public void setUbicacion(String string) {
+		this.ubicacion=string;
+		
+	}
+
+	public void setEstado(String string) {
+		this.estado= string;
+		
+	}
+
+	public Double getPrecio() {
+		return precio;
+	}
+
+	public String getUbicacion() {
+		return this.ubicacion;
+	}
+
+	public String getClase() {
+		return this.clase;
+	}
+
+	public String getEstado() {
+		return this.estado;
 	}
 }

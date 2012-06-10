@@ -1,6 +1,10 @@
 package edu.utn.dds.aterrizar.usuario;
 
-public class Usuario {
+import java.util.Collection;
+
+import edu.utn.dds.aterrizar.vuelo.Asiento;
+
+public abstract class Usuario {
 
 	private String nombre;
 	private String apellido;
@@ -24,9 +28,8 @@ public class Usuario {
 		return apellido;
 	}
 	
-	public double recargo() {
-		// TODO Implementar recargo segun el tipo de usuario
-		return 0;
-	}
+	public abstract double recargo();
+	
+	public abstract Collection<Asiento> filtrarAsientos(Collection<Asiento> asientos);
 
 }
