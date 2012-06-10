@@ -9,6 +9,7 @@ import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.parser.ParserException;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Vuelo;
+import static org.mockito.Mockito.*;
 
 public class ParserTest {
 
@@ -27,13 +28,13 @@ public class ParserTest {
 	
 	@Test 
 	public void generacionDeListaDeAsientos(){
-		List <Asiento> asientosParseados= new Parser().parseDisponibles(asientosLanchita, new Vuelo());
+		List <Asiento> asientosParseados= new Parser().parseDisponibles(asientosLanchita, mock(Vuelo.class));
 		
 		Assert.assertFalse(asientosParseados.isEmpty());
 	}
 	
 	@Test(expected= ParserException.class) 
 	public void fallaDeParseo(){
-		 new Parser().parseDisponibles(new String[][]{{}}, new Vuelo());
+		 new Parser().parseDisponibles(new String[][]{{}}, mock(Vuelo.class));
 	}
 }

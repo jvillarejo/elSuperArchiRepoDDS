@@ -31,17 +31,11 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 	/**
 	 * Dado un vuelo (origen, destino, fecha), hace una query a AerolineaLanchita para obtener los asientos disponibles
 	 * (un array de arrays de String) y los parsea para obtener una lista de Asientos. 
-	 *@throws ParseException si ocurre algún error durante el parseo.
 	 */
 	@Override
 	public List<Asiento> buscarAsientos(Vuelo vuelo) {
 		String[][] asientosDisponibles = AerolineaLanchita.getInstance().getAsientosDisponibles(vuelo.getOrigen(), vuelo.getDestino(), vuelo.getFecha());
-		try{
 		return this.lanchitaParser.parseDisponibles(asientosDisponibles, vuelo);
-		}
-		catch (RuntimeException e){
-			throw new ParserException("No se pudo completar el parseo", e);
-		}
 	}
 
 	/**
