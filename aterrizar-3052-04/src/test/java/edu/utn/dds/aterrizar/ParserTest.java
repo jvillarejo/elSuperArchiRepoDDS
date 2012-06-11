@@ -37,4 +37,9 @@ public class ParserTest {
 	public void fallaDeParseo(){
 		 new Parser().parseDisponibles(new String[][]{{}}, mock(Vuelo.class));
 	}
+	
+	@Test(expected= ParserException.class)
+	public void parseoDeAsientoConUbicacionErronea() {
+		new Parser().parseDisponibles(new String[][]{{ "01202022220298-2", "528.81", "P", "ERRONEA", "D", "" }}, mock(Vuelo.class));
+	}
 }
