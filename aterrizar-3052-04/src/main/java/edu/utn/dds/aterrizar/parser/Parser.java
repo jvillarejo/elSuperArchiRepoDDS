@@ -1,9 +1,11 @@
 package edu.utn.dds.aterrizar.parser;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 
 import edu.utn.dds.aterrizar.vuelo.Asiento;
+import edu.utn.dds.aterrizar.vuelo.Ubicacion;
 import edu.utn.dds.aterrizar.vuelo.Vuelo;
 
 public class Parser {
@@ -18,6 +20,17 @@ public class Parser {
 		}
 	
 		return disponibles;
+	}
+	
+	private Ubicacion stringToUbicacion(final String ubicacion)
+	{
+		Hashtable<String, String> ubicacionMapper = new Hashtable<String, String>();
+		ubicacionMapper.put("V", "VENTANILLA");
+		ubicacionMapper.put("C", "CENTRO");
+		ubicacionMapper.put("P", "PASILLO");
+		
+		String ubicacionValue = ubicacionMapper.get(ubicacion);
+		return Ubicacion.valueOf(ubicacionValue);
 	}
 	
 	public Double adaptToDouble(String string){
@@ -38,7 +51,7 @@ public class Parser {
 				asiento.setCodigo(this.getSeatCode(asientoLanchita[0]));
 				asiento.setPrecio(this.adaptToDouble(asientoLanchita[1]));
 				asiento.setClase(asientoLanchita[2]);
-				asiento.setUbicacion(asientoLanchita[3]);
+				asiento.setUbicacion(stringToUbicacion(asientoLanchita[3]));
 				asiento.setEstado(asientoLanchita[4]);
 		
 		return asiento;

@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
+import edu.utn.dds.aterrizar.vuelo.Ubicacion;
 import edu.utn.dds.aterrizar.vuelo.Vuelo;
 
 import static org.mockito.Mockito.*;
@@ -25,7 +26,7 @@ public class AsientoLanchitaFactoryTest {
 		Assert.assertEquals(159.90, asiento.getPrecio(), 0.0);	
 		Assert.assertEquals( "3", asiento.getCodigo());
 		Assert.assertEquals( "P", asiento.getClase());
-		Assert.assertEquals( "V", asiento.getUbicacion());
+		Assert.assertEquals( Ubicacion.VENTANILLA, asiento.getUbicacion());
 		Assert.assertEquals( "D", asiento.getEstado());
 	}
 

@@ -3,7 +3,6 @@ package edu.utn.dds.aterrizar.vuelo;
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 
-
 public class Asiento {
 
 	private Vuelo vuelo;
@@ -12,7 +11,7 @@ public class Asiento {
 	private String codigo;
 	//ponele que eventualmente podrían no ser strings 
 	private String clase;
-	private String ubicacion;
+	private Ubicacion ubicacion;
 	private String estado;
 
 	
@@ -53,11 +52,6 @@ public class Asiento {
 		
 	}
 
-	public void setUbicacion(String string) {
-		this.ubicacion=string;
-		
-	}
-
 	public void setEstado(String string) {
 		this.estado= string;
 		
@@ -67,15 +61,19 @@ public class Asiento {
 		return precio;
 	}
 
-	public String getUbicacion() {
-		return this.ubicacion;
-	}
-
 	public String getClase() {
 		return this.clase;
 	}
 
 	public String getEstado() {
 		return this.estado;
+	}
+
+	public Ubicacion getUbicacion() {
+		return this.ubicacion;
+	}
+	
+	public void setUbicacion(Ubicacion ubicacion) {
+		this.ubicacion = ubicacion;
 	}
 }
