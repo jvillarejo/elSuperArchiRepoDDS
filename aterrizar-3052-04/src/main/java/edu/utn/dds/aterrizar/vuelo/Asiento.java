@@ -10,10 +10,11 @@ public class Asiento {
 	private Double precio;
 	private String codigo;
 	//ponele que eventualmente podrían no ser strings 
-	private String clase;
+	private Clase clase;
 	private Ubicacion ubicacion;
 	private String estado;
 
+	public Asiento() {}
 	
 	public Asiento(Vuelo vuelo) {
 		this.vuelo = vuelo;
@@ -29,8 +30,7 @@ public class Asiento {
 
 	public void comprar(final Usuario usuario) {
 		//TODO delegar esto en la disponibilidad para que lance excepcion si no esta disponible
-		this.aerolinea.comprarAsiento(this, usuario);
-		
+		this.aerolinea.comprarAsiento(this, usuario);		
 	} 
 	
 	public Double precioTotal(Usuario usuario) {
@@ -47,8 +47,8 @@ public class Asiento {
 		
 	}
 
-	public void setClase(String string) {
-		this.clase= string;
+	public void setClase(Clase clase) {
+		this.clase= clase;
 		
 	}
 
@@ -61,7 +61,7 @@ public class Asiento {
 		return precio;
 	}
 
-	public String getClase() {
+	public Clase getClase() {
 		return this.clase;
 	}
 
