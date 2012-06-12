@@ -3,7 +3,6 @@ package edu.utn.dds.aterrizar.vuelo;
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 
-
 public class Asiento {
 
 	private Vuelo vuelo;
@@ -11,10 +10,11 @@ public class Asiento {
 	private Double precio;
 	private String codigo;
 	//ponele que eventualmente podrían no ser strings 
-	private String clase;
-	private String ubicacion;
+	private Clase clase;
+	private Ubicacion ubicacion;
 	private String estado;
 
+	public Asiento() {}
 	
 	public Asiento(Vuelo vuelo) {
 		this.vuelo = vuelo;
@@ -30,8 +30,7 @@ public class Asiento {
 
 	public void comprar(final Usuario usuario) {
 		//TODO delegar esto en la disponibilidad para que lance excepcion si no esta disponible
-		this.aerolinea.comprarAsiento(this, usuario);
-		
+		this.aerolinea.comprarAsiento(this, usuario);		
 	} 
 	
 	public Double precioTotal(Usuario usuario) {
@@ -48,13 +47,8 @@ public class Asiento {
 		
 	}
 
-	public void setClase(String string) {
-		this.clase= string;
-		
-	}
-
-	public void setUbicacion(String string) {
-		this.ubicacion=string;
+	public void setClase(Clase clase) {
+		this.clase= clase;
 		
 	}
 
@@ -67,15 +61,19 @@ public class Asiento {
 		return precio;
 	}
 
-	public String getUbicacion() {
-		return this.ubicacion;
-	}
-
-	public String getClase() {
+	public Clase getClase() {
 		return this.clase;
 	}
 
 	public String getEstado() {
 		return this.estado;
+	}
+
+	public Ubicacion getUbicacion() {
+		return this.ubicacion;
+	}
+	
+	public void setUbicacion(Ubicacion ubicacion) {
+		this.ubicacion = ubicacion;
 	}
 }
