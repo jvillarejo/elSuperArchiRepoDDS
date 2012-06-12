@@ -7,17 +7,17 @@ import static net.sf.staccatocommons.lambda.Lambda.*;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Ubicacion;
 
-public class FiltroPorUbicacion implements FiltroAsiento {
+public class FiltroPorUbicacion extends FiltroAsientoGenerico {
 	
 	private Ubicacion ubicacion;
 	
-	public FiltroPorUbicacion(Ubicacion ubicacion) {
+	public FiltroPorUbicacion(Ubicacion ubicacion, FiltroAsiento siguienteFiltro) {
 		this.ubicacion = ubicacion;
+		this.setNextFilter(siguienteFiltro);
 	}
 
 	@Override
 	public List<Asiento> filtrar(List<Asiento> asientos) {
-		// TODO Auto-generated method stub
 		return Streams
 			.from(asientos)
 			.filter(lambda($(Asiento.class).getUbicacion()).equal(this.ubicacion))

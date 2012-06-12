@@ -10,28 +10,23 @@ import net.sf.staccatocommons.collections.stream.Streams;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Clase;
 
-public class FiltroPorClase implements FiltroAsiento {
+public class FiltroPorClase extends FiltroAsientoGenerico {
 
 	private Clase clase;
 	
-	public FiltroPorClase(Clase clase) {
-		this.setClase(clase);
+	public FiltroPorClase(Clase clase, FiltroAsiento siguienteFiltro) {
+		this.clase = clase;
+		this.setNextFilter(siguienteFiltro);
 	}
 
 	@Override
 	public List<Asiento> filtrar(List<Asiento> asientos) {
-		return Streams
+		List<Asiento> nuevosAsientos = Streams
 	        .from(asientos)
 	        .filter(lambda($(Asiento.class).getClase()).equal(this.clase))
 	        .toList();
-	}
-
-	public void setClase(Clase clase) {
-		this.clase = clase;
-	}
-
-	public Clase getClase() {
-		return clase;
+		
+		return this.getNextFilter().filtrar(nuevosAsientos);		
 	}
 
 }

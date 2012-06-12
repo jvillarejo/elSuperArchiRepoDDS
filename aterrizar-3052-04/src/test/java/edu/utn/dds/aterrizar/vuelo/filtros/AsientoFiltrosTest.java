@@ -45,7 +45,7 @@ public class AsientoFiltrosTest {
 		List<Asiento> asientosEnElPasillo = new ArrayList<Asiento>();
 		asientosEnElPasillo.add(asientoPasilloEnPrimera);
 		
-		FiltroAsiento filtroUbicacion = new FiltroPorUbicacion(Ubicacion.PASILLO);
+		FiltroAsiento filtroUbicacion = new FiltroPorUbicacion(Ubicacion.PASILLO, new FiltroDummy());
 		assertEquals(asientosEnElPasillo, filtroUbicacion.filtrar(asientosDisponibles));
 	}
 	
@@ -55,7 +55,7 @@ public class AsientoFiltrosTest {
 		asientosEnVentanilla.add(asientoVentanillaEnTurista);
 		asientosEnVentanilla.add(asientoVentanillaEnEjecutivo);
 		
-		FiltroAsiento filtroUbicacion = new FiltroPorUbicacion(Ubicacion.VENTANILLA);
+		FiltroAsiento filtroUbicacion = new FiltroPorUbicacion(Ubicacion.VENTANILLA, new FiltroDummy());
 		assertEquals(asientosEnVentanilla, filtroUbicacion.filtrar(asientosDisponibles));
 	}
 	
@@ -65,7 +65,27 @@ public class AsientoFiltrosTest {
 		asientosEnPrimera.add(asientoCentroEnPrimera);
 		asientosEnPrimera.add(asientoPasilloEnPrimera);
 		
-		FiltroAsiento filtroClase = new FiltroPorClase(Clase.PRIMERA);
+		FiltroAsiento filtroClase = new FiltroPorClase(Clase.PRIMERA, new FiltroDummy());
 		assertEquals(asientosEnPrimera, filtroClase.filtrar(asientosDisponibles));
+	}
+	
+	@Test
+	public void buscarAsientosVentanillaEnPrimera() {
+		FiltroAsiento filtroClase = new FiltroPorClase(Clase.PRIMERA, 
+				new FiltroPorUbicacion(Ubicacion.VENTANILLA, new FiltroDummy())
+		);
+		
+		assertTrue(filtroClase.filtrar(asientosDisponibles).isEmpty());
+	}
+	
+	@Test
+	public void buscarAsientosVentanillaEnTurista() {		
+		List<Asiento> asientosVentanillaEnTurista = new ArrayList<Asiento>();
+		asientosVentanillaEnTurista.add(asientoVentanillaEnTurista);
+		
+		FiltroAsiento filtroClase = new FiltroPorClase(Clase.TURISTA, 
+				new FiltroPorUbicacion(Ubicacion.VENTANILLA, new FiltroDummy())
+		);
+		assertEquals(asientosVentanillaEnTurista, filtroClase.filtrar(asientosDisponibles));
 	}
 }
