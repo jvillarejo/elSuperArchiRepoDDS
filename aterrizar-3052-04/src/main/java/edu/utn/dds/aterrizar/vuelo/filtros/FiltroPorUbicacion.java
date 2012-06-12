@@ -18,10 +18,12 @@ public class FiltroPorUbicacion extends FiltroAsientoGenerico {
 
 	@Override
 	public List<Asiento> filtrar(List<Asiento> asientos) {
-		return Streams
+		List<Asiento> nuevosAsientos = Streams
 			.from(asientos)
 			.filter(lambda($(Asiento.class).getUbicacion()).equal(this.ubicacion))
 			.toList();
+		
+		return this.getNextFilter().filtrar(nuevosAsientos);
 	}
 
 }
