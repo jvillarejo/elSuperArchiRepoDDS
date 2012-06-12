@@ -7,6 +7,7 @@ import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Vuelo;
+import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
 
 public class Agencia {
 
@@ -16,19 +17,17 @@ public class Agencia {
 		this.aerolineas = aerolineas;
 	}
 	
-	public List<Asiento> buscarAsientos(final Vuelo vuelo, final Usuario usuario) {
+	public List<Asiento> buscarAsientos(final Vuelo vuelo, final Usuario usuario, final FiltroAsiento filtro) {
 		List<Asiento> asientos = new ArrayList<Asiento>();
 		
-		//TODO implementar filtro segun usuario, para que solo le aparezcan las superofertas a los usuarios vip
 		for (Aerolinea aerolinea : aerolineas) {
 			asientos.addAll(aerolinea.buscarAsientos(vuelo));
 		}
 		
-		return asientos;
+		return filtro.filtrar(asientos);	
 	}
 	
 	public void comprarAsiento(final Asiento asiento, final Usuario usuario) {
 		asiento.comprar(usuario); 
-	}
-	
+	}		
 }

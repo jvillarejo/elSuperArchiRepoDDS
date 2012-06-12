@@ -2,7 +2,10 @@ package edu.utn.dds.aterrizar.usuario;
 
 import java.util.Collection;
 
+import org.apache.commons.lang.NotImplementedException;
+
 import edu.utn.dds.aterrizar.vuelo.Asiento;
+import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
 
 public abstract class Usuario {
 
@@ -31,5 +34,10 @@ public abstract class Usuario {
 	public abstract double recargo();
 	
 	public abstract Collection<Asiento> filtrarAsientos(Collection<Asiento> asientos);
+	
+	public FiltroAsiento getFiltro() {
+		//TODO: esto deberia ser this.getTipo().getFiltro()
+		throw new NotImplementedException("Falta implementar los filtros de los usuarios.");
+	}
 
 }
