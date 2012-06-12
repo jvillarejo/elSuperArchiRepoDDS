@@ -34,6 +34,18 @@
 		<artifactId>aerolinea-lanchita</artifactId>
 		<version>1.0</version>
 	</dependency>
+
+    <dependency>
+        <groupId>net.sf.staccatocommons</groupId>
+        <artifactId>staccatissimo-lambda</artifactId>
+        <version>2.2</version>
+    </dependency>
+
+	<dependency>
+		<groupId>net.sf.staccatocommons</groupId>
+		<artifactId>staccatissimo-collections</artifactId>
+		<version>2.2</version>
+	</dependency>
   </dependencies>
   
   <build>
