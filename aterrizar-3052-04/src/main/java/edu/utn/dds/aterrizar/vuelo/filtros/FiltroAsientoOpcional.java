@@ -1,6 +1,6 @@
 package edu.utn.dds.aterrizar.vuelo.filtros;
 
-public abstract class FiltroAsientoGenerico implements FiltroAsiento {
+public abstract class FiltroAsientoOpcional implements FiltroAsiento {
 	private FiltroAsiento nextFilter;
 
 	public void setNextFilter(FiltroAsiento nextFilter) {

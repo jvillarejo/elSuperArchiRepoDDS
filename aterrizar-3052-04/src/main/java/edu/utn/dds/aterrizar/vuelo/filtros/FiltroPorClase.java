@@ -10,7 +10,7 @@ import net.sf.staccatocommons.collections.stream.Streams;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Clase;
 
-public class FiltroPorClase extends FiltroAsientoGenerico {
+public class FiltroPorClase extends FiltroAsientoOpcional {
 
 	private Clase clase;
 	

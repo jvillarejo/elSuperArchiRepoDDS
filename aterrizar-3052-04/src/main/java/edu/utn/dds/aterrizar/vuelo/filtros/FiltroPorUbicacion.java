@@ -7,7 +7,7 @@ import static net.sf.staccatocommons.lambda.Lambda.*;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Ubicacion;
 
-public class FiltroPorUbicacion extends FiltroAsientoGenerico {
+public class FiltroPorUbicacion extends FiltroAsientoOpcional {
 	
 	private Ubicacion ubicacion;
 	
