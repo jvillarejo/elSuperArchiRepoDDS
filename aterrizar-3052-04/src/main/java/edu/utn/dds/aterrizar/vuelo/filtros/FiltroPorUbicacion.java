@@ -7,6 +7,12 @@ import static net.sf.staccatocommons.lambda.Lambda.*;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Ubicacion;
 
+/**
+ * Filtra asientos segun su ubicacion.
+ * @param ubicacion
+ * @param siguienteFiltro
+ * @return un </code>Asiento</code> con sus fields seteados.
+ */
 public class FiltroPorUbicacion extends FiltroAsientoOpcional {
 	
 	private Ubicacion ubicacion;

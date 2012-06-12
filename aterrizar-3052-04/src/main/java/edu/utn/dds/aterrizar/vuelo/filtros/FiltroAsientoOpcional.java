@@ -1,5 +1,10 @@
 package edu.utn.dds.aterrizar.vuelo.filtros;
 
+/**
+ * Representa un filtro aplicable sobre una lista de asientos, que conoce al filtro que se va a aplicar despues.
+ * @author faloi
+ */
+
 public abstract class FiltroAsientoOpcional implements FiltroAsiento {
 	private FiltroAsiento nextFilter;
 
