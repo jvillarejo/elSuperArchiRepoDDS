@@ -31,13 +31,19 @@ public class Asiento {
 		this.aerolinea.comprarAsiento(this, usuario);		
 	} 
 	
+	public Boolean esSuperOferta() {
+		return 
+			this.getClase() == Clase.PRIMERA && this.getPrecio() < 8000
+			||
+			this.getClase() == Clase.EJECUTIVO && this.getPrecio() < 4000;
+	}
+	
 	public Double precioTotal(Usuario usuario) {
-		return this.getPrecio() + this.getPrecio() * this.aerolinea.getPorcentajeDeVenta() + usuario.recargo();
+		return this.getPrecio() + this.getPrecio() * this.aerolinea.getPorcentajeDeVenta() + usuario.getRecargo();
 	}
 
 	public void setCodigo(String field) {
 		this.codigo= field;
-		
 	}
 
 	public void setPrecio(Double precio) {
