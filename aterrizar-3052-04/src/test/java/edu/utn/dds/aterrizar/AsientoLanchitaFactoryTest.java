@@ -28,7 +28,7 @@ public class AsientoLanchitaFactoryTest {
 		String[] asientoLanchita = { "01202022220202-3", "159.90", "P", "V", "D", "" };
 		Asiento asiento = parser.create(asientoLanchita, mock(Vuelo.class));
 		Assert.assertEquals(159.90, asiento.getPrecio(), 0.0);	
-		Assert.assertEquals( "3", asiento.getCodigo());
+		Assert.assertEquals( "01202022220202-3", asiento.getCodigo());
 		Assert.assertEquals( Clase.PRIMERA, asiento.getClase());
 		Assert.assertEquals( Ubicacion.VENTANILLA, asiento.getUbicacion());
 		Assert.assertEquals( "D", asiento.getEstado());
