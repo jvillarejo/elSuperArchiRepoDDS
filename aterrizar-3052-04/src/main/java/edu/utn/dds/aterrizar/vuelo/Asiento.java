@@ -35,7 +35,7 @@ public class Asiento {
 		return 
 			this.getClase() == Clase.PRIMERA && this.getPrecio() < 8000
 			||
-			this.getClase() == Clase.EJECUTIVO && this.getPrecio() < 4000;
+			this.getClase() == Clase.EJECUTIVA && this.getPrecio() < 4000;
 	}
 	
 	public void setCodigo(String field) {

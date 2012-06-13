@@ -35,7 +35,7 @@ public class AsientoFiltrosTest {
 		asientoVentanillaEnTurista.setClase(Clase.TURISTA);
 
 		asientoVentanillaEnEjecutivo.setUbicacion(Ubicacion.VENTANILLA);
-		asientoVentanillaEnEjecutivo.setClase(Clase.EJECUTIVO);
+		asientoVentanillaEnEjecutivo.setClase(Clase.EJECUTIVA);
 
 		asientosDisponibles.add(asientoCentroEnPrimera);
 		asientosDisponibles.add(asientoPasilloEnPrimera);
