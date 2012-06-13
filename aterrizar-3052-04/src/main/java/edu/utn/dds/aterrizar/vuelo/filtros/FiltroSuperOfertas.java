@@ -12,12 +12,10 @@ public class FiltroSuperOfertas implements FiltroAsiento {
 
 	@Override
 	public List<Asiento> filtrar(List<Asiento> asientos) {
-		
 		return Streams
 			.from(asientos)
-			.filter(lambda($(Asiento.class).esSuperOferta()).equal(true))
+			.filter(lambda($(Asiento.class).esSuperOferta()).equal(false))
 			.toList();
-		
 	}
 
 }
