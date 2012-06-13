@@ -3,6 +3,7 @@ package edu.utn.dds.aterrizar.aerolineas;
 import java.util.List;
 
 import com.lanchita.AerolineaLanchita;
+import com.lanchita.excepciones.CodigoErroneoException;
 import com.lanchita.excepciones.EstadoErroneoException;
 
 import edu.utn.dds.aterrizar.parser.*;
@@ -50,6 +51,10 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 		catch(EstadoErroneoException e){
 			throw new AsientoLanchitaNoDisponibleException(e);
 		}
+		catch(CodigoErroneoException e1){
+			throw new RuntimeException("Código inválido");
+		}
+	
 		asientoDisponible.setEstado("C");
 	}
 
