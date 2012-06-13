@@ -9,7 +9,6 @@ public class Asiento {
 	private Aerolinea aerolinea;
 	private Double precio;
 	private String codigo;
-	//ponele que eventualmente podrían no ser strings 
 	private Clase clase;
 	private Ubicacion ubicacion;
 	private String estado;
@@ -29,7 +28,6 @@ public class Asiento {
 	}
 
 	public void comprar(final Usuario usuario) {
-		//TODO delegar esto en la disponibilidad para que lance excepcion si no esta disponible
 		this.aerolinea.comprarAsiento(this, usuario);		
 	} 
 	

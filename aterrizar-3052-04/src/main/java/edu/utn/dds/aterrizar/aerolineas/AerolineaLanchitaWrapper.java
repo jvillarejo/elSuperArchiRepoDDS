@@ -8,7 +8,7 @@ import com.lanchita.excepciones.EstadoErroneoException;
 import edu.utn.dds.aterrizar.parser.*;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.*;
-//TODO Inyectar dependencia de AerolineaLanchita
+
 
 /**
  * Representa una implementación del pattern Adapter entre AerolineaLanchita y el model
@@ -24,7 +24,7 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 	 * Constructor del wrapper con su correspondiente parser específico
 	 * @param parser
 	 */
-	public AerolineaLanchitaWrapper(Parser parser){
+	public AerolineaLanchitaWrapper(Parser parser ){
 		this.lanchitaParser= parser;
 	}
 
