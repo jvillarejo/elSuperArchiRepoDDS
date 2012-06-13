@@ -1,23 +1,22 @@
 package edu.utn.dds.aterrizar.usuario;
 
-import java.util.Collection;
 
-import org.apache.commons.lang.NotImplementedException;
 
-import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
 
-public abstract class Usuario {
+public class Usuario {
 
 	private String nombre;
 	private String apellido;
 	private String dni;
+	private TipoDeSuscripcion tipoDeSuscripcion;
 	
 	//TODO Agregar tipo de usuario VIP, Estandar, los que no pagan
-	public Usuario(String nombre, String apellido, String dni) {
+	public Usuario(String nombre, String apellido, String dni, TipoDeSuscripcion tipoDeSuscripcion) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
+		this.tipoDeSuscripcion = tipoDeSuscripcion;
 	}
 	public String getDni() {
 		return this.dni;
@@ -31,13 +30,18 @@ public abstract class Usuario {
 		return apellido;
 	}
 	
-	public abstract double recargo();
-	
-	public abstract Collection<Asiento> filtrarAsientos(Collection<Asiento> asientos);
+	public Double getRecargo() {
+		return this.getTipo().getRecargo();
+	}
 	
 	public FiltroAsiento getFiltro() {
-		//TODO: esto deberia ser this.getTipo().getFiltro()
-		throw new NotImplementedException("Falta implementar los filtros de los usuarios.");
+		return this.getTipo().getFiltro();
+	}
+	public void setTipo(TipoDeSuscripcion tipo) {
+		this.tipoDeSuscripcion = tipo;
+	}
+	public TipoDeSuscripcion getTipo() {
+		return tipoDeSuscripcion;
 	}
 
 }
