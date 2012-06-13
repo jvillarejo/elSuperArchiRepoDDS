@@ -29,18 +29,18 @@ public class Agencia {
 		
 		return filtro.filtrar(asientos);	
 	}
-	
-	private List<Asiento> adaptarPreciosParaUsuario(List<Asiento> asientos,
-			Usuario usuario) {
-		
-		for (Asiento asiento : asientos)
-			asiento.setPrecio(asiento.precioTotal(usuario));
-		
-		return asientos;
-		
-	}
 
 	public void comprarAsiento(final Asiento asiento, final Usuario usuario) {
 		asiento.comprar(usuario); 
 	}		
+
+	private List<Asiento> adaptarPreciosParaUsuario(List<Asiento> asientos,
+			Usuario usuario) {
+		
+		for (Asiento asiento : asientos)
+			asiento.adaptarPrecioPara(usuario);
+		
+		return asientos;
+		
+	}
 }

@@ -38,10 +38,6 @@ public class Asiento {
 			this.getClase() == Clase.EJECUTIVO && this.getPrecio() < 4000;
 	}
 	
-	public Double precioTotal(Usuario usuario) {
-		return this.getPrecio() + this.getPrecio() * this.aerolinea.getPorcentajeDeVenta() + usuario.getRecargo();
-	}
-
 	public void setCodigo(String field) {
 		this.codigo= field;
 	}
@@ -79,5 +75,13 @@ public class Asiento {
 	
 	public void setUbicacion(Ubicacion ubicacion) {
 		this.ubicacion = ubicacion;
+	}
+
+	public void adaptarPrecioPara(Usuario usuario) {
+		this.setPrecio(this.precioTotal(usuario));
+	}
+
+	private Double precioTotal(Usuario usuario) {
+		return this.getPrecio() + this.getPrecio() * this.aerolinea.getPorcentajeDeVenta() + usuario.getRecargo();
 	}
 }
