@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Clase;
@@ -26,7 +27,7 @@ public class AsientoLanchitaFactoryTest {
 	@Test
 	public void laFactoryCreaUnAsientoCorrectamente() {
 		String[] asientoLanchita = { "01202022220202-3", "159.90", "P", "V", "D", "" };
-		Asiento asiento = parser.create(asientoLanchita, mock(Vuelo.class));
+		Asiento asiento = parser.create(asientoLanchita, mock(Vuelo.class), mock(Aerolinea.class));
 		Assert.assertEquals(159.90, asiento.getPrecio(), 0.0);	
 		Assert.assertEquals( "3", asiento.getCodigo());
 		Assert.assertEquals( Clase.PRIMERA, asiento.getClase());
