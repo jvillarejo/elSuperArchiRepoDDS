@@ -2,6 +2,9 @@ package edu.utn.dds.aterrizar.usuario;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
 
 public class Usuario {
@@ -10,6 +13,7 @@ public class Usuario {
 	private String apellido;
 	private String dni;
 	private TipoDeSuscripcion tipoDeSuscripcion;
+	private List<ConsultaAsientos> consultasRealizadas;
 	
 	//TODO Agregar tipo de usuario VIP, Estandar, los que no pagan
 	public Usuario(String nombre, String apellido, String dni, TipoDeSuscripcion tipoDeSuscripcion) {
@@ -17,7 +21,14 @@ public class Usuario {
 		this.apellido = apellido;
 		this.dni = dni;
 		this.tipoDeSuscripcion = tipoDeSuscripcion;
+		
+		consultasRealizadas = new ArrayList<ConsultaAsientos>();
 	}
+	
+	public void registrarConsulta(ConsultaAsientos consulta) {
+		this.consultasRealizadas.add(consulta);
+	}
+	
 	public String getDni() {
 		return this.dni;
 	}

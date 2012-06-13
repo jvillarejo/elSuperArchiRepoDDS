@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
+import edu.utn.dds.aterrizar.usuario.ConsultaAsientos;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Vuelo;
@@ -23,6 +24,8 @@ public class Agencia {
 		for (Aerolinea aerolinea : aerolineas) {
 			asientos.addAll(aerolinea.buscarAsientos(vuelo));
 		}
+		
+		usuario.registrarConsulta(new ConsultaAsientos(vuelo, filtro));
 		
 		return filtro.filtrar(asientos);	
 	}
