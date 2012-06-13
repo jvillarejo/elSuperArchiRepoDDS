@@ -19,17 +19,27 @@ public class Agencia {
 	}
 	
 	public List<Asiento> buscarAsientos(final Vuelo vuelo, final Usuario usuario, final FiltroAsiento filtro) {
-		List<Asiento> asientos = new ArrayList<Asiento>();
-		
-		for (Aerolinea aerolinea : aerolineas) {
+		List<Asiento> asientos = new ArrayList<Asiento>();		
+		for (Aerolinea aerolinea : aerolineas) 
 			asientos.addAll(aerolinea.buscarAsientos(vuelo));
-		}
+
+		asientos = adaptarPreciosParaUsuario(asientos, usuario);
 		
 		usuario.registrarConsulta(new ConsultaAsientos(vuelo, filtro));
 		
 		return filtro.filtrar(asientos);	
 	}
 	
+	private List<Asiento> adaptarPreciosParaUsuario(List<Asiento> asientos,
+			Usuario usuario) {
+		
+		for (Asiento asiento : asientos)
+			asiento.setPrecio(asiento.precioTotal(usuario));
+		
+		return asientos;
+		
+	}
+
 	public void comprarAsiento(final Asiento asiento, final Usuario usuario) {
 		asiento.comprar(usuario); 
 	}		
