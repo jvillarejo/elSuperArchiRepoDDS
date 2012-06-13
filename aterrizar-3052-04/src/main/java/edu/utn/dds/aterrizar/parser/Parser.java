@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
+import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Clase;
 import edu.utn.dds.aterrizar.vuelo.Ubicacion;
@@ -11,12 +11,12 @@ import edu.utn.dds.aterrizar.vuelo.Vuelo;
 
 public class Parser {
 
-	public List<Asiento> parseDisponibles(String[][] asientos, Vuelo vuelo){
+	public List<Asiento> parseDisponibles(String[][] asientos, Vuelo vuelo, Aerolinea aerolinea){
 		// esto pasa del array de arrays strings a asientos. 
 		Asiento asiento;
 		List<Asiento> disponibles = new ArrayList<Asiento>();
 		for (int i = 0; i < asientos.length; i++) {
-		 asiento=this.create(asientos[i], vuelo);
+		 asiento=this.create(asientos[i], vuelo, aerolinea);
 		 disponibles.add(asiento);
 		}
 	
@@ -34,11 +34,12 @@ public class Parser {
 	 * @param vuelo
 	 * @return un </code>Asiento</code> con sus fields seteados.
 	 */
-	public Asiento create (String[] asientoLanchita, Vuelo vuelo){
+	public Asiento create (String[] asientoLanchita, Vuelo vuelo, Aerolinea aerolinea){
 	try{	
 		vuelo.setCode(this.getFlightCode(asientoLanchita[0]));
-		Asiento asiento = new Asiento(vuelo, new AerolineaLanchitaWrapper(this)); //TODO: esto es espantoso, corregirlo (necesario para que el asiento sepa calcular su precio)
-				asiento.setCodigo(this.getSeatCode(asientoLanchita[0]));
+		Asiento asiento = new Asiento(vuelo, aerolinea);
+	
+				asiento.setCodigo(asientoLanchita[0]);
 				asiento.setPrecio(this.adaptToDouble(asientoLanchita[1]));
 				asiento.setClase(this.stringToClase(asientoLanchita[2]));
 				asiento.setUbicacion(this.stringToUbicacion(asientoLanchita[3]));
@@ -48,11 +49,6 @@ public class Parser {
 	} catch(RuntimeException e){
 		throw new ParserException("Error en el parseo", e);
 	}
-	}
-
-	private String getSeatCode(String string){
-		String sc= string.substring(15);
-		return sc;
 	}
 
 	private String getFlightCode(String string) {

@@ -1,4 +1,4 @@
-package edu.utn.dds.aterrizar;
+package edu.utn.dds.aterrizar.parser;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
 import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.parser.ParserException;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
@@ -32,23 +33,23 @@ public class ParserTest {
 	
 	@Test 
 	public void generacionDeListaDeAsientos(){
-		List <Asiento> asientosParseados= new Parser().parseDisponibles(asientosLanchita, mock(Vuelo.class));
+		List <Asiento> asientosParseados= new Parser().parseDisponibles(asientosLanchita, mock(Vuelo.class), mock(AerolineaLanchitaWrapper.class));
 		
 		Assert.assertFalse(asientosParseados.isEmpty());
 	}
 	
 	@Test(expected= ParserException.class) 
 	public void fallaDeParseo(){
-		 new Parser().parseDisponibles(new String[][]{{}}, mock(Vuelo.class));
+		 new Parser().parseDisponibles(new String[][]{{}}, mock(Vuelo.class), mock(AerolineaLanchitaWrapper.class));
 	}
 	
 	@Test(expected= ParserException.class)
 	public void parseoDeAsientoConUbicacionErronea() {
-		new Parser().parseDisponibles(new String[][]{{ "01202022220298-2", "528.81", "P", "ERRONEA", "D", "" }}, mock(Vuelo.class));
+		new Parser().parseDisponibles(new String[][]{{ "01202022220298-2", "528.81", "P", "ERRONEA", "D", "" }}, mock(Vuelo.class), mock(AerolineaLanchitaWrapper.class));
 	}
 	
 	@Test(expected= ParserException.class)
 	public void parseoDeAsientoConClaseErronea() {
-		new Parser().parseDisponibles(new String[][]{{ "01202022220298-2", "528.81", "ERRONEA", "V", "D", "" }}, mock(Vuelo.class));
+		new Parser().parseDisponibles(new String[][]{{ "01202022220298-2", "528.81", "ERRONEA", "V", "D", "" }}, mock(Vuelo.class), mock(AerolineaLanchitaWrapper.class));
 	}
 }

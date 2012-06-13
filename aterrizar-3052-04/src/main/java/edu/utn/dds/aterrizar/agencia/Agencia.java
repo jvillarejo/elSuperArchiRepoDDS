@@ -32,13 +32,14 @@ public class Agencia {
 
 	public void comprarAsiento(final Asiento asiento, final Usuario usuario) {
 		asiento.comprar(usuario); 
+		usuario.registrarCompra(asiento);
 	}		
 
 	private List<Asiento> adaptarPreciosParaUsuario(List<Asiento> asientos,
 			Usuario usuario) {
-		
+		List<Asiento> asientosAdaptados= new ArrayList<Asiento>(); 
 		for (Asiento asiento : asientos)
-			asiento.adaptarPrecioPara(usuario);
+			asientosAdaptados.add(asiento.adaptarNuevoAsientoConPrecioPara(usuario));
 		
 		return asientos;
 		
