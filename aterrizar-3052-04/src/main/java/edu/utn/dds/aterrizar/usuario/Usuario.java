@@ -15,7 +15,6 @@ public class Usuario {
 	private TipoDeSuscripcion tipoDeSuscripcion;
 	private List<ConsultaAsientos> consultasRealizadas;
 	
-	//TODO Agregar tipo de usuario VIP, Estandar, los que no pagan
 	public Usuario(String nombre, String apellido, String dni, TipoDeSuscripcion tipoDeSuscripcion) {
 		this.nombre = nombre;
 		this.apellido = apellido;
