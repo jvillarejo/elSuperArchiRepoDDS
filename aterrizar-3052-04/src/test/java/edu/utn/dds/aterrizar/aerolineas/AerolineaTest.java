@@ -1,4 +1,4 @@
-package edu.utn.dds.aterrizar;
+package edu.utn.dds.aterrizar.aerolineas;
 
 
 import java.util.Date;
@@ -49,9 +49,12 @@ public class AerolineaTest {
 	@Test
 	public void testComprarAsiento() {
 		when(usuario.getDni()).thenReturn("35247037");
-		when(asientoDisponible.getCodigo()).thenReturn("01202022220202-3");
-		comunicadorDeAerolinea.comprarAsiento(asientoDisponible, usuario);		
-		Assert.assertTrue(asientoDisponible.getEstado().equals("C"));
+	//	when(asientoDisponible.getCodigo()).thenReturn("01202022220202-3");
+		Asiento asiento= new Asiento(vuelo, mock(AerolineaLanchitaWrapper.class));
+		asiento.setCodigo("01202022220202-3");
+		asiento.setEstado("D");
+		comunicadorDeAerolinea.comprarAsiento(asiento, usuario);		
+		Assert.assertTrue(asiento.getEstado().equals("C"));
 	}
 
 }
