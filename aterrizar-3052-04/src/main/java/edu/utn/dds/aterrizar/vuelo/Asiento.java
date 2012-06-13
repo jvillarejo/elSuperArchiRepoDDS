@@ -15,8 +15,13 @@ public class Asiento {
 
 	public Asiento() {}
 	
-	public Asiento(Vuelo vuelo) {
+	public Asiento(Aerolinea aerolinea) {
+		this.aerolinea = aerolinea;
+	}
+	
+	public Asiento(Vuelo vuelo, Aerolinea aerolinea) {
 		this.vuelo = vuelo;
+		this.aerolinea = aerolinea;
 	}
 
 	public Vuelo getFlight() {
@@ -31,13 +36,15 @@ public class Asiento {
 		this.aerolinea.comprarAsiento(this, usuario);		
 	} 
 	
-	public Double precioTotal(Usuario usuario) {
-		return this.getPrecio() + this.getPrecio() * this.aerolinea.getPorcentajeDeVenta() + usuario.recargo();
+	public Boolean esSuperOferta() {
+		return 
+			this.getClase() == Clase.PRIMERA && this.getPrecio() < 8000
+			||
+			this.getClase() == Clase.EJECUTIVA && this.getPrecio() < 4000;
 	}
-
+	
 	public void setCodigo(String field) {
 		this.codigo= field;
-		
 	}
 
 	public void setPrecio(Double precio) {
@@ -73,5 +80,13 @@ public class Asiento {
 	
 	public void setUbicacion(Ubicacion ubicacion) {
 		this.ubicacion = ubicacion;
+	}
+
+	public void adaptarPrecioPara(Usuario usuario) {
+		this.setPrecio(this.precioTotal(usuario));
+	}
+
+	private Double precioTotal(Usuario usuario) {
+		return this.getPrecio() + this.getPrecio() * this.aerolinea.getPorcentajeDeVenta() + usuario.getRecargo();
 	}
 }
