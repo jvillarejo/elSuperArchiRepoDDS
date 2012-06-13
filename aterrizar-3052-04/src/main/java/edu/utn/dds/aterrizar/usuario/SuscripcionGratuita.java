@@ -1,7 +1,7 @@
 package edu.utn.dds.aterrizar.usuario;
 
 
-public class Gratuita extends TipoDeSuscripcion {
+public class SuscripcionGratuita extends TipoDeSuscripcion {
 
 	final Double RECARGO_SUSCRIPCION_GRATUITA = 20.0;
 	
