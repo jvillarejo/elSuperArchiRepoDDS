@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-
+import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Clase;
 import edu.utn.dds.aterrizar.vuelo.Ubicacion;
@@ -37,7 +37,7 @@ public class Parser {
 	public Asiento create (String[] asientoLanchita, Vuelo vuelo){
 	try{	
 		vuelo.setCode(this.getFlightCode(asientoLanchita[0]));
-		Asiento asiento = new Asiento(vuelo);
+		Asiento asiento = new Asiento(vuelo, new AerolineaLanchitaWrapper(this)); //TODO: esto es espantoso, corregirlo (necesario para que el asiento sepa calcular su precio)
 				asiento.setCodigo(this.getSeatCode(asientoLanchita[0]));
 				asiento.setPrecio(this.adaptToDouble(asientoLanchita[1]));
 				asiento.setClase(this.stringToClase(asientoLanchita[2]));
@@ -75,7 +75,7 @@ public class Parser {
 	{
 		Hashtable<String, String> claseMapper = new Hashtable<String, String>();
 		claseMapper.put("P", "PRIMERA");
-		claseMapper.put("E", "EJECUTIVO");
+		claseMapper.put("E", "EJECUTIVA");
 		claseMapper.put("T", "TURISTA");
 		
 		String claseValue = claseMapper.get(clase);
