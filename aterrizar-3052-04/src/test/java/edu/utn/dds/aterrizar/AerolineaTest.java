@@ -1,10 +1,14 @@
 package edu.utn.dds.aterrizar;
 
 
+import java.util.Date;
+import java.util.List;
+
 import org.junit.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
+
 
 import static org.mockito.Mockito.*;
 
@@ -21,28 +25,33 @@ public class AerolineaTest {
 	private Vuelo vuelo;
 	private Asiento asientoDisponible;
 	private Usuario usuario;
+	private Date fecha;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp()  {
 		vuelo = mock(Vuelo.class);
 		asientoDisponible = mock(Asiento.class);
 		usuario = mock(Usuario.class);
-		
-		this.comunicadorDeAerolinea = new AerolineaLanchitaWrapper(mock(Parser.class));
+		fecha= new Date();
+		this.comunicadorDeAerolinea = new AerolineaLanchitaWrapper(new Parser());
 	}
 	
 	@Test
-	public void testBuscarAsientos() throws Exception {
-		comunicadorDeAerolinea.buscarAsientos(vuelo);
-		
-		Assert.fail("no implementado todavia");
+	public void testBuscarAsientos()  {
+		when(vuelo.getOrigen()).thenReturn("BUE");
+		when(vuelo.getDestino()).thenReturn("LA");
+		when(vuelo.getFecha()).thenReturn(fecha);
+		List<Asiento> disponibles = comunicadorDeAerolinea.buscarAsientos(vuelo);
+		Assert.assertFalse(disponibles.isEmpty());
+		;
 	}
 	
 	@Test
 	public void testComprarAsiento() {
-		comunicadorDeAerolinea.comprarAsiento(asientoDisponible, usuario);
-		
-		Assert.fail("no implementado todavia");
+		when(usuario.getDni()).thenReturn("35247037");
+		when(asientoDisponible.getCodigo()).thenReturn("01202022220202-3");
+		comunicadorDeAerolinea.comprarAsiento(asientoDisponible, usuario);		
+		Assert.assertTrue(asientoDisponible.getEstado().equals("C"));
 	}
 
 }

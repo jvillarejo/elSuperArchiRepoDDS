@@ -11,14 +11,17 @@ import edu.utn.dds.aterrizar.vuelo.Ubicacion;
 import edu.utn.dds.aterrizar.vuelo.Vuelo;
 
 import static org.mockito.Mockito.*;
-
+/**
+ * 
+ * @author clari
+ *
+ */
 public class AsientoLanchitaFactoryTest {
 	private Parser parser;
 	
 	@Before
 	public void setUp(){
-		//por alguna razón no pasa el test si uso un mock en vez de una instancia nueva xD
-		this.parser= new Parser();//mock(Parser.class); 
+		this.parser= new Parser();
 	}
 	@Test
 	public void laFactoryCreaUnAsientoCorrectamente() {

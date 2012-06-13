@@ -38,7 +38,6 @@ public class Parser {
 	try{	
 		vuelo.setCode(this.getFlightCode(asientoLanchita[0]));
 		Asiento asiento = new Asiento(vuelo);
-		//TODO: crear el vuelo con lo que está antés del guión en el primer string.
 				asiento.setCodigo(this.getSeatCode(asientoLanchita[0]));
 				asiento.setPrecio(this.adaptToDouble(asientoLanchita[1]));
 				asiento.setClase(this.stringToClase(asientoLanchita[2]));
