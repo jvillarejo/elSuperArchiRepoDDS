@@ -1,5 +1,7 @@
 package edu.utn.dds.aterrizar.vuelo;
 
+import com.lanchita.AerolineaLanchita;
+
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 
@@ -15,8 +17,13 @@ public class Asiento {
 
 	public Asiento() {}
 	
-	public Asiento(Vuelo vuelo) {
+	public Asiento(Aerolinea aerolinea) {
+		this.aerolinea = aerolinea;
+	}
+	
+	public Asiento(Vuelo vuelo, Aerolinea aerolinea) {
 		this.vuelo = vuelo;
+		this.aerolinea = aerolinea;
 	}
 
 	public Vuelo getFlight() {
