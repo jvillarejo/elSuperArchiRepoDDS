@@ -20,13 +20,16 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
    // private static final AerolineaLanchita aerolinea= AerolineaLanchita.getInstance();
 	private static final double PORCENTAJE_DE_VENTA = 0.15;
 	private Parser lanchitaParser;
+	private AerolineaLanchita aerolineaLanchita;
 	
 	/**
 	 * Constructor del wrapper con su correspondiente parser específico
+	 * @param aerolineaLanchita 
 	 * @param parser
 	 */
-	public AerolineaLanchitaWrapper(Parser parser ){
+	public AerolineaLanchitaWrapper(AerolineaLanchita aerolineaLanchita, Parser parser ){
 		this.lanchitaParser= parser;
+		this.aerolineaLanchita = aerolineaLanchita;
 	}
 
 	/**
@@ -35,7 +38,7 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 	 */
 	@Override
 	public List<Asiento> buscarAsientos(Vuelo vuelo) {
-		String[][] asientosDisponibles = AerolineaLanchita.getInstance().getAsientosDisponibles(vuelo.getOrigen(), vuelo.getDestino(), vuelo.getFecha());
+		String[][] asientosDisponibles = aerolineaLanchita.getAsientosDisponibles(vuelo.getOrigen(), vuelo.getDestino(), vuelo.getFecha());
 		return this.lanchitaParser.parseDisponibles(asientosDisponibles, vuelo, this);
 	}
 
@@ -46,7 +49,7 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 	@Override
 	public void comprarAsiento(Asiento asientoDisponible,Usuario usuario) {
 		try{
-		AerolineaLanchita.getInstance().comprar(asientoDisponible.getCodigo(), usuario.getDni());
+			aerolineaLanchita.comprar(asientoDisponible.getCodigo(), usuario.getDni());
 		}
 		catch(EstadoErroneoException e){
 			throw new AsientoLanchitaNoDisponibleException(e);

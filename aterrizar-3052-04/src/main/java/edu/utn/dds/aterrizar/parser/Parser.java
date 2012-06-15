@@ -38,7 +38,7 @@ public class Parser {
 	try{	
 		vuelo.setCode(this.getFlightCode(asientoLanchita[0]));
 		Asiento asiento = new Asiento(vuelo, aerolinea);
-				asiento.setCodigo(this.getSeatCode(asientoLanchita[0]));
+				asiento.setCodigo(asientoLanchita[0]);
 				asiento.setPrecio(this.adaptToDouble(asientoLanchita[1]));
 				asiento.setClase(this.stringToClase(asientoLanchita[2]));
 				asiento.setUbicacion(this.stringToUbicacion(asientoLanchita[3]));
@@ -48,11 +48,6 @@ public class Parser {
 	} catch(RuntimeException e){
 		throw new ParserException("Error en el parseo", e);
 	}
-	}
-
-	private String getSeatCode(String string){
-		String sc= string.substring(15);
-		return sc;
 	}
 
 	private String getFlightCode(String string) {

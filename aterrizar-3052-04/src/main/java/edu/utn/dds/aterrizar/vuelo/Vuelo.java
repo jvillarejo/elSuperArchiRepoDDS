@@ -16,6 +16,10 @@ public class Vuelo {
 	private String destino;
 	private Date fecha;
 
+	public String getCodigo() {
+		return codigo;
+	}
+	
 	public String getOrigen() {
 		return this.origen;
 	}
