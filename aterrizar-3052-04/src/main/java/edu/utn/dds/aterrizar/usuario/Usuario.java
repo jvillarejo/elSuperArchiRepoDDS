@@ -5,6 +5,7 @@ package edu.utn.dds.aterrizar.usuario;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
 
 public class Usuario {
@@ -14,6 +15,7 @@ public class Usuario {
 	private String dni;
 	private TipoDeSuscripcion tipoDeSuscripcion;
 	private List<ConsultaAsientos> consultasRealizadas;
+	private List<Asiento> comprasEfectuadas;
 	
 	public Usuario(String nombre, String apellido, String dni, TipoDeSuscripcion tipoDeSuscripcion) {
 		this.nombre = nombre;
@@ -52,6 +54,19 @@ public class Usuario {
 	}
 	public TipoDeSuscripcion getTipo() {
 		return tipoDeSuscripcion;
+	}
+
+
+	public double getTotalCompras() {
+		double total= 0;
+		for (Asiento asiento: this.comprasEfectuadas){
+			total += asiento.getPrecio();
+		}
+		return total;
+	}
+
+	public void registrarCompra(Asiento asiento) {
+			this.comprasEfectuadas.add(asiento.adaptarNuevoAsientoConPrecioPara(this));
 	}
 
 }

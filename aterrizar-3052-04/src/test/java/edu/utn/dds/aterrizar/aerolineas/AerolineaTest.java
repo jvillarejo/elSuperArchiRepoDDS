@@ -1,4 +1,4 @@
-package edu.utn.dds.aterrizar;
+package edu.utn.dds.aterrizar.aerolineas;
 
 
 import java.util.Date;
@@ -18,7 +18,11 @@ import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Vuelo;
 import edu.utn.dds.aterrizar.parser.*;
-
+/**
+ * 
+ * @author clari, ariel
+ *
+ */
 public class AerolineaTest {
 
 	private Aerolinea comunicadorDeAerolinea;
@@ -47,11 +51,33 @@ public class AerolineaTest {
 	}
 	
 	@Test
-	public void testComprarAsiento() {
+	public void testComprarAsientoDisponible() {
+		when(usuario.getDni()).thenReturn("35247037");
+	//	when(asientoDisponible.getCodigo()).thenReturn("01202022220202-3");
+		Asiento asiento= new Asiento(vuelo, mock(AerolineaLanchitaWrapper.class));
+		asiento.setCodigo("01202022220202-3");
+		asiento.setEstado("D");
+		comunicadorDeAerolinea.comprarAsiento(asiento, usuario);		
+		Assert.assertTrue(asiento.getEstado().equals("C"));
+	}
+	
+	
+	@Test(expected = AsientoLanchitaNoDisponibleException.class)
+	public void testComprarAsientoNoDisponible() {
+		when(usuario.getDni()).thenReturn("35247037");
+		Asiento asiento= new Asiento(vuelo, mock(AerolineaLanchitaWrapper.class));
+		asiento.setCodigo("01202022220202-3");
+		asiento.setEstado("R");
+		comunicadorDeAerolinea.comprarAsiento(asiento, usuario);
+	}
+	
+	
+	@Test(expected = AsientoLanchitaNoDisponibleException.class)
+	public void testComprarAsientoDisponibleDosVecesLaSegundaTiraError() {
 		when(usuario.getDni()).thenReturn("35247037");
 		when(asientoDisponible.getCodigo()).thenReturn("01202022220202-3");
-		comunicadorDeAerolinea.comprarAsiento(asientoDisponible, usuario);		
-		Assert.assertTrue(asientoDisponible.getEstado().equals("C"));
+		comunicadorDeAerolinea.comprarAsiento(asientoDisponible, usuario);
+		comunicadorDeAerolinea.comprarAsiento(asientoDisponible, usuario);
 	}
 
 }
