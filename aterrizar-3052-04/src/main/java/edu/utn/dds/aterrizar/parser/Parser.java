@@ -38,7 +38,7 @@ public class Parser {
 	try{	
 		vuelo.setCode(this.getFlightCode(asientoLanchita[0]));
 		Asiento asiento = new Asiento(vuelo, aerolinea);
-				asiento.setCodigo(asientoLanchita[0]);
+				parseCodigoDeVueloYNumeroDeAsiento(asiento, asientoLanchita[0]);
 				asiento.setPrecio(this.adaptToDouble(asientoLanchita[1]));
 				asiento.setClase(this.stringToClase(asientoLanchita[2]));
 				asiento.setUbicacion(this.stringToUbicacion(asientoLanchita[3]));
@@ -49,6 +49,14 @@ public class Parser {
 		throw new ParserException("Error en el parseo", e);
 	}
 	}
+
+	private void parseCodigoDeVueloYNumeroDeAsiento(Asiento asiento,
+			String codigoLanchita) {
+		String[] values = codigoLanchita.split("-");
+		asiento.setCodigoDeVuelo(values[0]);
+		asiento.setNumeroDeAsiento(Integer.valueOf(values[1]));
+	}
+
 
 	private String getFlightCode(String string) {
 		String fc= string.substring(0, 13);

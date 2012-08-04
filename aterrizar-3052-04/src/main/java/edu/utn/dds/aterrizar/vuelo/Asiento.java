@@ -8,10 +8,11 @@ public class Asiento {
 	private Vuelo vuelo;
 	private Aerolinea aerolinea;
 	private Double precio;
-	private String codigo;
 	private Clase clase;
 	private Ubicacion ubicacion;
 	private String estado;
+	private String codigoDeVuelo;
+	private Integer numeroDeAsiento;
 
 	public Asiento() {}
 	
@@ -28,10 +29,6 @@ public class Asiento {
 		return vuelo;
 	}
 
-	public String getCodigo() {
-		return this.codigo;
-	}
-
 	public void comprar(final Usuario usuario) {
 		this.aerolinea.comprarAsiento(this, usuario);		
 	} 
@@ -43,10 +40,6 @@ public class Asiento {
 			this.getClase() == Clase.EJECUTIVA && this.getPrecio() < 4000;
 	}
 	
-	public void setCodigo(String string) {
-		this.codigo= string;
-	}
-
 	public void setPrecio(Double precio) {
 		this.precio= precio;
 		
@@ -94,5 +87,21 @@ public class Asiento {
 		Asiento asientoAdaptado = new Asiento(this.vuelo, this.aerolinea);
 		asientoAdaptado.adaptarPrecioPara(usuario);
 		return asientoAdaptado;
+	}
+
+	public String getCodigoDeVuelo() {
+		return this.codigoDeVuelo;
+	}
+
+	public Integer getNumeroDeAsiento() {
+		return this.numeroDeAsiento;
+	}
+	
+	public void setCodigoDeVuelo(String codigoDeVuelo) {
+		this.codigoDeVuelo = codigoDeVuelo;
+	}
+
+	public void setNumeroDeAsiento(Integer numeroDeAsiento) {
+		this.numeroDeAsiento = numeroDeAsiento;
 	}
 }

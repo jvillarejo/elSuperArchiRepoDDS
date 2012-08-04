@@ -44,21 +44,25 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 
 	/**
 	 * Dada una lista de Asientos disponibles y un Usuario, usa la interfaz de compra de AerolinaLanchita.
-	 * @throws AsientoLanchitaNoDisponibleException si el asiento no está disponible.
+	 * @throws AsientoNoDisponibleException si el asiento no está disponible.
 	 */
 	@Override
 	public void comprarAsiento(Asiento asientoDisponible,Usuario usuario) {
 		try{
-			aerolineaLanchita.comprar(asientoDisponible.getCodigo(), usuario.getDni());
+			aerolineaLanchita.comprar(getCodigoLanchita(asientoDisponible), usuario.getDni());
 		}
 		catch(EstadoErroneoException e){
-			throw new AsientoLanchitaNoDisponibleException(e);
+			throw new AsientoNoDisponibleException(e);
 		}
 		catch(CodigoErroneoException e1){
 			throw new RuntimeException("Código inválido");
 		}
 	
 		asientoDisponible.setEstado("C");
+	}
+
+	private String getCodigoLanchita(Asiento asientoDisponible) {
+		return asientoDisponible.getCodigoDeVuelo() + "-" + asientoDisponible.getNumeroDeAsiento();
 	}
 
 	@Override

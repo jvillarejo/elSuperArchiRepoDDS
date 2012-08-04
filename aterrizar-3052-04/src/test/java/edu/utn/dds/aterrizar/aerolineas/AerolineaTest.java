@@ -61,7 +61,8 @@ public class AerolineaTest {
 	public void testComprarAsientoDisponible() {
 		when(usuario.getDni()).thenReturn("35247037");
 		Asiento asiento= new Asiento(vuelo, mock(Aerolinea.class));
-		asiento.setCodigo("01202022220202-3");
+		asiento.setCodigoDeVuelo("01202022220202");
+		asiento.setNumeroDeAsiento(3);
 		asiento.setEstado("D");
 		comunicadorDeAerolinea.comprarAsiento(asiento, usuario);
 		assertEquals("C", asiento.getEstado());
@@ -69,11 +70,12 @@ public class AerolineaTest {
 	}
 	
 	
-	@Test(expected = AsientoLanchitaNoDisponibleException.class)
+	@Test(expected = AsientoNoDisponibleException.class)
 	public void testComprarAsientoNoDisponible() {
 		when(usuario.getDni()).thenReturn("35247037");
 		Asiento asiento= new Asiento(vuelo, mock(AerolineaLanchitaWrapper.class));
-		asiento.setCodigo("01202022220202-3");
+		asiento.setCodigoDeVuelo("01202022220202");
+		asiento.setNumeroDeAsiento(3);
 		asiento.setEstado("R");
 		doThrow(new EstadoErroneoException()).when(aerolineaLanchita).comprar(anyString(), anyString());
 		
@@ -83,12 +85,13 @@ public class AerolineaTest {
 	}
 	
 	
-	@Test(expected = AsientoLanchitaNoDisponibleException.class)
+	@Test(expected = AsientoNoDisponibleException.class)
 	public void testComprarAsientoDisponibleDosVecesLaSegundaTiraError() {
 		when(usuario.getDni()).thenReturn("35247037");
 		
 		Asiento asientoDisponible = new Asiento(vuelo, mock(Aerolinea.class));
-		asientoDisponible.setCodigo("01202022220202-3");
+		asientoDisponible.setCodigoDeVuelo("01202022220202");
+		asientoDisponible.setNumeroDeAsiento(3);
 		asientoDisponible.setEstado("D");
 		
 		doNothing().doThrow(new EstadoErroneoException()).when(aerolineaLanchita).comprar(anyString(), anyString());
