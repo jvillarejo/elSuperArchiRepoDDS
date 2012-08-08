@@ -13,4 +13,12 @@ public class ConsultaAsientos {
 		this.filtro = filtro;
 	}
 	
+	public Vuelo getVuelo() {
+		return vuelo;
+	}
+
+	public FiltroAsiento getFiltro() {
+		return filtro;
+	}
+	
 }
