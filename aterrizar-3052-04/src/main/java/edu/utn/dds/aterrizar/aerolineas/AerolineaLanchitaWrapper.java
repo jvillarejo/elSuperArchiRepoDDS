@@ -35,7 +35,7 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 	 */
 	@Override
 	public List<Asiento> buscarAsientos(Vuelo vuelo) {
-		String[][] asientosDisponibles = AerolineaLanchita.getInstance().getAsientosDisponibles(vuelo.getOrigen(), vuelo.getDestino(), vuelo.getFecha());
+		String[][] asientosDisponibles = getLanchita().getAsientosDisponibles(vuelo.getOrigen(), vuelo.getDestino(), vuelo.getFecha());
 		return this.lanchitaParser.parseDisponibles(asientosDisponibles, vuelo, this);
 	}
 
@@ -46,7 +46,7 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 	@Override
 	public void comprarAsiento(Asiento asientoDisponible,Usuario usuario) {
 		try{
-		AerolineaLanchita.getInstance().comprar(asientoDisponible.getCodigo(), usuario.getDni());
+		getLanchita().comprar(asientoDisponible.getCodigo(), usuario.getDni());
 		}
 		catch(EstadoErroneoException e){
 			throw new AsientoLanchitaNoDisponibleException(e);
@@ -56,6 +56,10 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 		}
 	
 		asientoDisponible.setEstado("C");
+	}
+
+	protected AerolineaLanchita getLanchita() {
+		return AerolineaLanchita.getInstance();
 	}
 
 	@Override

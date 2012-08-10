@@ -19,15 +19,13 @@ public class FiltroBuilder {
 	}
 	
 	public FiltroBuilder filtrarPorUbicacion(Ubicacion ubicacion) {
-		FiltroPorUbicacion filtro = new FiltroPorUbicacion(ubicacion, this.filtro);
-		this.filtro = filtro;
+		this.filtro = new FiltroPorUbicacion(ubicacion, this.filtro);
 		
 		return this;
 	}
 	
 	public FiltroBuilder filtrarPorClase(Clase clase) {
-		FiltroPorClase filtro = new FiltroPorClase(clase, this.filtro);
-		this.filtro = filtro;
+		this.filtro = new FiltroPorClase(clase, this.filtro);
 		
 		return this;
 	}
