@@ -15,6 +15,12 @@ public class Vuelo {
 	private String origen;
 	private String destino;
 	private Date fecha;
+	
+	public Vuelo(String origen, String destino, String fecha){
+		this.origen=origen;
+		this.destino=destino;
+		this.setFecha(fecha);
+	}
 
 	public String getCodigo() {
 		return codigo;
