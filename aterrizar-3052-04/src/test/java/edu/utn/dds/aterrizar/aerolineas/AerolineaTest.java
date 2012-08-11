@@ -1,6 +1,7 @@
 package edu.utn.dds.aterrizar.aerolineas;
 
 
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
@@ -103,6 +104,5 @@ public class AerolineaTest {
 		
 		comunicadorDeAerolinea.comprarAsiento(asientoDisponible, usuario);
 		verify(aerolineaLanchita).comprar("01202022220202-3", "35247037");
-	}
-
+}
 }

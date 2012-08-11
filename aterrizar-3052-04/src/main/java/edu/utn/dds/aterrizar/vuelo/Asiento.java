@@ -39,9 +39,13 @@ public class Asiento {
 			||
 			this.getClase() == Clase.EJECUTIVA && this.getPrecio() < 4000;
 	}
+
 	public boolean esEscala(Asiento otroAsiento){
 		return this.getFlight().getDestino().equals(otroAsiento.getFlight().getOrigen())
 				/*&& this.getFlight.getFecha. before(otroAsiento.getFlight.getFecha())*/;
+
+	
+
 	}
 	public void setPrecio(Double precio) {
 		this.precio= precio;
@@ -92,6 +96,7 @@ public class Asiento {
 		return asientoAdaptado;
 	}
 
+
 	public String getCodigoDeVuelo() {
 		return this.codigoDeVuelo;
 	}
@@ -107,4 +112,5 @@ public class Asiento {
 	public void setNumeroDeAsiento(Integer numeroDeAsiento) {
 		this.numeroDeAsiento = numeroDeAsiento;
 	}
+
 }
