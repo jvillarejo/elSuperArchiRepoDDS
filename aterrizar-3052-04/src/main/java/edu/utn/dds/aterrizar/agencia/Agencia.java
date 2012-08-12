@@ -8,6 +8,7 @@ import edu.utn.dds.aterrizar.usuario.ConsultaAsientos;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Vuelo;
+import edu.utn.dds.aterrizar.vuelo.filtros.BuscadorDeAsientos;
 import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
 
 public class Agencia {
@@ -18,16 +19,19 @@ public class Agencia {
 		this.aerolineas = aerolineas;
 	}
 	
-	public List<Asiento> buscarAsientos(final Vuelo vuelo, final Usuario usuario, final FiltroAsiento filtro) {
+	public List<Asiento> buscarAsientos(final Vuelo vuelo, final Usuario usuario, final FiltroAsiento... filtros) {
 		List<Asiento> asientos = new ArrayList<Asiento>();		
 		for (Aerolinea aerolinea : aerolineas) 
 			asientos.addAll(aerolinea.buscarAsientos(vuelo));
 
 		asientos = adaptarPreciosParaUsuario(asientos, usuario);
 		
-		usuario.registrarConsulta(new ConsultaAsientos(vuelo, filtro));
+		usuario.registrarConsulta(new ConsultaAsientos(vuelo, filtros));
+
+		BuscadorDeAsientos buscador = new BuscadorDeAsientos(asientos, usuario);
+		buscador.agregarFiltros(filtros);
 		
-		return filtro.filtrar(asientos);	
+		return buscador.buscar();
 	}
 
 	public void comprarAsiento(final Asiento asiento, final Usuario usuario) {

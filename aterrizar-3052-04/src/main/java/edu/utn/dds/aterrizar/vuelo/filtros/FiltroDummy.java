@@ -1,13 +1,12 @@
 package edu.utn.dds.aterrizar.vuelo.filtros;
 
-import java.util.List;
-
+import net.sf.staccatocommons.collections.stream.Stream;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 
 public class FiltroDummy implements FiltroAsiento {
 
 	@Override
-	public List<Asiento> filtrar(List<Asiento> asientos) {
+	public Stream<Asiento> filtrar(Stream<Asiento> asientos) {
 		return asientos;
 	}
 

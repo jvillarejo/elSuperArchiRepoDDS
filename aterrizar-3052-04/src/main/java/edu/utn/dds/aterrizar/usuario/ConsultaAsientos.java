@@ -6,19 +6,18 @@ import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
 public class ConsultaAsientos {
 
 	private Vuelo vuelo;
-	private FiltroAsiento filtro;
+	private FiltroAsiento[] filtros;
 	
-	public ConsultaAsientos(Vuelo vuelo, FiltroAsiento filtro) {
+	public ConsultaAsientos(Vuelo vuelo, FiltroAsiento[] filtros) {
 		this.vuelo = vuelo;
-		this.filtro = filtro;
+		this.filtros = filtros;
 	}
 	
 	public Vuelo getVuelo() {
-		return vuelo;
-	}
-
-	public FiltroAsiento getFiltro() {
-		return filtro;
+		return this.vuelo;
 	}
 	
+	public FiltroAsiento[] getFiltros() {
+		return this.filtros;
+	}
 }
