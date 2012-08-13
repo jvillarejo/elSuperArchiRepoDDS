@@ -31,9 +31,22 @@ public class AsientoOrdenTest {
 		asientoCaro.setPrecio(2500D);
 		
 		BuscadorDeAsientos buscador = new BuscadorDeAsientos(Arrays.asList(asientoCaro, asientoBarato), usuarioDefault);
-		buscador.ordenarPor(new OrdenPorPrecioDescendente());
+		buscador.ordenarPor(new OrdenPorPrecio(Orden.DESCENDENTE));
 		
 		assertEquals(Arrays.asList(asientoBarato, asientoCaro), buscador.buscar());
 	}
 	
+	@Test
+	public void ordenarAsientosPorPrecioAscendente() {
+		Asiento asientoBarato = new Asiento();
+		asientoBarato.setPrecio(1500D);
+		
+		Asiento asientoCaro = new Asiento();
+		asientoCaro.setPrecio(2500D);
+		
+		BuscadorDeAsientos buscador = new BuscadorDeAsientos(Arrays.asList(asientoCaro, asientoBarato), usuarioDefault);
+		buscador.ordenarPor(new OrdenPorPrecio(Orden.ASCENDENTE));
+		
+		assertEquals(Arrays.asList(asientoCaro, asientoBarato), buscador.buscar());
+	}
 }
