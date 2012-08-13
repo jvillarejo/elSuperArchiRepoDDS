@@ -7,6 +7,7 @@ import net.sf.staccatocommons.collections.stream.Streams;
 
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.CriterioOrdenAsiento;
 
 public class BuscadorDeAsientos {
 	private Stream<Asiento> asientosFiltrados;
@@ -41,6 +42,11 @@ public class BuscadorDeAsientos {
 	public void agregarFiltros(FiltroAsiento... filtros) {
 		for (FiltroAsiento filtro : filtros)
 			this.agregarFiltro(filtro);
+	}
+	
+	public void ordenarPor(CriterioOrdenAsiento criterio) {
+		Stream<Asiento> asientosOrdenados = criterio.ordenar(this.getAsientosFiltrados());
+		this.setAsientosFiltrados(asientosOrdenados);
 	}
 
 	public List<Asiento> buscar() {
