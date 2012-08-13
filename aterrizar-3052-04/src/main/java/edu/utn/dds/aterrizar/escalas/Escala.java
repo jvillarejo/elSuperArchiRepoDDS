@@ -12,12 +12,13 @@ import edu.utn.dds.aterrizar.aerolineas.*;
 public class Escala {
 	
 public List<Asiento> getVuelosDisponiblesDirectosYConEscalas(String origen, String destino, String fecha, Aerolinea aerolinea){
+	//buscamos los vuelos directos, como siempre
 	List<Asiento>vuelos= aerolinea.buscarAsientos(new Vuelo(origen, destino, fecha));
+	//y agregamos los vuelos con escala
 	vuelos.addAll(this.buscarVuelosConEscala(origen, destino,fecha,aerolinea));
 	return vuelos;
 }
 public List<Asiento> buscarVuelosConEscala(String origen, String destino,String fecha,Aerolinea aerolinea){
-	//hasta acá solo buscamos los vuelos directos,
 	List<Asiento>vuelosDisponibles= this.buscarVueloSegun(origen, destino,fecha, aerolinea);
 	return Streams
 			.from(vuelosDisponibles)

@@ -41,8 +41,8 @@ public class Asiento {
 	}
 
 	public boolean esEscala(Asiento otroAsiento){
-		return this.getFlight().getDestino().equals(otroAsiento.getFlight().getOrigen())
-				/*&& this.getFlight.getFecha. before(otroAsiento.getFlight.getFecha())*/;
+		return this.getFlight().getDestino().equals(otroAsiento.getFlight().getOrigen()) &&
+				 this.getFlight().getFecha(). before(otroAsiento.getFlight().getFecha());
 
 	
 
