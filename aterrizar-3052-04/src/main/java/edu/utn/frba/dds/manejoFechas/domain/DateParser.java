@@ -5,6 +5,5 @@ import java.util.Date;
 public interface DateParser {
 
 	public Date parse(String dateString);
-	public String format(Date date);
 
 }
