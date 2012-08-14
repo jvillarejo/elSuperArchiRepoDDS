@@ -20,7 +20,7 @@ import com.lanchita.excepciones.EstadoErroneoException;
 import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.Vuelo;
+import edu.utn.dds.aterrizar.vuelo.Busqueda;
 /**
  * 
  * @author clari, ariel
@@ -29,7 +29,7 @@ import edu.utn.dds.aterrizar.vuelo.Vuelo;
 public class AerolineaTest {
 
 	private Aerolinea comunicadorDeAerolinea;
-	private Vuelo vuelo;
+	private Busqueda vuelo;
 	private Usuario usuario;
 	private Date fecha;
 	private AerolineaLanchita aerolineaLanchita;
@@ -37,7 +37,7 @@ public class AerolineaTest {
 	@Before
 	public void setUp()  {
 		aerolineaLanchita = mock(AerolineaLanchita.class);
-		vuelo = mock(Vuelo.class);
+		vuelo = mock(Busqueda.class);
 		usuario = mock(Usuario.class);
 		fecha= new Date();
 		this.comunicadorDeAerolinea = new AerolineaLanchitaWrapper(aerolineaLanchita, new Parser());
