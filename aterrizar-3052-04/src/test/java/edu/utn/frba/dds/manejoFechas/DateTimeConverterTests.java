@@ -29,39 +29,39 @@ public class DateTimeConverterTests {
 	
 	@Test
 	public void parsearFechaEnFormatoISO8601()  {
-		DateTime fechaISO = new DateTime(SimpleDateParser.ISO8601(), "1991-10-30");
+		DateTime fechaISO = new DateTime(SimpleDateParser.ISO8601, "1991-10-30");
 		Assert.assertEquals(fechaInicial, fechaISO.getDate());
 	}
 	
 	@Test
 	public void parsearFechaEnFormatoLatinoamericano()  {
-		DateTime fechaLatinoamericana = new DateTime(SimpleDateParser.LatinAmerican(), "30/10/1991");
+		DateTime fechaLatinoamericana = new DateTime(SimpleDateParser.LATIN_AMERICAN, "30/10/1991");
 		Assert.assertEquals(fechaInicial, fechaLatinoamericana.getDate());
 	}
 
 	@Test
 	public void parsearFechaEnFormatoNorteamericano()  {		
-		DateTime fechaNorteamericana = new DateTime(SimpleDateParser.NorthAmerican(), "10-30-1991");
+		DateTime fechaNorteamericana = new DateTime(SimpleDateParser.NORTH_AMERICAN, "10-30-1991");
 		Assert.assertEquals(fechaInicial, fechaNorteamericana.getDate());
 	}
 	
 	@Test
 	public void parsearFechaEnFormatoFlexible()  {		
-		FlexibleDateParser parserFlexible = new FlexibleDateParser(Arrays.<DateParser>asList(SimpleDateParser.NorthAmerican(), SimpleDateParser.LatinAmerican()));				
+		FlexibleDateParser parserFlexible = new FlexibleDateParser(Arrays.<DateParser>asList(SimpleDateParser.NORTH_AMERICAN, SimpleDateParser.LATIN_AMERICAN));				
 		DateTime fechaFlexible = new DateTime(parserFlexible, "30/10/1991");
 		Assert.assertEquals(fechaInicial, fechaFlexible.getDate());
 	}
 	
 	@Test(expected = DateParserException.class)
 	public void intentarParsearFechaEnFormatoFlexible()  {		
-		FlexibleDateParser parserFlexible = new FlexibleDateParser(Arrays.<DateParser>asList(SimpleDateParser.LatinAmerican()));				
+		FlexibleDateParser parserFlexible = new FlexibleDateParser(Arrays.<DateParser>asList(SimpleDateParser.LATIN_AMERICAN));				
 		DateTime fechaFlexible = new DateTime(parserFlexible, "1991-10-30");
 		Assert.assertEquals(fechaInicial, fechaFlexible.getDate());
 	}
 	
 	@Test(expected = DateParserException.class)
 	public void intentarParsearFechaConFormatoErroneo()  {		
-		DateTime fechaNorteamericana = new DateTime(SimpleDateParser.LatinAmerican(), "10-30-.1991");
+		DateTime fechaNorteamericana = new DateTime(SimpleDateParser.LATIN_AMERICAN, "10-30-.1991");
 		Assert.assertEquals(fechaInicial, fechaNorteamericana.getDate());
 	}
 	
