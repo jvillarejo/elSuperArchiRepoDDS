@@ -7,18 +7,12 @@ import java.util.Date;
 import edu.utn.frba.dds.manejoFechas.exceptions.DateParserException;
 
 
-public enum SimpleDateParser implements DateParser {
+public class SimpleDateParser implements DateParser {
 
-	LATIN_AMERICAN("dd/MM/yyyy"),
-	ISO8601("yyyy-MM-dd"),
-	NORTH_AMERICAN("MM-dd-yyyy");
-	
 	private String pattern;
-	private SimpleDateFormat dateFormat;
 	
-	private SimpleDateParser(String pattern) {
+	public SimpleDateParser(String pattern) {
 		this.setPattern(pattern);
-		this.dateFormat = new SimpleDateFormat(getPattern());
 	}
 
 	protected void setPattern(String pattern) {
@@ -32,14 +26,24 @@ public enum SimpleDateParser implements DateParser {
 	@Override
 	public Date parse(String dateString) {
 		try {
-			return this.dateFormat.parse(dateString);
+			return new SimpleDateFormat(getPattern()).parse(dateString);
 		} catch (ParseException e) {
 			throw new DateParserException("No se pudo parsear la fecha.", e);
 		}
 	}
+
 	
-	public String format(Date date) { 
-		return this.dateFormat.format(date);
+	//TODO: tiene que haber una forma mejor de resolver esto...
+	
+	public static SimpleDateParser ISO8601() {
+		return new SimpleDateParser("yyyy-MM-dd");
 	}
 	
+	public static SimpleDateParser LatinAmerican() {
+		return new SimpleDateParser("dd/MM/yyyy");
+	}
+	
+	public static SimpleDateParser NorthAmerican() {
+		return new SimpleDateParser("MM-dd-yyyy");
+	}
 }
