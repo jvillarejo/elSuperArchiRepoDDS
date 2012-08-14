@@ -10,14 +10,14 @@ import java.util.Date;
  * @author clari, juani
  *
  */
-public class Vuelo {
+public class Busqueda {
 
 	private String codigo;
 	private String origen;
 	private String destino;
-	private Date fecha;
+	private DateTime fecha;
 	
-	public Vuelo(String origen, String destino, String fecha){
+	public Busqueda(String origen, String destino, String fecha){
 		this.origen=origen;
 		this.destino=destino;
 		this.setFecha(fecha);
@@ -36,13 +36,14 @@ public class Vuelo {
 	}
 
 	public Date getFecha() {
-		return this.fecha;
+		return this.fecha.getDate();
 	}
 	
 	public void setFecha(String aString){
-			this.fecha= new SimpleDateParser("dd/mm/yyyy").parse(aString);
+			this.fecha= new DateTime(SimpleDateParser.ISO8601(), aString);
 
 	}
+	
 	public void setCode(String code) {
 		this.codigo= code;
 		

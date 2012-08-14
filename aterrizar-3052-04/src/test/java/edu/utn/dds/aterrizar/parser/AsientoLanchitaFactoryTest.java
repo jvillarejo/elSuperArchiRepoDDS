@@ -5,11 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
+import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.parser.Parser;
-import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Clase;
 import edu.utn.dds.aterrizar.vuelo.Ubicacion;
-import edu.utn.dds.aterrizar.vuelo.Vuelo;
+import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
 import static org.mockito.Mockito.*;
 /**
@@ -25,17 +25,17 @@ public class AsientoLanchitaFactoryTest {
 		this.parser= new Parser();
 	}
 	@Test
-	public void laFactoryCreaUnAsientoCorrectamente() {
+	public void laFactoryCreaUnVueloCorrectamente() {
 		String[] asientoLanchita = { "01202022220202-3", "159.90", "P", "V", "D", "" };
-		Asiento asiento = parser.create(asientoLanchita, mock(Vuelo.class), mock(AerolineaLanchitaWrapper.class));
-		Assert.assertEquals(159.90, asiento.getPrecio(), 0.0);	
+		Vuelo vuelo = parser.create(asientoLanchita, mock(Busqueda.class), mock(AerolineaLanchitaWrapper.class));
+		Assert.assertEquals(159.90, vuelo.getPrimerAsiento().getPrecio(), 0.0);	
 
-		Assert.assertEquals( "01202022220202", asiento.getCodigoDeVuelo());
-		Assert.assertEquals( Integer.valueOf(3), asiento.getNumeroDeAsiento());
+		Assert.assertEquals( "01202022220202", vuelo.getPrimerAsiento().getCodigoDeVuelo());
+		Assert.assertEquals( Integer.valueOf(3), vuelo.getPrimerAsiento().getNumeroDeAsiento());
 
-		Assert.assertEquals( Clase.PRIMERA, asiento.getClase());
-		Assert.assertEquals( Ubicacion.VENTANILLA, asiento.getUbicacion());
-		Assert.assertEquals( "D", asiento.getEstado());
+		Assert.assertEquals( Clase.PRIMERA, vuelo.getPrimerAsiento().getClase());
+		Assert.assertEquals( Ubicacion.VENTANILLA, vuelo.getPrimerAsiento().getUbicacion());
+		Assert.assertEquals( "D", vuelo.getPrimerAsiento().getEstado());
 	}
 
 }
