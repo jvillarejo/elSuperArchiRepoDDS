@@ -12,7 +12,8 @@ import com.oceanic.AerolineaOceanic;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
-import edu.utn.dds.aterrizar.aerolineas.AerolineaOceanicWrapper;
+import edu.utn.dds.aterrizar.aerolineas.AerolineaOceanicImpostor;
+import edu.utn.dds.aterrizar.aerolineas.AerolineaOceanicWrapperImpostor;
 import edu.utn.dds.aterrizar.aerolineas.AsientoNoDisponibleException;
 import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.usuario.SuscripcionEstandar;
@@ -31,19 +32,18 @@ public class ReservaTest {
 	private Aerolinea comunicadorDeAerolineaLanchita;
 	private Aerolinea comunicadorDeAerolineaOceanic;
 	private AerolineaLanchita aerolineaLanchita;
-	private AerolineaOceanic aerolineaOceanic;
+	private AerolineaOceanicImpostor aerolineaOceanicImpostor;
 
 	@Before
 	public void setUp() {
 		aerolineaLanchita = mock(AerolineaLanchita.class);
-//		aerolineaOceanic = mock(AerolineaOceanic.class);
-		aerolineaOceanic = AerolineaOceanic.getInstance();
+		aerolineaOceanicImpostor = AerolineaOceanicImpostor.getInstance();
 		usuarioGratuito = new Usuario("nombre", "apellido", "dni", new SuscripcionGratuita());
 		usuarioVip = new Usuario("nombre", "apellido", "dni", new SuscripcionVip());
 		usuarioEstandar = new Usuario("nombre", "apellido", "dni", new SuscripcionEstandar());
 		otroUsuarioEstandar = new Usuario("otroNombre", "otroApellido", "otroDni", new SuscripcionEstandar());
 		this.comunicadorDeAerolineaLanchita = new AerolineaLanchitaWrapper(aerolineaLanchita, new Parser());
-		this.comunicadorDeAerolineaOceanic = new AerolineaOceanicWrapper(aerolineaOceanic);
+		this.comunicadorDeAerolineaOceanic = new AerolineaOceanicWrapperImpostor(aerolineaOceanicImpostor);
 		asientoLanchita = new Asiento(this.comunicadorDeAerolineaLanchita);
 		asientoOceanic = new Asiento(this.comunicadorDeAerolineaOceanic);
 	}
@@ -81,10 +81,6 @@ public class ReservaTest {
 		comunicadorDeAerolineaLanchita.comprarAsiento(asientoLanchita, otroUsuarioEstandar);
 	}
 	
-	
-	
-	
-	
 	@Test
 	public void reservaYCompraExitosaDeUnAsientoDisponibleOceanic() {
 		asientoOceanic.setCodigoDeVuelo("OC100");
@@ -94,8 +90,6 @@ public class ReservaTest {
 		assertEquals("R", asientoOceanic.getEstado());
 		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, usuarioEstandar);
 		assertEquals("C", asientoOceanic.getEstado());
-		verify(aerolineaOceanic).reservar("dni", "OC100", 10);
-		verify(aerolineaOceanic).comprarSiHayDisponibilidad("dni", "OC100", 10);
 	}
 	
 	@Test(expected = AsientoNoDisponibleException.class)
