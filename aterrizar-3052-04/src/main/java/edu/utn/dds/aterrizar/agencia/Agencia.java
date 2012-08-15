@@ -76,8 +76,7 @@ public class Agencia {
 		List<Vuelo> vuelosConAsientosAdaptados= new ArrayList<Vuelo>(); 
 for(VueloDirecto vuelo: vuelos){
 		for (Asiento asiento : vuelo.getAsientos()){
-			VueloDirecto nuevoVuelo = new VueloDirecto();
-			//TODO fuck, hay que pensar que pasa en el composite, creo que querría agregar asientos solo en vuelos directos.
+			VueloDirecto nuevoVuelo = new VueloDirecto(vuelo.getOrigen(), vuelo.getDestino(), vuelo.getFechaSalida().toString(), vuelo.getFechaLlegada().toString(),vuelo.getAerolinea());
 			vuelo.agregarAsiento(asiento.adaptarNuevoAsientoConPrecioPara(usuario));
 			vuelosConAsientosAdaptados.add(nuevoVuelo);
 		}
