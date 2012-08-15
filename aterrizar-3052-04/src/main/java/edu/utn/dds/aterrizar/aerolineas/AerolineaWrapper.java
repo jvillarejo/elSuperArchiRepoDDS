@@ -50,6 +50,10 @@ public abstract class AerolineaWrapper {
 		}
 	}
 	
+	public void reservaExpirada(Reserva reserva){
+		reserva.getUsuarios().remove(0);
+	}
+	
 	private boolean contieneUsuario(Reserva reserva, String dni) {
 		for(Usuario usuario : reserva.getUsuarios())
 			if(usuario.getDni().equals(dni))

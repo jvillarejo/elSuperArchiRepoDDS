@@ -41,7 +41,12 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 	@Override
 	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
 
-		String[][] asientosDisponibles = aerolineaLanchita.getAsientosDisponibles(busqueda.getOrigen(), busqueda.getDestino(), busqueda.getFecha());
+		String[][] asientosDisponibles = aerolineaLanchita.asientosDisponibles(busqueda.getOrigen(),
+				busqueda.getDestino(), 
+				busqueda.getFechaSalida().toString(), 
+				busqueda.getHoraSalida(), 
+				busqueda.getFechaLlegada().toString(),
+				busqueda.getHoraLlegada());
 
 		return this.lanchitaParser.parseDisponibles(asientosDisponibles, busqueda, this);
 	}
@@ -54,7 +59,7 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 	public void comprarAsiento(Asiento asientoDisponible,Usuario usuario) {
 		super.comprarAsiento(asientoDisponible, usuario);
 		try{
-			aerolineaLanchita.comprar(getCodigo(asientoDisponible));
+			aerolineaLanchita.comprar(getCodigo(asientoDisponible) /*, usuario.getDni()*/);
 		}
 		catch(EstadoErroneoException e){
 			throw new AsientoNoDisponibleException(e);
