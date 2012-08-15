@@ -1,22 +1,23 @@
 package edu.utn.dds.aterrizar.vuelo;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import edu.utn.dds.aterrizar.manejoDeFechas.*;
+
 import java.util.Date;
+
 
 /**
  * Representa los parámetros de consulta de busqueda
  * @author clari, juani
  *
  */
-public class Vuelo {
+public class Busqueda {
 
 	private String codigo;
 	private String origen;
 	private String destino;
-	private Date fecha;
+	private DateTime fecha;
 	
-	public Vuelo(String origen, String destino, String fecha){
+	public Busqueda(String origen, String destino, String fecha){
 		this.origen=origen;
 		this.destino=destino;
 		this.setFecha(fecha);
@@ -35,16 +36,14 @@ public class Vuelo {
 	}
 
 	public Date getFecha() {
-		return this.fecha;
+		return this.fecha.getDate();
 	}
 	
 	public void setFecha(String aString){
-		try {
-			this.fecha= new SimpleDateFormat().parse(aString);
-		} catch (ParseException e) {
-			throw new RuntimeException("can't parse string to date", e);
-		}
+			this.fecha= new DateTime(SimpleDateParser.ISO8601(), aString);
+
 	}
+	
 	public void setCode(String code) {
 		this.codigo= code;
 		

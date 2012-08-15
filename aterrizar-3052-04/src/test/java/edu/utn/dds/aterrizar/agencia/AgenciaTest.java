@@ -14,7 +14,7 @@ import edu.utn.dds.aterrizar.agencia.Agencia;
 import edu.utn.dds.aterrizar.usuario.ConsultaAsientos;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.Vuelo;
+import edu.utn.dds.aterrizar.vuelo.Busqueda;
 import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
 import edu.utn.dds.aterrizar.vuelo.filtros.FiltroDummy;
 
@@ -43,15 +43,15 @@ public class AgenciaTest {
 	
 	@Test
 	public void laAgenciaBuscaAsientosEnTodasLasAerolineas() {
-		laAgencia.buscarAsientos(mock(Vuelo.class), juanMockito, new FiltroDummy());
+		laAgencia.buscarAsientos(mock(Busqueda.class), juanMockito, new FiltroDummy());
 		
-		verify(aerolineaMockito).buscarAsientos(any(Vuelo.class));
-		verify(aerolineaPrivadaDelTurco).buscarAsientos(any(Vuelo.class));
+		verify(aerolineaMockito).buscarAsientos(any(Busqueda.class));
+		verify(aerolineaPrivadaDelTurco).buscarAsientos(any(Busqueda.class));
 	}
 	
 	@Test
 	public void laAgenciaRegistraLaConsultaEnElUsuario() {
-		laAgencia.buscarAsientos(mock(Vuelo.class), juanMockito, new FiltroDummy());
+		laAgencia.buscarAsientos(mock(Busqueda.class), juanMockito, new FiltroDummy());
 
 		verify(juanMockito).registrarConsulta(any(ConsultaAsientos.class));
 	}
@@ -59,7 +59,7 @@ public class AgenciaTest {
 	@Test
 	public void laAgenciaFiltraLosAsientosSegunLosCriterios() {
 		//TODO: mejorar este test...
-		Vuelo deNeuquenALaQuiaca = mock(Vuelo.class);
+		Busqueda deNeuquenALaQuiaca = mock(Busqueda.class);
 		when(aerolineaMockito.buscarAsientos(deNeuquenALaQuiaca)).thenReturn(Arrays.asList(mock(Asiento.class)));
 		
 		FiltroAsiento filtros = mock(FiltroAsiento.class);
