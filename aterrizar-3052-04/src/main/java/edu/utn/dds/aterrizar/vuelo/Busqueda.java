@@ -40,7 +40,7 @@ public class Busqueda {
 	}
 	
 	public void setFecha(String aString){
-			this.fecha= new DateTime(SimpleDateParser.ISO8601(), aString);
+			this.fecha= new DateTime(SimpleDateParser.LatinAmerican(), aString);
 
 	}
 	

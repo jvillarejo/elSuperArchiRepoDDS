@@ -37,16 +37,16 @@ public class AgenciaTest {
 	
 	@Test
 	public void laAgenciaBuscaAsientosEnTodasLasAerolineas() {
-		laAgencia.buscarAsientos(mock(Busqueda.class), mock(Usuario.class), mock(FiltroAsiento.class));
+		laAgencia.buscarVuelos(mock(Busqueda.class), mock(Usuario.class), mock(FiltroAsiento.class));
 		
-		verify(aerolineaMockito).buscarAsientos(any(Busqueda.class));
-		verify(aerolineaPrivadaDelTurco).buscarAsientos(any(Busqueda.class));
+		verify(aerolineaMockito).buscarVuelos(any(Busqueda.class));
+		verify(aerolineaPrivadaDelTurco).buscarVuelos(any(Busqueda.class));
 	}
 	
 	@Test
 	public void laAgenciaRegistraLaConsultaEnElUsuario() {
 		Usuario juanMockito = mock(Usuario.class);
-		laAgencia.buscarAsientos(mock(Busqueda.class), juanMockito, mock(FiltroAsiento.class));
+		laAgencia.buscarVuelos(mock(Busqueda.class), juanMockito, mock(FiltroAsiento.class));
 
 		verify(juanMockito).registrarConsulta(any(ConsultaAsientos.class));
 	}
@@ -54,7 +54,7 @@ public class AgenciaTest {
 	@Test
 	public void laAgenciaFiltraLosAsientosSegunLosCriterios() {
 		FiltroAsiento filtros = mock(FiltroAsiento.class);
-		laAgencia.buscarAsientos(mock(Busqueda.class), mock(Usuario.class), filtros);
+		laAgencia.buscarVuelos(mock(Busqueda.class), mock(Usuario.class), filtros);
 
 		verify(filtros).filtrar(anyListOf(Asiento.class));
 	}

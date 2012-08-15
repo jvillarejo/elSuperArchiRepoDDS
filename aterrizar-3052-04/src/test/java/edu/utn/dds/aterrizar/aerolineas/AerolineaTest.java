@@ -5,8 +5,13 @@ package edu.utn.dds.aterrizar.aerolineas;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +22,7 @@ import org.junit.Test;
 import com.lanchita.AerolineaLanchita;
 import com.lanchita.excepciones.EstadoErroneoException;
 
-import edu.utn.dds.aterrizar.escalas.Vuelo;
+import edu.utn.dds.aterrizar.escalas.VueloDirecto;
 import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
@@ -34,28 +39,32 @@ public class AerolineaTest {
 	private Usuario usuario;
 	private Date fecha;
 	private AerolineaLanchita aerolineaLanchita;
+	private Parser parser;
 
 	@Before
 	public void setUp()  {
 		aerolineaLanchita = mock(AerolineaLanchita.class);
+		parser = mock(Parser.class);
 		vuelo = mock(Busqueda.class);
 		usuario = mock(Usuario.class);
 		fecha= new Date();
-		this.comunicadorDeAerolinea = new AerolineaLanchitaWrapper(aerolineaLanchita, new Parser());
+		this.comunicadorDeAerolinea = new AerolineaLanchitaWrapper(aerolineaLanchita, parser);
 	}
 	
 	@Test
 	public void testBuscarAsientos()  {
-		String[][] asientosLanchita = {
-				{ "01202022220202-3", "159.90", "P", "V", "D", "" } };
+		String[] asiento = { "01202022220202-3", "159.90", "P", "V", "D", "" };
+		String[][] asientosLanchita = {asiento};
 		when(aerolineaLanchita.getAsientosDisponibles(anyString(), anyString(), any(Date.class))).thenReturn(asientosLanchita);
+		when(parser.parseDisponibles(any(String[][].class), any(Busqueda.class), any(AerolineaLanchitaWrapper.class))).thenReturn(Arrays.asList(new VueloDirecto()));
 		when(vuelo.getOrigen()).thenReturn("BUE");
 		when(vuelo.getDestino()).thenReturn("LA");
 		when(vuelo.getFecha()).thenReturn(fecha);
-		List<Vuelo> disponibles = comunicadorDeAerolinea.buscarVuelos(vuelo);
+		List<VueloDirecto> disponibles = comunicadorDeAerolinea.buscarVuelos(vuelo);
 		Assert.assertNotNull(disponibles);
 		Assert.assertFalse(disponibles.isEmpty());
 		
+		verify(parser).parseDisponibles(asientosLanchita, vuelo, comunicadorDeAerolinea);
 		verify(aerolineaLanchita).getAsientosDisponibles("BUE", "LA", fecha);
 	}
 	

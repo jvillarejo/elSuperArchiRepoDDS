@@ -14,14 +14,15 @@ import edu.utn.dds.aterrizar.vuelo.Ubicacion;
 
 public class AerolineaOceanicParser {
 
-	public List<Vuelo> parse(List<AsientoDTO> asientosDisponibles,
+	public List<VueloDirecto> parse(List<AsientoDTO> asientosDisponibles,
 			Busqueda busqueda, Aerolinea aerolinea) {
 		
-		List<Vuelo> vuelos = new ArrayList<Vuelo>();
+		List<VueloDirecto> vuelos = new ArrayList<VueloDirecto>();
 		
 		for (AsientoDTO asientoDTO : asientosDisponibles) { 
 			Asiento asiento = this.parse(asientoDTO, aerolinea, busqueda);
-			this.addOrCreate(vuelos, asiento);
+			//TODO No me gusta esto muchos parametros ver de refactorizar
+			this.addOrCreate(vuelos, asiento, asientoDTO, aerolinea);
 		}
 		
 		
@@ -29,12 +30,17 @@ public class AerolineaOceanicParser {
 		
 	}
 
-	private void addOrCreate(List<Vuelo> vuelos, Asiento asiento) {
+	private void addOrCreate(List<VueloDirecto> vuelos, Asiento asiento, AsientoDTO asientoDTO, Aerolinea aerolinea) {
 		try { 
 			Vuelo vuelo = findVuelo(vuelos, asiento.getCodigoDeVuelo());
 			vuelo.getAsientos().add(asiento);
 		} catch (VueloNotFoundException e) { 
-			VueloDirecto vuelo = new VueloDirecto();
+			//TODO No me gusta esto muchos parametros ver de refactorizar
+			VueloDirecto vuelo = new VueloDirecto(asiento.getFlight().getOrigen(), 
+					asiento.getFlight().getDestino(), 
+					asientoDTO.getFechaDeSalida(), 
+					asientoDTO.getFechaDeLlegada(),
+					aerolinea);
 			
 			vuelo.setCodigo(asiento.getCodigoDeVuelo());
 			vuelo.setDestino(asiento.getFlight().getDestino());
@@ -44,8 +50,8 @@ public class AerolineaOceanicParser {
 		
 	}
 
-	private Vuelo findVuelo(List<Vuelo> vuelos, String codigoDeVuelo) {
-		for (Vuelo vuelo : vuelos) {
+	private VueloDirecto findVuelo(List<VueloDirecto> vuelos, String codigoDeVuelo) {
+		for (VueloDirecto vuelo : vuelos) {
 			if(vuelo.getCodigo().equals(codigoDeVuelo)) {
 				return vuelo;
 			}
@@ -65,7 +71,7 @@ public class AerolineaOceanicParser {
 		asiento.setUbicacion(parseUbicacion(asientoDTO.getUbicacion()));
 		//TODO Usar enum para esto también, ver con Ari
 		asiento.setEstado(asientoDTO.getReservado() ? "R" : "D");
-		
+
 		return asiento ;
 	}
 	
