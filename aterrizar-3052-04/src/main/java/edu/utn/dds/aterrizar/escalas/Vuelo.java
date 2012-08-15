@@ -8,6 +8,7 @@ import edu.utn.dds.aterrizar.vuelo.Asiento;
 public interface Vuelo {
 	public long getDuration();
 	public void setCodigo(String codigo);
+	public String getCodigo();
 	public List<Asiento> getAsientos();
 	public Asiento getPrimerAsiento();
 	public DateTime getFechaLlegada();

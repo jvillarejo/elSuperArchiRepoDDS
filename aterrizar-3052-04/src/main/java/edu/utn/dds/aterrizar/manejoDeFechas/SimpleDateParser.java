@@ -9,9 +9,11 @@ import edu.utn.dds.aterrizar.manejoDeFechas.exceptions.DateParserException;
 public class SimpleDateParser implements DateParser {
 
 	private String pattern;
+	private SimpleDateFormat dateFormat;
 	
 	public SimpleDateParser(String pattern) {
 		this.setPattern(pattern);
+		dateFormat = new SimpleDateFormat(pattern);
 	}
 
 	protected void setPattern(String pattern) {
@@ -22,10 +24,14 @@ public class SimpleDateParser implements DateParser {
 		return pattern;
 	}
 	
+	public String format(Date date) { 
+		return dateFormat.format(date);
+	}
+	
 	@Override
 	public Date parse(String dateString) {
 		try {
-			return new SimpleDateFormat(getPattern()).parse(dateString);
+			return dateFormat.parse(dateString);
 		} catch (ParseException e) {
 			throw new DateParserException("No se pudo parsear la fecha.", e);
 		}

@@ -1,5 +1,6 @@
 package edu.utn.dds.aterrizar.escalas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.utn.dds.aterrizar.manejoDeFechas.DateTime;
@@ -10,7 +11,7 @@ public class VueloDirecto implements Vuelo {
  protected DateTime fechaLlegada;
  protected String origen;
  protected String destino;
- private List<Asiento> asientos;
+ private List<Asiento> asientos = new ArrayList<Asiento>();
 protected String codigo;
  
 	public long getDuration(){
@@ -61,5 +62,10 @@ protected String codigo;
 	@Override
 	public String getDestino(){
 		return this.destino;
+	}
+
+	@Override
+	public String getCodigo() {
+		return this.codigo;
 	}
 }
