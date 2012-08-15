@@ -25,6 +25,9 @@ protected Aerolinea aerolinea;
 	this.fechaLlegada = new DateTime(SimpleDateParser.ISO8601(), fechaLlegada);
 	this.aerolinea= aerolinea;
 	}
+	
+	public VueloDirecto() {
+	}
 
 	public long getDuration(){
 		return this.fechaSalida.diasDeDiferenciaCon(this.fechaLlegada);

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
-import edu.utn.dds.aterrizar.escalas.AsientoIterator;
 import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.escalas.VueloConEscala;
 import edu.utn.dds.aterrizar.escalas.VueloDirecto;

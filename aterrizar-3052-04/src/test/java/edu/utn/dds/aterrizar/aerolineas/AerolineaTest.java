@@ -5,7 +5,11 @@ package edu.utn.dds.aterrizar.aerolineas;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +21,7 @@ import org.junit.Test;
 import com.lanchita.AerolineaLanchita;
 import com.lanchita.excepciones.EstadoErroneoException;
 
-import edu.utn.dds.aterrizar.escalas.Vuelo;
+import edu.utn.dds.aterrizar.escalas.VueloDirecto;
 import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
@@ -52,7 +56,7 @@ public class AerolineaTest {
 		when(vuelo.getOrigen()).thenReturn("BUE");
 		when(vuelo.getDestino()).thenReturn("LA");
 		when(vuelo.getFecha()).thenReturn(fecha);
-		List<Vuelo> disponibles = comunicadorDeAerolinea.buscarVuelos(vuelo);
+		List<VueloDirecto> disponibles = comunicadorDeAerolinea.buscarVuelos(vuelo);
 		Assert.assertNotNull(disponibles);
 		Assert.assertFalse(disponibles.isEmpty());
 		
