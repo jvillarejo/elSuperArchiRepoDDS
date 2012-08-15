@@ -1,19 +1,19 @@
 package edu.utn.dds.aterrizar.usuario;
 
-import edu.utn.dds.aterrizar.vuelo.Vuelo;
+import edu.utn.dds.aterrizar.vuelo.Busqueda;
 import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
 
 public class ConsultaAsientos {
 
-	private Vuelo vuelo;
+	private Busqueda vuelo;
 	private FiltroAsiento filtro;
 	
-	public ConsultaAsientos(Vuelo vuelo, FiltroAsiento filtro) {
+	public ConsultaAsientos(Busqueda vuelo, FiltroAsiento filtro) {
 		this.vuelo = vuelo;
 		this.filtro = filtro;
 	}
 	
-	public Vuelo getVuelo() {
+	public Busqueda getVuelo() {
 		return vuelo;
 	}
 

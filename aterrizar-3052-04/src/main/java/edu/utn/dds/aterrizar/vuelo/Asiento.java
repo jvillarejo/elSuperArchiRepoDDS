@@ -5,7 +5,7 @@ import edu.utn.dds.aterrizar.usuario.Usuario;
 
 public class Asiento {
 
-	private Vuelo vuelo;
+	private Busqueda vuelo;
 	private Aerolinea aerolinea;
 	private Double precio;
 	private Clase clase;
@@ -20,12 +20,12 @@ public class Asiento {
 		this.aerolinea = aerolinea;
 	}
 	
-	public Asiento(Vuelo vuelo, Aerolinea aerolinea) {
+	public Asiento(Busqueda vuelo, Aerolinea aerolinea) {
 		this.vuelo = vuelo;
 		this.aerolinea = aerolinea;
 	}
 
-	public Vuelo getFlight() {
+	public Busqueda getFlight() {
 		return vuelo;
 	}
 
@@ -40,13 +40,7 @@ public class Asiento {
 			this.getClase() == Clase.EJECUTIVA && this.getPrecio() < 4000;
 	}
 
-	public boolean esEscala(Asiento otroAsiento){
-		return this.getFlight().getDestino().equals(otroAsiento.getFlight().getOrigen())
-				/*&& this.getFlight.getFecha. before(otroAsiento.getFlight.getFecha())*/;
 
-	
-
-	}
 	public void setPrecio(Double precio) {
 		this.precio= precio;
 		

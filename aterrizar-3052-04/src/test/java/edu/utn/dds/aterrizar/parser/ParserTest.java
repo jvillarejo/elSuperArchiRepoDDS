@@ -10,10 +10,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
+import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.parser.ParserException;
-import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.Vuelo;
+import edu.utn.dds.aterrizar.vuelo.Busqueda;
 import static org.mockito.Mockito.*;
 
 public class ParserTest {
@@ -33,23 +33,23 @@ public class ParserTest {
 	
 	@Test 
 	public void generacionDeListaDeAsientos(){
-		List <Asiento> asientosParseados= new Parser().parseDisponibles(asientosLanchita, mock(Vuelo.class), mock(AerolineaLanchitaWrapper.class));
+		List <Vuelo> vuelosParseados= new Parser().parseDisponibles(asientosLanchita, mock(Busqueda.class), mock(AerolineaLanchitaWrapper.class));
 		
-		Assert.assertFalse(asientosParseados.isEmpty());
+		Assert.assertFalse(vuelosParseados.isEmpty());
 	}
 	
 	@Test(expected= ParserException.class) 
 	public void fallaDeParseo(){
-		 new Parser().parseDisponibles(new String[][]{{}}, mock(Vuelo.class), mock(AerolineaLanchitaWrapper.class));
+		 new Parser().parseDisponibles(new String[][]{{}}, mock(Busqueda.class), mock(AerolineaLanchitaWrapper.class));
 	}
 	
 	@Test(expected= ParserException.class)
 	public void parseoDeAsientoConUbicacionErronea() {
-		new Parser().parseDisponibles(new String[][]{{ "01202022220298-2", "528.81", "P", "ERRONEA", "D", "" }}, mock(Vuelo.class), mock(AerolineaLanchitaWrapper.class));
+		new Parser().parseDisponibles(new String[][]{{ "01202022220298-2", "528.81", "P", "ERRONEA", "D", "" }}, mock(Busqueda.class), mock(AerolineaLanchitaWrapper.class));
 	}
 	
 	@Test(expected= ParserException.class)
 	public void parseoDeAsientoConClaseErronea() {
-		new Parser().parseDisponibles(new String[][]{{ "01202022220298-2", "528.81", "ERRONEA", "V", "D", "" }}, mock(Vuelo.class), mock(AerolineaLanchitaWrapper.class));
+		new Parser().parseDisponibles(new String[][]{{ "01202022220298-2", "528.81", "ERRONEA", "V", "D", "" }}, mock(Busqueda.class), mock(AerolineaLanchitaWrapper.class));
 	}
 }
