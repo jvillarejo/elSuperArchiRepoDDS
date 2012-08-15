@@ -29,12 +29,12 @@ public class Agencia {
 	}
 
 	public List<Vuelo> buscarVuelos(final ConsultaVuelos consulta, final Usuario usuario) {
-		List<VueloDirecto> vuelos = new ArrayList<VueloDirecto>();		
+		List<VueloDirecto> vuelosDirectos = new ArrayList<VueloDirecto>();		
 		for (Aerolinea aerolinea : aerolineas) {
-			vuelos.addAll( aerolinea.buscarVuelos(consulta.getBusqueda()));
+			vuelosDirectos.addAll( aerolinea.buscarVuelos(consulta.getBusqueda()));
 		}
 //esto si o si se tiene que hacer ANTES de armar las escalas (no tiene sentido hacerlo después)
-		vuelos = adaptarPreciosParaUsuario(vuelos, usuario);
+		List<Vuelo> vuelos = adaptarPreciosParaUsuario(vuelosDirectos, usuario);
 		
 		usuario.registrarConsulta(consulta);
 
@@ -79,9 +79,9 @@ public class Agencia {
 		usuario.registrarCompra(asiento);
 	}		
 
-	private List<VueloDirecto> adaptarPreciosParaUsuario(
-			List<VueloDirecto> vuelos, Usuario usuario) {
+	private List<Vuelo> adaptarPreciosParaUsuario(List<VueloDirecto> vuelos, Usuario usuario) {
 		List<Vuelo> vuelosConAsientosAdaptados = new ArrayList<Vuelo>();
+		
 		for (VueloDirecto vuelo : vuelos) {
 			for (Asiento asiento : vuelo.getAsientos()) {
 				VueloDirecto nuevoVuelo = new VueloDirecto(vuelo.getOrigen(),
@@ -93,6 +93,7 @@ public class Agencia {
 				vuelosConAsientosAdaptados.add(nuevoVuelo);
 			}
 		}
-		return vuelos;
+	
+		return vuelosConAsientosAdaptados;
 	}
 }
