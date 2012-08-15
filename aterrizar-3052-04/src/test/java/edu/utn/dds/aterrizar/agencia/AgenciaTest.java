@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.agencia.Agencia;
-import edu.utn.dds.aterrizar.usuario.ConsultaAsientos;
+import edu.utn.dds.aterrizar.usuario.ConsultaVuelos;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
@@ -53,7 +53,7 @@ public class AgenciaTest {
 	public void laAgenciaRegistraLaConsultaEnElUsuario() {
 		laAgencia.buscarVuelos(mock(Busqueda.class), juanMockito, new FiltroDummy());
 
-		verify(juanMockito).registrarConsulta(any(ConsultaAsientos.class));
+		verify(juanMockito).registrarConsulta(any(ConsultaVuelos.class));
 	}
 	
 	@Test

@@ -14,7 +14,7 @@ public class Usuario {
 	private String apellido;
 	private String dni;
 	private TipoDeSuscripcion tipoDeSuscripcion;
-	private List<ConsultaAsientos> consultasRealizadas;
+	private List<ConsultaVuelos> consultasRealizadas;
 	private List<Asiento> comprasEfectuadas;
 	
 	public Usuario(String nombre, String apellido, String dni, TipoDeSuscripcion tipoDeSuscripcion) {
@@ -23,10 +23,10 @@ public class Usuario {
 		this.dni = dni;
 		this.tipoDeSuscripcion = tipoDeSuscripcion;
 		
-		consultasRealizadas = new ArrayList<ConsultaAsientos>();
+		consultasRealizadas = new ArrayList<ConsultaVuelos>();
 	}
 	
-	public void registrarConsulta(ConsultaAsientos consulta) {
+	public void registrarConsulta(ConsultaVuelos consulta) {
 		this.consultasRealizadas.add(consulta);
 	}
 	

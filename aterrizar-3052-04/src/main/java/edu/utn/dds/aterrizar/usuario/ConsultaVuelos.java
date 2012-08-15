@@ -1,24 +1,34 @@
 package edu.utn.dds.aterrizar.usuario;
 
+import java.util.List;
+
+import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
 import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.CriterioOrden;
 
-public class ConsultaAsientos {
+public class ConsultaVuelos {
 
-	private Busqueda vuelo;
-	private Filtro<Asiento>[] filtros;
+	private Busqueda busqueda;
+	private List<Filtro<Asiento>> filtros;
+	private CriterioOrden<Vuelo> criterioOrdenamiento;
 	
-	public ConsultaAsientos(Busqueda vuelo, Filtro<Asiento>[] filtros) {
-		this.vuelo = vuelo;
+	public ConsultaVuelos(Busqueda busqueda, List<Filtro<Asiento>> filtros, CriterioOrden<Vuelo> criterioOrdenamiento) {
+		this.busqueda = busqueda;
 		this.filtros = filtros;
+		this.criterioOrdenamiento = criterioOrdenamiento;
 	}
 	
-	public Busqueda getVuelo() {
-		return vuelo;
+	public Busqueda getBusqueda() {
+		return busqueda;
 	}
 
-	public Filtro<Asiento>[] getFiltros() {
+	public List<Filtro<Asiento>> getFiltros() {
 		return this.filtros;
+	}
+
+	public CriterioOrden<Vuelo> getCriterioOrdenamiento() {
+		return criterioOrdenamiento;
 	}
 }
