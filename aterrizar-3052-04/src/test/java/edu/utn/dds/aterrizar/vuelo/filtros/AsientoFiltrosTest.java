@@ -125,6 +125,14 @@ public class AsientoFiltrosTest {
 	}
 
 	@Test
+	public void buscarAsientosEnTuristaOEnEjecutiva() {
+		BuscadorDeAsientos buscador = new BuscadorDeAsientos(asientosDisponibles, usuarioDefault);
+		buscador.agregarFiltros(new FiltroPorClase(Clase.TURISTA, Clase.EJECUTIVA));
+		
+		assertEquals(Arrays.asList(asientoVentanillaEnTurista, asientoVentanillaEnEjecutivo), buscador.buscar());
+	}
+	
+	@Test
 	public void buscarAsientosVentanillaEnTurista() {
 		List<Asiento> asientosVentanillaEnTurista = Arrays.asList(asientoVentanillaEnTurista);
 		
