@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
+import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
 
 public class Usuario {
 
@@ -14,7 +14,7 @@ public class Usuario {
 	private String apellido;
 	private String dni;
 	private TipoDeSuscripcion tipoDeSuscripcion;
-	private List<ConsultaAsientos> consultasRealizadas;
+	private List<ConsultaVuelos> consultasRealizadas;
 	private List<Asiento> comprasEfectuadas;
 	
 	public Usuario(String nombre, String apellido, String dni, TipoDeSuscripcion tipoDeSuscripcion) {
@@ -23,10 +23,10 @@ public class Usuario {
 		this.dni = dni;
 		this.tipoDeSuscripcion = tipoDeSuscripcion;
 		
-		consultasRealizadas = new ArrayList<ConsultaAsientos>();
+		consultasRealizadas = new ArrayList<ConsultaVuelos>();
 	}
 	
-	public void registrarConsulta(ConsultaAsientos consulta) {
+	public void registrarConsulta(ConsultaVuelos consulta) {
 		this.consultasRealizadas.add(consulta);
 	}
 	
@@ -46,7 +46,7 @@ public class Usuario {
 		return this.getTipo().getRecargo();
 	}
 	
-	public FiltroAsiento getFiltro() {
+	public Filtro<Asiento> getFiltro() {
 		return this.getTipo().getFiltro();
 	}
 	public void setTipo(TipoDeSuscripcion tipo) {
