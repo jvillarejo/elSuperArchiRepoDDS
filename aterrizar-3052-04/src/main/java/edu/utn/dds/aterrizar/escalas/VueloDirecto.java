@@ -10,7 +10,6 @@ import edu.utn.dds.aterrizar.manejoDeFechas.DateTime;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.filtros.BuscadorDeAsientos;
 import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
 import edu.utn.dds.aterrizar.vuelo.ordenamiento.Query;
 
@@ -53,7 +52,8 @@ public class VueloDirecto extends Vuelo {
 
 	@Override
 	public void filtrarAsientos(List<Filtro<Asiento>> filtros, Usuario usuario) {
-		Query<Asiento> buscador = new BuscadorDeAsientos(this.getAsientos(), usuario);
+		Query<Asiento> buscador = new Query<Asiento>(this.getAsientos());
+		buscador.filter(usuario.getFiltro());
 		buscador.agregarFiltros(filtros);
 		
 		this.asientos = buscador.execute(); 

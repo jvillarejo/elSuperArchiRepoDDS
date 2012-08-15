@@ -1,12 +1,8 @@
 package edu.utn.dds.aterrizar.agencia;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
-
-import net.sf.staccatocommons.collections.stream.Streams;
-import net.sf.staccatocommons.iterators.thriter.Thriterator;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.escalas.Vuelo;
@@ -15,9 +11,7 @@ import edu.utn.dds.aterrizar.escalas.VueloDirecto;
 import edu.utn.dds.aterrizar.usuario.ConsultaVuelos;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.filtros.BuscadorDeAsientos;
 import edu.utn.dds.aterrizar.vuelo.ordenamiento.Query;
-import edu.utn.dds.aterrizar.vuelo.ordenamiento.BuscadorDeVuelos;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
 public class Agencia {
@@ -45,7 +39,7 @@ public class Agencia {
 		for (Vuelo vuelo : vuelos)
 			vuelo.filtrarAsientos(consulta.getFiltros(), usuario);
 			
-		Query<Vuelo> buscador = new BuscadorDeVuelos(vuelos);
+		Query<Vuelo> buscador = new Query<Vuelo>(vuelos);
 		buscador.ordenarPor(consulta.getCriterioOrdenamiento());
 		
 		return buscador.execute();	
