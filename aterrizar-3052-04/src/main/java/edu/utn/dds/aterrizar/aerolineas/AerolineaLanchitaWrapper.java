@@ -41,8 +41,7 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 	@Override
 	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
 
-//		String[][] asientosDisponibles = aerolineaLanchita.getAsientosDisponibles(busqueda.getOrigen(), busqueda.getDestino(), busqueda.getFecha());
-		String[][] asientosDisponibles = new String[][]{{ "01202022220202-3", "159.90", "P", "V", "D", "", "14:00","02:25","EZE","USA","20/12/2012","21/12/2012" }};
+		String[][] asientosDisponibles = aerolineaLanchita.getAsientosDisponibles(busqueda.getOrigen(), busqueda.getDestino(), busqueda.getFecha());
 
 		return this.lanchitaParser.parseDisponibles(asientosDisponibles, busqueda, this);
 	}

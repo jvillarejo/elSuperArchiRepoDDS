@@ -51,7 +51,7 @@ public class ReservaTest {
 	}
 	
 	@Test
-	public void reservaYCompraDeUnAsientoDisponible() {
+	public void reservaYCompraExitosaDeUnAsientoDisponibleLanchita() {
 		asiento.setCodigoDeVuelo("01202022220202");
 		asiento.setNumeroDeAsiento(3);
 		asiento.setEstado("D");
@@ -64,7 +64,7 @@ public class ReservaTest {
 	}
 	
 	@Test(expected = AsientoNoDisponibleException.class)
-	public void reservaUsuarioYCompraOtroUsuario() {
+	public void reservaUsuarioYCompraOtroUsuarioLanchitaRompe() {
 		asiento.setCodigoDeVuelo("01202022220202");
 		asiento.setNumeroDeAsiento(3);
 		asiento.setEstado("D");
@@ -72,5 +72,4 @@ public class ReservaTest {
 		assertEquals("R", asiento.getEstado());
 		comunicadorDeAerolinea.comprarAsiento(asiento, otroUsuarioEstandar);
 	}
-
 }
