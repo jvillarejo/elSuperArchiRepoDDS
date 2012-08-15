@@ -29,18 +29,18 @@ public class BuscadorDeAsientos {
 		this.defaultConstructor(asientos, usuario);
 	}
 
-	public BuscadorDeAsientos(List<Asiento> asientos, Usuario usuario, FiltroAsiento primerFiltro) {
+	public BuscadorDeAsientos(List<Asiento> asientos, Usuario usuario, Filtro<Asiento> primerFiltro) {
 		this.defaultConstructor(asientos, usuario);
 		this.agregarFiltro(primerFiltro);
 	}
 
-	public void agregarFiltro(FiltroAsiento filtro) {
+	public void agregarFiltro(Filtro<Asiento> filtro) {
 		Stream<Asiento> asientosVueltosAFiltrar = filtro.filtrar(this.getAsientosFiltrados());
 		this.setAsientosFiltrados(asientosVueltosAFiltrar);
 	}
 
-	public void agregarFiltros(FiltroAsiento... filtros) {
-		for (FiltroAsiento filtro : filtros)
+	public void agregarFiltros(Filtro<Asiento>... filtros) {
+		for (Filtro<Asiento> filtro : filtros)
 			this.agregarFiltro(filtro);
 	}
 	

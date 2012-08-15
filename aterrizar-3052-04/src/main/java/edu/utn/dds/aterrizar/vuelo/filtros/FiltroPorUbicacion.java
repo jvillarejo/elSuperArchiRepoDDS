@@ -11,7 +11,7 @@ import edu.utn.dds.aterrizar.vuelo.Ubicacion;
  * @param siguienteFiltro
  * @return un </code>Asiento</code> con sus fields seteados.
  */
-public class FiltroPorUbicacion implements FiltroAsiento {
+public class FiltroPorUbicacion implements Filtro<Asiento> {
 	
 	private Ubicacion ubicacion;
 	

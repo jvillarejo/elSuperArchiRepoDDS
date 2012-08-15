@@ -6,7 +6,7 @@ import static net.sf.staccatocommons.lambda.Lambda.$;
 
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 
-public class FiltroSuperOfertas implements FiltroAsiento {
+public class FiltroSuperOfertas implements Filtro<Asiento> {
 
 	@Override
 	public Stream<Asiento> filtrar(Stream<Asiento> asientos) {

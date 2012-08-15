@@ -6,7 +6,7 @@ import net.sf.staccatocommons.collections.stream.Stream;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Clase;
 
-public class FiltroPorClase implements FiltroAsiento {
+public class FiltroPorClase implements Filtro<Asiento> {
 
 	private Clase[] clases;
 	

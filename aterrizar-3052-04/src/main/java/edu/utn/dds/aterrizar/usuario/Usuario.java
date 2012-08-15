@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
+import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
 
 public class Usuario {
 
@@ -46,7 +46,7 @@ public class Usuario {
 		return this.getTipo().getRecargo();
 	}
 	
-	public FiltroAsiento getFiltro() {
+	public Filtro<Asiento> getFiltro() {
 		return this.getTipo().getFiltro();
 	}
 	public void setTipo(TipoDeSuscripcion tipo) {

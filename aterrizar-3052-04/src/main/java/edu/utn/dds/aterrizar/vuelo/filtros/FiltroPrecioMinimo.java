@@ -5,7 +5,7 @@ import static net.sf.staccatocommons.lang.Compare.*;
 import net.sf.staccatocommons.collections.stream.Stream;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 
-public class FiltroPrecioMinimo implements FiltroAsiento {
+public class FiltroPrecioMinimo implements Filtro<Asiento> {
 	private Double importe;
 
 	public FiltroPrecioMinimo(Double importe) {
