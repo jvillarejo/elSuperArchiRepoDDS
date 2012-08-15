@@ -3,6 +3,9 @@ package edu.utn.dds.aterrizar.escalas;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.sf.staccatocommons.lambda.Lambda.*;
+import net.sf.staccatocommons.collections.stream.Streams;
+
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.manejoDeFechas.DateTime;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
@@ -86,5 +89,13 @@ protected Aerolinea aerolinea;
 
 	public String getCodigo() {
 		return this.codigo;
+	}
+
+	@Override
+	public Double getPrecioMasBarato() {
+		return Streams
+			.from(this.getAsientos())
+			.minimumOn(lambda($(Asiento.class).getPrecio()))
+			.getPrecio();
 	}
 }
