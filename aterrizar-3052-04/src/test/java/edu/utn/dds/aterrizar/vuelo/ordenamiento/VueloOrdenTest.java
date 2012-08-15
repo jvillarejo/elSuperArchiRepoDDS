@@ -36,7 +36,7 @@ public class VueloOrdenTest {
 	}
 	
 	@Test
-	public void ordenarAsientosPorPrecioAscendente() {
+	public void ordenarVuelosPorPrecioAscendente() {
 		Vuelo vueloConAsientoCarisimo = mock(Vuelo.class);
 		when(vueloConAsientoCarisimo.getPrecioMasBarato()).thenReturn(7000D);
 		
@@ -51,4 +51,22 @@ public class VueloOrdenTest {
 		
 		assertEquals(Arrays.asList(vueloConAsientoBarato, vueloConAsientoCaro, vueloConAsientoCarisimo), buscador.buscar());
 	}
+	
+	@Test
+	public void ordenarVuelosPorTiempoDeVuelo() {
+		Vuelo vueloLargo = mock(Vuelo.class);
+		when(vueloLargo.getDuration()).thenReturn(5L);
+		
+		Vuelo vueloCortito = mock(Vuelo.class);
+		when(vueloLargo.getDuration()).thenReturn(1L);
+		
+		Vuelo vueloLarguisimo = mock(Vuelo.class);
+		when(vueloLarguisimo.getDuration()).thenReturn(27L);
+		
+		Buscador<Vuelo> buscador = new BuscadorDeVuelos(Arrays.asList(vueloLargo, vueloCortito, vueloLarguisimo));
+		buscador.ordenarPor(new OrdenPorTiempoDeVuelo());
+		
+		assertEquals(Arrays.asList(vueloCortito, vueloLargo, vueloLarguisimo), buscador.buscar());
+	}
+	
 }
