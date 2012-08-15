@@ -74,6 +74,22 @@ public class AsientoFiltrosTest {
 		assertEquals(Arrays.asList(asientoCaro), buscador.buscar());
 	}
 	
+	public void buscarAsientosQueNoEstenReservados() {
+		Asiento asientoLibre = mock(Asiento.class);
+		when(asientoLibre.isReservado()).thenReturn(false);
+		
+		Asiento asientoReservado = mock(Asiento.class);
+		when(asientoReservado.isReservado()).thenReturn(true);
+		
+		Asiento otroAsientoReservado = mock(Asiento.class);
+		when(otroAsientoReservado.isReservado()).thenReturn(true);
+		
+		List<Asiento> asientos = Arrays.asList(asientoLibre, asientoReservado, otroAsientoReservado);
+		BuscadorDeAsientos buscador = new BuscadorDeAsientos(asientos, usuarioDefault, new FiltroLibres());
+		
+		assertEquals(Arrays.asList(asientoLibre), buscador.buscar());
+	}
+	
 	@Test
 	public void buscarAsientosConPrecioEntre2000y5500() {
 		Asiento asientoBarato = new Asiento();
