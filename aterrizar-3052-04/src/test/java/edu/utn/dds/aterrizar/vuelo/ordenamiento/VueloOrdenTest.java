@@ -32,7 +32,7 @@ public class VueloOrdenTest {
 		Query<Vuelo> buscador = new BuscadorDeVuelos(Arrays.asList(vueloConAsientoBarato, vueloConAsientoCaro));
 		buscador.ordenarPor(new OrdenPorPrecio(Orden.DESCENDENTE));
 		
-		assertEquals(Arrays.asList(vueloConAsientoCaro, vueloConAsientoBarato), buscador.buscar());
+		assertEquals(Arrays.asList(vueloConAsientoCaro, vueloConAsientoBarato), buscador.execute());
 	}
 	
 	@Test
@@ -49,7 +49,7 @@ public class VueloOrdenTest {
 		Query<Vuelo> buscador = new BuscadorDeVuelos(Arrays.asList(vueloConAsientoBarato, vueloConAsientoCarisimo, vueloConAsientoCaro));
 		buscador.ordenarPor(new OrdenPorPrecio(Orden.ASCENDENTE));
 		
-		assertEquals(Arrays.asList(vueloConAsientoBarato, vueloConAsientoCaro, vueloConAsientoCarisimo), buscador.buscar());
+		assertEquals(Arrays.asList(vueloConAsientoBarato, vueloConAsientoCaro, vueloConAsientoCarisimo), buscador.execute());
 	}
 	
 	@Test
@@ -66,7 +66,7 @@ public class VueloOrdenTest {
 		Query<Vuelo> buscador = new BuscadorDeVuelos(Arrays.asList(vueloLargo, vueloCortito, vueloLarguisimo));
 		buscador.ordenarPor(new OrdenPorTiempoDeVuelo());
 		
-		assertEquals(Arrays.asList(vueloCortito, vueloLargo, vueloLarguisimo), buscador.buscar());
+		assertEquals(Arrays.asList(vueloCortito, vueloLargo, vueloLarguisimo), buscador.execute());
 	}
 	
 }

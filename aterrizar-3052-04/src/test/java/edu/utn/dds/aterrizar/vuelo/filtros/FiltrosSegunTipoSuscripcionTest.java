@@ -47,7 +47,7 @@ public class FiltrosSegunTipoSuscripcionTest {
 		Usuario unTipoImportante = new Usuario("Barack", "Obama", "12331", new SuscripcionVip());
 		Query<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoImportante);
 		
-		assertEquals(asientosDisponibles, buscador.buscar()); 
+		assertEquals(asientosDisponibles, buscador.execute()); 
 	}
 	
 	@Test
@@ -56,7 +56,7 @@ public class FiltrosSegunTipoSuscripcionTest {
 		Query<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoComun);
 		
 		List<Asiento> asientosComunes = Arrays.asList(asientoNormalEnPrimera, asientoNormalEnTurista);
-		assertEquals(asientosComunes, buscador.buscar()); 
+		assertEquals(asientosComunes, buscador.execute()); 
 	}
 	
 	@Test
@@ -65,6 +65,6 @@ public class FiltrosSegunTipoSuscripcionTest {
 		Query<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoTacanio);
 		
 		List<Asiento> asientosComunes = Arrays.asList(asientoNormalEnPrimera, asientoNormalEnTurista);
-		assertEquals(asientosComunes, buscador.buscar()); 
+		assertEquals(asientosComunes, buscador.execute()); 
 	}
 }
