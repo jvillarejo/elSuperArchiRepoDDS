@@ -43,15 +43,15 @@ public class AgenciaTest {
 	
 	@Test
 	public void laAgenciaBuscaAsientosEnTodasLasAerolineas() {
-		laAgencia.buscarAsientos(mock(Busqueda.class), juanMockito, new FiltroDummy());
+		laAgencia.buscarVuelos(mock(Busqueda.class), juanMockito, new FiltroDummy());
 		
-		verify(aerolineaMockito).buscarAsientos(any(Busqueda.class));
-		verify(aerolineaPrivadaDelTurco).buscarAsientos(any(Busqueda.class));
+		verify(aerolineaMockito).buscarVuelos(any(Busqueda.class));
+		verify(aerolineaPrivadaDelTurco).buscarVuelos(any(Busqueda.class));
 	}
 	
 	@Test
 	public void laAgenciaRegistraLaConsultaEnElUsuario() {
-		laAgencia.buscarAsientos(mock(Busqueda.class), juanMockito, new FiltroDummy());
+		laAgencia.buscarVuelos(mock(Busqueda.class), juanMockito, new FiltroDummy());
 
 		verify(juanMockito).registrarConsulta(any(ConsultaAsientos.class));
 	}
@@ -65,7 +65,7 @@ public class AgenciaTest {
 		FiltroAsiento filtros = mock(FiltroAsiento.class);
 		when(filtros.filtrar(any(Stream.class))).thenReturn(mock(Stream.class));
 		
-		laAgencia.buscarAsientos(deNeuquenALaQuiaca, juanMockito, filtros);
+		laAgencia.buscarVuelos(deNeuquenALaQuiaca, juanMockito, filtros);
 
 		verify(filtros).filtrar(any(Stream.class));
 	}

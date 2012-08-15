@@ -1,8 +1,11 @@
 package edu.utn.dds.aterrizar.escalas;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.manejoDeFechas.DateTime;
+import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 
 public class VueloDirecto implements Vuelo {
@@ -10,11 +13,24 @@ public class VueloDirecto implements Vuelo {
  protected DateTime fechaLlegada;
  protected String origen;
  protected String destino;
- private List<Asiento> asientos;
+ private List<Asiento> asientos = new ArrayList<Asiento>();
 protected String codigo;
+protected Aerolinea aerolinea;
  
+	public  VueloDirecto(String origen, String destino, String fechaSalida,
+		String fechaLlegada, Aerolinea aerolinea) {
+	this.origen= origen;
+	this.destino= destino;
+	this.fechaSalida= new DateTime(SimpleDateParser.ISO8601(), fechaSalida);
+	this.fechaLlegada = new DateTime(SimpleDateParser.ISO8601(), fechaLlegada);
+	this.aerolinea= aerolinea;
+	}
+	
+	public VueloDirecto() {
+	}
+
 	public long getDuration(){
-		return this.fechaLlegada.diasDeDiferenciaCon(this.fechaLlegada);
+		return this.fechaSalida.diasDeDiferenciaCon(this.fechaLlegada);
 	
 	}
 	
@@ -61,5 +77,14 @@ protected String codigo;
 	@Override
 	public String getDestino(){
 		return this.destino;
+	}
+
+	@Override
+	public Aerolinea getAerolinea() {
+		return this.aerolinea;
+	}
+
+	public String getCodigo() {
+		return this.codigo;
 	}
 }

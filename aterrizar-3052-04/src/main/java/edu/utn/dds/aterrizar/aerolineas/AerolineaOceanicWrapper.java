@@ -3,8 +3,9 @@ package edu.utn.dds.aterrizar.aerolineas;
 import java.util.List;
 
 import com.oceanic.AerolineaOceanic;
-import com.oceanic.AsientoDTO;
 
+import edu.utn.dds.aterrizar.escalas.VueloDirecto;
+import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
@@ -21,9 +22,22 @@ public class AerolineaOceanicWrapper implements Aerolinea {
 	}
 	
 	@Override
-	public List<Asiento> buscarAsientos(Busqueda vuelo) {
-		// TODO pensar la busqueda ya que oceanic tiene dos métodos
-		return null;
+	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
+		//TODO modificar el origen y destino para que cumpla con Oceanic
+		return this.parser.parse(
+				aerolineaOceanic.asientosDisponiblesParaOrigenYDestino(transformarCiudad(busqueda.getOrigen()), transformarCiudad(busqueda.getDestino()), SimpleDateParser.LatinAmerican().format(busqueda.getFecha())),
+						busqueda,
+						this);
+	}
+	
+	private String transformarCiudad(String ciudad) {
+		if("LA".equals(ciudad)) {
+			return "SLA";
+		} else if(ciudad.length() == 2) {
+			return ciudad.concat("_");
+		}
+		
+		return ciudad;
 	}
 
 	@Override
@@ -39,5 +53,7 @@ public class AerolineaOceanicWrapper implements Aerolinea {
 	public Double getPorcentajeDeVenta() {
 		return PORCENTAJE_DE_VENTA;
 	}
+
+	
 
 }
