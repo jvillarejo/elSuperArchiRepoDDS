@@ -9,6 +9,7 @@ import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
+import edu.utn.dds.aterrizar.vuelo.Reserva;
 
 public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolinea {
 
@@ -63,5 +64,11 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 		aerolineaOceanic.reservar(usuario.getDni(), asiento.getCodigoDeVuelo(), asiento.getNumeroDeAsiento());
 		super.reservarAsiento(asiento, usuario);
 	}
-
+	
+	@Override
+	public Reserva reservaExpirada(String codigo, String numeroAsiento){
+		Reserva nuevaReserva = super.reservaExpirada(codigo, numeroAsiento);
+		aerolineaOceanic.reservar(nuevaReserva.getUsuarios().get(0).getDni(), codigo, new Integer(numeroAsiento));
+		return nuevaReserva;
+	}
 }

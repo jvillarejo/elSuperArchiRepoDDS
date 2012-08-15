@@ -86,5 +86,11 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 			throw new AsientoNoDisponibleException(e1);
 		}
 	}
-
+	
+	@Override
+	public Reserva reservaExpirada(String codigo, String numeroAsiento){
+		Reserva nuevaReserva = super.reservaExpirada(codigo, numeroAsiento);
+		aerolineaLanchita.reservar(codigo, nuevaReserva.getUsuarios().get(0).getDni());
+		return nuevaReserva;
+	}
 }

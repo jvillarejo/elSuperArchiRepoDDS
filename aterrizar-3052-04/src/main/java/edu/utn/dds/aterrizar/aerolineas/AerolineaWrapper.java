@@ -50,8 +50,10 @@ public abstract class AerolineaWrapper {
 		}
 	}
 	
-	public void reservaExpirada(Reserva reserva){
+	public Reserva reservaExpirada(String codigo, String numeroAsiento){
+		Reserva reserva = contieneCodigo(joinStrings(codigo, numeroAsiento));
 		reserva.getUsuarios().remove(0);
+		return new Reserva();
 	}
 	
 	private boolean contieneUsuario(Reserva reserva, String dni) {
@@ -69,6 +71,10 @@ public abstract class AerolineaWrapper {
 	}
 	
 	protected String getCodigo(Asiento asientoDisponible) {
-		return asientoDisponible.getCodigoDeVuelo() + "-" + asientoDisponible.getNumeroDeAsiento();
+		return joinStrings(asientoDisponible.getCodigoDeVuelo(), asientoDisponible.getNumeroDeAsiento().toString());
+	}
+	
+	private String joinStrings(String codigo, String numeroAsiento){
+		return codigo + "-" + numeroAsiento;
 	}
 }
