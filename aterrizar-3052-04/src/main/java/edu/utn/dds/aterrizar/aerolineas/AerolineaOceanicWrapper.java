@@ -25,9 +25,12 @@ public class AerolineaOceanicWrapper implements Aerolinea {
 	@Override
 	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
 		return this.parser.parse(
-				aerolineaOceanic.asientosDisponiblesParaOrigenYDestino(transformarCiudad(busqueda.getOrigen()), transformarCiudad(busqueda.getDestino()), SimpleDateParser.LatinAmerican().format(busqueda.getFecha())),
-						busqueda,
-						this);
+				aerolineaOceanic.asientosDisponiblesParaOrigenYDestino(
+						transformarCiudad(busqueda.getOrigen()), 
+						transformarCiudad(busqueda.getDestino()), 
+						SimpleDateParser.LatinAmerican().format(busqueda.getFechaSalida().getDate())),
+				busqueda,
+				this);
 	}
 	
 	private String transformarCiudad(String ciudad) {

@@ -31,19 +31,27 @@ public class AerolineaOceanicWrapperTest {
 	private AerolineaOceanicParser parser;
 	private AerolineaOceanic aerolineaOceanic;
 	private AerolineaOceanicWrapper aerolineaOceanicWrapper;
+	private Usuario usuario;
+	private Asiento asientoDisponible;
 	
 	@Before
 	public void setUp() {
 		aerolineaOceanic = mock(AerolineaOceanic.class);
 		parser = mock(AerolineaOceanicParser.class);
 		aerolineaOceanicWrapper = new AerolineaOceanicWrapper(aerolineaOceanic, parser);
+		
+		usuario = mock(Usuario.class);
+		when(usuario.getDni()).thenReturn("33981245");
+		
+		asientoDisponible = mock(Asiento.class);
+		when(asientoDisponible.getCodigoDeVuelo()).thenReturn("3E7");
+		when(asientoDisponible.getNumeroDeAsiento()).thenReturn(Integer.valueOf(7));
 
 	}
 	
 	@Test
 	public void testBuscarVuelos() {
-		Busqueda busqueda = new Busqueda("MA", "LA", "12/08/2012");
-		
+		Busqueda busqueda = new Busqueda("MA", "LA", "12/08/2012", "13/08/2012", "15:00", "09:00");
 		AsientoDTO asientoDTO = new AsientoDTO("BCE", Integer.valueOf(5), "12/08/2012", "13/08/2012", "15:00", "09:00", BigDecimal.valueOf(512), "primera clase", "pasillo", false, "MA_", "SLA");
 		List<AsientoDTO> asientosDTOs = Arrays.asList(asientoDTO);
 		
@@ -66,17 +74,21 @@ public class AerolineaOceanicWrapperTest {
 		
 		when(aerolineaOceanic.comprarSiHayDisponibilidad(anyString(), anyString(), anyInt())).thenReturn(Boolean.TRUE);
 		
-		Usuario usuario = mock(Usuario.class);
-		when(usuario.getDni()).thenReturn("33981245");
-		
-		Asiento asientoDisponible = mock(Asiento.class);
-		when(asientoDisponible.getCodigoDeVuelo()).thenReturn("3E7");
-		when(asientoDisponible.getNumeroDeAsiento()).thenReturn(Integer.valueOf(7));
-		
 		aerolineaOceanicWrapper.comprarAsiento(asientoDisponible, usuario);
 		
 		verify(aerolineaOceanic,times(1)).comprarSiHayDisponibilidad("33981245", "3E7", Integer.valueOf(7));
 		verify(asientoDisponible,times(1)).setEstado("C");
+	}
+	
+	@Test(expected=AsientoNoDisponibleException.class)
+	public void testComprarAsientoNoDisponible() {
+		
+		when(aerolineaOceanic.comprarSiHayDisponibilidad(anyString(), anyString(), anyInt())).thenReturn(Boolean.FALSE);
+		
+		aerolineaOceanicWrapper.comprarAsiento(asientoDisponible, usuario);
+		
+		verify(aerolineaOceanic,times(1)).comprarSiHayDisponibilidad("33981245", "3E7", Integer.valueOf(7));
+		verify(asientoDisponible,times(0)).setEstado("C");
 	}
 
 }
