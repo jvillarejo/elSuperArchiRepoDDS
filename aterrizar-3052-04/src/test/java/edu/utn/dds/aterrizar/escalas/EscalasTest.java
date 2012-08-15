@@ -11,9 +11,10 @@ import org.junit.Test;
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaOceanicWrapper;
+import edu.utn.dds.aterrizar.agencia.Agencia;
 
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.Vuelo;
+import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
 
 import static org.mockito.Mockito.*;
@@ -23,29 +24,21 @@ public class EscalasTest {
 
 private Aerolinea lanchita = mock(AerolineaLanchitaWrapper.class);
 private Aerolinea oceanic = mock(AerolineaOceanicWrapper.class);
-private Asiento unAsiento;
-private Asiento otroAsiento;
-private List<Asiento> asientosDisponibles = new ArrayList<Asiento>();
-
-@Before
-public void setUp(){
-	unAsiento= new Asiento(new Vuelo("BA", "LA", "17/08/2012"), lanchita);
-	otroAsiento= new Asiento(new Vuelo("LA", "DC", "17/08/2012"), lanchita);
-}
+private VueloDirecto unVuelo= 	new VueloDirecto("BA", "LA", "14/08/2012", "17/08/2012", lanchita);
+private VueloDirecto otroVuelo= new VueloDirecto("LA", "DC", "17/08/2012", "30/8/2012", lanchita);
+private List<VueloDirecto> vuelosDisponibles = new ArrayList<VueloDirecto>();
 	@Test
 	public void testEsEscala() {
-		//TODO revisar porque no quiere parsear la fecha.
-		assertTrue(unAsiento.esEscala(otroAsiento));
+		assertTrue(new Agencia().esEscala(unVuelo,otroVuelo));
 	
 	}
 	
 	@Test
 	public void testBuscarVuelosConEscalasLanchita(){
-		asientosDisponibles.add(unAsiento);
-		asientosDisponibles.add(otroAsiento);
-		List<Asiento> vuelos = new Escala().buscarVuelosConEscala("BA", "DC", "17/8/2012", lanchita);
-		assertTrue(vuelos.containsAll(asientosDisponibles));
+		vuelosDisponibles.add(unVuelo);
+		vuelosDisponibles.add(otroVuelo);
+		List<Vuelo> vuelos = mock(Agencia.class).buscarVuelosConEscala(vuelosDisponibles);
+		assertTrue(vuelos.containsAll(vuelosDisponibles));
 	}
-//TODO chequear como anda con oceanic, que faltan implementar mensajes en el wrapper
-//TODO escribir test con expected failures
+
 }
