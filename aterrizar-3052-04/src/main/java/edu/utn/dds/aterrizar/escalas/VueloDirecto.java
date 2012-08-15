@@ -3,10 +3,17 @@ package edu.utn.dds.aterrizar.escalas;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.sf.staccatocommons.lambda.Lambda.*;
+import net.sf.staccatocommons.collections.stream.Streams;
+
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.manejoDeFechas.DateTime;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
+import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
+import edu.utn.dds.aterrizar.vuelo.filtros.BuscadorDeAsientos;
+import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.Buscador;
 
 public class VueloDirecto implements Vuelo {
  protected DateTime fechaSalida;
@@ -86,5 +93,21 @@ protected Aerolinea aerolinea;
 
 	public String getCodigo() {
 		return this.codigo;
+	}
+
+	@Override
+	public Double getPrecioMasBarato() {
+		return Streams
+			.from(this.getAsientos())
+			.minimumOn(lambda($(Asiento.class).getPrecio()))
+			.getPrecio();
+	}
+
+	@Override
+	public void filtrarAsientos(List<Filtro<Asiento>> filtros, Usuario usuario) {
+		Buscador<Asiento> buscador = new BuscadorDeAsientos(this.getAsientos(), usuario);
+		buscador.agregarFiltros(filtros);
+		
+		this.asientos = buscador.buscar(); 
 	}
 }

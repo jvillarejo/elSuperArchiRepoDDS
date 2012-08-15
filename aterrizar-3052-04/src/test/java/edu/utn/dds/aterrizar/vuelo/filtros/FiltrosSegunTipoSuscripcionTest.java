@@ -1,12 +1,14 @@
 package edu.utn.dds.aterrizar.vuelo.filtros;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.*;
 
 import edu.utn.dds.aterrizar.usuario.*;
 import edu.utn.dds.aterrizar.vuelo.*;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.Buscador;
 
 import static org.junit.Assert.*;
 
@@ -43,33 +45,26 @@ public class FiltrosSegunTipoSuscripcionTest {
 	@Test
 	public void usuarioVipRecibeLasSuperOfertas() {
 		Usuario unTipoImportante = new Usuario("Barack", "Obama", "12331", new SuscripcionVip());
-		FiltroAsiento filtroVip = new FiltroBuilder(unTipoImportante).build();
+		Buscador<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoImportante);
 		
-		assertEquals(asientosDisponibles, filtroVip.filtrar(asientosDisponibles)); 
+		assertEquals(asientosDisponibles, buscador.buscar()); 
 	}
 	
 	@Test
 	public void usuarioEstandarNoRecibeLasSuperOfertas() {
 		Usuario unTipoComun = new Usuario("Federico", "Aloi", "9999", new SuscripcionEstandar());
-		FiltroAsiento filtroComun = new FiltroBuilder(unTipoComun).build();
+		Buscador<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoComun);
 		
-		List<Asiento> asientosComunes = new ArrayList<Asiento>();
-		asientosComunes.add(asientoNormalEnPrimera);
-		asientosComunes.add(asientoNormalEnTurista);
-		
-		assertEquals(asientosComunes, filtroComun.filtrar(asientosDisponibles)); 
+		List<Asiento> asientosComunes = Arrays.asList(asientoNormalEnPrimera, asientoNormalEnTurista);
+		assertEquals(asientosComunes, buscador.buscar()); 
 	}
 	
 	@Test
 	public void usuarioGratuitoNoRecibeLasSuperOfertas() {
 		Usuario unTipoTacanio = new Usuario("Ebenezer", "Scrooge", "0000", new SuscripcionGratuita());
-		FiltroAsiento filtroGratuito = new FiltroBuilder(unTipoTacanio).build();
+		Buscador<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoTacanio);
 		
-		List<Asiento> asientosComunes = new ArrayList<Asiento>();
-		asientosComunes.add(asientoNormalEnPrimera);
-		asientosComunes.add(asientoNormalEnTurista);
-		
-		assertEquals(asientosComunes, filtroGratuito.filtrar(asientosDisponibles)); 
+		List<Asiento> asientosComunes = Arrays.asList(asientoNormalEnPrimera, asientoNormalEnTurista);
+		assertEquals(asientosComunes, buscador.buscar()); 
 	}
-	
 }

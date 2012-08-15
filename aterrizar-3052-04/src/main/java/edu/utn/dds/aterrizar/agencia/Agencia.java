@@ -8,11 +8,13 @@ import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.escalas.VueloConEscala;
 import edu.utn.dds.aterrizar.escalas.VueloDirecto;
-import edu.utn.dds.aterrizar.usuario.ConsultaAsientos;
+import edu.utn.dds.aterrizar.usuario.ConsultaVuelos;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
+import edu.utn.dds.aterrizar.vuelo.filtros.BuscadorDeAsientos;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.Buscador;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.BuscadorDeVuelos;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
-import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
 
 public class Agencia {
 
@@ -26,16 +28,23 @@ public class Agencia {
 	super();
 	}
 
-	public List<Vuelo> buscarVuelos(final Busqueda busqueda, final Usuario usuario, final FiltroAsiento filtro) {
-		List<VueloDirecto> vuelos = new ArrayList<VueloDirecto>();		
-		for (Aerolinea aerolinea : aerolineas) 
-			vuelos.addAll( aerolinea.buscarVuelos(busqueda));
+	public List<Vuelo> buscarVuelos(final ConsultaVuelos consulta, final Usuario usuario) {
+		List<VueloDirecto> vuelosDirectos = new ArrayList<VueloDirecto>();		
+		for (Aerolinea aerolinea : aerolineas) {
+			vuelosDirectos.addAll( aerolinea.buscarVuelos(consulta.getBusqueda()));
+		}
 //esto si o si se tiene que hacer ANTES de armar las escalas (no tiene sentido hacerlo después)
-		vuelos = adaptarPreciosParaUsuario(vuelos, usuario);
+		List<Vuelo> vuelos = adaptarPreciosParaUsuario(vuelosDirectos, usuario);
 		
-		usuario.registrarConsulta(new ConsultaAsientos(busqueda, filtro));
-		//FIXME refactor de los filtros.
-		return filtro.filtrar(vuelos);	
+		usuario.registrarConsulta(consulta);
+
+		for (Vuelo vuelo : vuelos)
+			vuelo.filtrarAsientos(consulta.getFiltros(), usuario);
+			
+		Buscador<Vuelo> buscador = new BuscadorDeVuelos(vuelos);
+		buscador.ordenarPor(consulta.getCriterioOrdenamiento());
+		
+		return buscador.buscar();	
 	}
 	
 	//FIXME lo estoy dejando aparte pero esto debería hacerse en lo que ahora es buscar asientos
@@ -70,17 +79,21 @@ public class Agencia {
 		usuario.registrarCompra(asiento);
 	}		
 
-	private List<VueloDirecto> adaptarPreciosParaUsuario(List<VueloDirecto> vuelos,
-			Usuario usuario) {
-		List<Vuelo> vuelosConAsientosAdaptados= new ArrayList<Vuelo>(); 
-for(VueloDirecto vuelo: vuelos){
-		for (Asiento asiento : vuelo.getAsientos()){
-			VueloDirecto nuevoVuelo = new VueloDirecto();
-			//TODO fuck, hay que pensar que pasa en el composite, creo que querría agregar asientos solo en vuelos directos.
-			vuelo.agregarAsiento(asiento.adaptarNuevoAsientoConPrecioPara(usuario));
-			vuelosConAsientosAdaptados.add(nuevoVuelo);
+	private List<Vuelo> adaptarPreciosParaUsuario(List<VueloDirecto> vuelos, Usuario usuario) {
+		List<Vuelo> vuelosConAsientosAdaptados = new ArrayList<Vuelo>();
+		
+		for (VueloDirecto vuelo : vuelos) {
+			for (Asiento asiento : vuelo.getAsientos()) {
+				VueloDirecto nuevoVuelo = new VueloDirecto(vuelo.getOrigen(),
+						vuelo.getDestino(), vuelo.getFechaSalida().toString(),
+						vuelo.getFechaLlegada().toString(),
+						vuelo.getAerolinea());
+				vuelo.agregarAsiento(asiento
+						.adaptarNuevoAsientoConPrecioPara(usuario));
+				vuelosConAsientosAdaptados.add(nuevoVuelo);
+			}
 		}
-	}
-return vuelos;
+	
+		return vuelosConAsientosAdaptados;
 	}
 }
