@@ -2,17 +2,11 @@ package edu.utn.dds.aterrizar.vuelo.ordenamiento;
 
 import java.util.List;
 
+
 import edu.utn.dds.aterrizar.escalas.Vuelo;
 
-public class BuscadorDeVuelos {
-
-	public BuscadorDeVuelos(List<Vuelo> vuelos) {
-		
+public class BuscadorDeVuelos extends Buscador<Vuelo>{
+	public BuscadorDeVuelos(List<Vuelo> elementosOriginales) {
+		super(elementosOriginales);
 	}
-
-	public void ordenarPor(CriterioOrden<Vuelo> criterioOrden) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

@@ -15,10 +15,10 @@ public class OrdenPorPrecio implements CriterioOrden<Vuelo> {
 
 	@Override
 	public Stream<Vuelo> ordenar(Stream<Vuelo> elementosOrdenados) {
-		Stream<Vuelo> streamOrdenado = elementosOrdenados.sortOn(lambda($(Vuelo.class).getAsientoMasBarato().getPrecio()));
+		Stream<Vuelo> streamOrdenado = elementosOrdenados.sortOn(lambda($(Vuelo.class).getPrecioMasBarato()));
 
 		if (this.sentido == Orden.DESCENDENTE)
-			streamOrdenado.reverse();
+			streamOrdenado = streamOrdenado.reverse();
 		
 		return streamOrdenado;
 	}

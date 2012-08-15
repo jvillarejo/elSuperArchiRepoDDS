@@ -32,6 +32,11 @@ public class Buscador<T> {
 		return this.getElementosFiltrados().toList();
 	}
 	
+	public void ordenarPor(CriterioOrden<T> criterioOrden) {
+		Stream<T> vuelosOrdenados = criterioOrden.ordenar(this.getElementosFiltrados());
+		this.setElementosFiltrados(vuelosOrdenados);
+	}
+
 	public Buscador(List<T> elementosOriginales) {
 		this.setElementosFiltrados(Streams.from(elementosOriginales));
 	}

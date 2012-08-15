@@ -17,6 +17,5 @@ public interface Vuelo {
 	public String getOrigen();
 	public String getDestino();
 	public Aerolinea getAerolinea();
-	public Asiento getAsientoMasBarato();
-	
+	public Double getPrecioMasBarato();
 }
