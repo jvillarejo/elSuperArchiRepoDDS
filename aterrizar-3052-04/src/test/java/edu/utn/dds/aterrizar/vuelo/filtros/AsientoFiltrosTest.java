@@ -47,6 +47,52 @@ public class AsientoFiltrosTest {
 	}
 
 	@Test
+	public void buscarAsientosConPrecioMenorA4500() {
+		Asiento asientoBarato = new Asiento();
+		asientoBarato.setPrecio(1500D);
+		
+		Asiento asientoCaro = new Asiento();
+		asientoCaro.setPrecio(5000D);
+		
+		BuscadorDeAsientos buscador = new BuscadorDeAsientos(Arrays.asList(asientoBarato, asientoCaro), usuarioDefault, 
+				new FiltroPrecioMaximo(4500D));
+
+		assertEquals(Arrays.asList(asientoBarato), buscador.buscar());
+	}
+
+	@Test
+	public void buscarAsientosConPrecioMayorA2000() {
+		Asiento asientoBarato = new Asiento();
+		asientoBarato.setPrecio(1500D);
+		
+		Asiento asientoCaro = new Asiento();
+		asientoCaro.setPrecio(5000D);
+		
+		BuscadorDeAsientos buscador = new BuscadorDeAsientos(Arrays.asList(asientoBarato, asientoCaro), usuarioDefault, 
+				new FiltroPrecioMinimo(2000D));
+
+		assertEquals(Arrays.asList(asientoCaro), buscador.buscar());
+	}
+	
+	@Test
+	public void buscarAsientosConPrecioEntre2000y5500() {
+		Asiento asientoBarato = new Asiento();
+		asientoBarato.setPrecio(1500D);
+		
+		Asiento asientoCaro = new Asiento();
+		asientoCaro.setPrecio(5000D);
+		
+		Asiento asientoCarisimo = new Asiento();
+		asientoCarisimo.setPrecio(6200D);
+		
+		List<Asiento> asientos = Arrays.asList(asientoBarato, asientoCaro, asientoCarisimo);
+		BuscadorDeAsientos buscador = new BuscadorDeAsientos(asientos, usuarioDefault);
+		buscador.agregarFiltros(new FiltroPrecioMaximo(5500D), new FiltroPrecioMinimo(2000D));
+
+		assertEquals(Arrays.asList(asientoCaro), buscador.buscar());
+	}
+	
+	@Test
 	public void buscarAsientosEnElPasillo() {
 		List<Asiento> asientosEnElPasillo = Arrays.asList(asientoPasilloEnPrimera);
 		BuscadorDeAsientos buscador = new BuscadorDeAsientos(asientosEnElPasillo, usuarioDefault, new FiltroPorUbicacion(Ubicacion.PASILLO));
