@@ -4,19 +4,16 @@ import static net.sf.staccatocommons.lambda.Lambda.*;
 import static net.sf.staccatocommons.lang.Compare.*;
 import net.sf.staccatocommons.collections.stream.Stream;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.Clase;
 
-public class FiltroPorClase implements Filtro<Asiento> {
+public class FiltroPrecioMaximo implements Filtro<Asiento> {
+	private Double importe;
 
-	private Clase[] clases;
-	
-	public FiltroPorClase(Clase... clases) {
-		this.clases = clases;
+	public FiltroPrecioMaximo(Double importe) {
+		this.importe = importe;
 	}
 
 	@Override
 	public Stream<Asiento> filtrar(Stream<Asiento> asientos) {
-		return asientos.filter(lambda($(Asiento.class).getClase()).then(in_(this.clases)));
+		return asientos.filter(lambda($(Asiento.class).getPrecio()).then(lessThan(this.importe)));
 	}
-
 }

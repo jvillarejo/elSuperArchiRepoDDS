@@ -94,6 +94,9 @@ public class Asiento {
 		return asientoAdaptado;
 	}
 
+	public boolean isReservado() {
+		return this.getEstado().equals("R");
+	}
 
 	public String getCodigoDeVuelo() {
 		return this.codigoDeVuelo;

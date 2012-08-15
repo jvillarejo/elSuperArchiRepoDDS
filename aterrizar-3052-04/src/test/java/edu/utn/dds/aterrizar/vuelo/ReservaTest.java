@@ -12,6 +12,7 @@ import com.oceanic.AerolineaOceanic;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
+import edu.utn.dds.aterrizar.aerolineas.AsientoNoDisponibleException;
 import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.usuario.SuscripcionEstandar;
 import edu.utn.dds.aterrizar.usuario.SuscripcionGratuita;
@@ -59,10 +60,10 @@ public class ReservaTest {
 		comunicadorDeAerolinea.comprarAsiento(asiento, usuarioEstandar);
 		assertEquals("C", asiento.getEstado());
 		verify(aerolineaLanchita).reservar("01202022220202-3", "dni");
-//		verify(aerolineaLanchita).comprar("01202022220202-3", "dni");
+		verify(aerolineaLanchita).comprar("01202022220202-3");
 	}
 	
-	@Test
+	@Test(expected = AsientoNoDisponibleException.class)
 	public void reservaUsuarioYCompraOtroUsuario() {
 		asiento.setCodigoDeVuelo("01202022220202");
 		asiento.setNumeroDeAsiento(3);
@@ -70,9 +71,6 @@ public class ReservaTest {
 		usuarioEstandar.reservar(asiento);
 		assertEquals("R", asiento.getEstado());
 		comunicadorDeAerolinea.comprarAsiento(asiento, otroUsuarioEstandar);
-//		assertEquals("C", asiento.getEstado());
-//		verify(aerolineaLanchita).reservar("01202022220202-3", "dni");
-//		verify(aerolineaLanchita).comprar("01202022220202-3", "dni");
 	}
 
 }

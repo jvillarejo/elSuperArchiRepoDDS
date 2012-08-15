@@ -5,8 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
@@ -39,6 +38,25 @@ private List<VueloDirecto> vuelosDisponibles = new ArrayList<VueloDirecto>();
 		vuelosDisponibles.add(otroVuelo);
 		List<Vuelo> vuelos = mock(Agencia.class).buscarVuelosConEscala(vuelosDisponibles);
 		assertTrue(vuelos.containsAll(vuelosDisponibles));
+	}
+	
+	@Test
+	public void buscarPrecioMasBaratoEnVueloDirecto() {
+		Asiento asientoUnaLocura = new Asiento();
+		asientoUnaLocura.setPrecio(10500D);
+		
+		Asiento asientoCaro = new Asiento();
+		asientoCaro.setPrecio(7500D);
+		
+		Asiento asientoBarato = new Asiento();
+		asientoBarato.setPrecio(1500D);
+		
+		VueloDirecto buenosAiresAMadrid = new VueloDirecto();
+		buenosAiresAMadrid.agregarAsiento(asientoBarato);
+		buenosAiresAMadrid.agregarAsiento(asientoCaro);
+		buenosAiresAMadrid.agregarAsiento(asientoUnaLocura);
+		
+		assertEquals(1500D, buenosAiresAMadrid.getPrecioMasBarato(), 0D);
 	}
 
 }

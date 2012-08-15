@@ -77,7 +77,7 @@ public class AerolineaTest {
 		asiento.setEstado("D");
 		comunicadorDeAerolinea.comprarAsiento(asiento, usuario);
 		assertEquals("C", asiento.getEstado());
-		verify(aerolineaLanchita).comprar("01202022220202-3", "35247037");
+		verify(aerolineaLanchita).comprar("01202022220202-3");
 	}
 	
 	
@@ -88,11 +88,11 @@ public class AerolineaTest {
 		asiento.setCodigoDeVuelo("01202022220202");
 		asiento.setNumeroDeAsiento(3);
 		asiento.setEstado("R");
-		doThrow(new EstadoErroneoException()).when(aerolineaLanchita).comprar(anyString(), anyString());
+		doThrow(new EstadoErroneoException()).when(aerolineaLanchita).comprar(anyString());
 		
 		comunicadorDeAerolinea.comprarAsiento(asiento, usuario);
 		
-		verify(aerolineaLanchita).comprar("01202022220202-3", "35247037");
+		verify(aerolineaLanchita).comprar("01202022220202-3");
 	}
 	
 	
@@ -105,14 +105,14 @@ public class AerolineaTest {
 		asientoDisponible.setNumeroDeAsiento(3);
 		asientoDisponible.setEstado("D");
 		
-		doNothing().doThrow(new EstadoErroneoException()).when(aerolineaLanchita).comprar(anyString(), anyString());
+		doNothing().doThrow(new EstadoErroneoException()).when(aerolineaLanchita).comprar(anyString());
 		
 		comunicadorDeAerolinea.comprarAsiento(asientoDisponible, usuario);
 		assertEquals("C",asientoDisponible.getEstado());
-		verify(aerolineaLanchita).comprar("01202022220202-3", "35247037");
+		verify(aerolineaLanchita).comprar("01202022220202-3");
 
 		
 		comunicadorDeAerolinea.comprarAsiento(asientoDisponible, usuario);
-		verify(aerolineaLanchita).comprar("01202022220202-3", "35247037");
+		verify(aerolineaLanchita).comprar("01202022220202-3");
 }
 }

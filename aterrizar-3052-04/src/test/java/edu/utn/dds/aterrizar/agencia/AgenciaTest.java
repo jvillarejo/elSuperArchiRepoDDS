@@ -1,18 +1,25 @@
 package edu.utn.dds.aterrizar.agencia;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import net.sf.staccatocommons.collections.stream.Stream;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.agencia.Agencia;
-import edu.utn.dds.aterrizar.usuario.ConsultaAsientos;
+import edu.utn.dds.aterrizar.escalas.VueloDirecto;
+import edu.utn.dds.aterrizar.usuario.ConsultaVuelos;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
-import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
+import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
+import edu.utn.dds.aterrizar.vuelo.filtros.FiltroDummy;
+import edu.utn.dds.aterrizar.vuelo.filtros.FiltroLibres;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.CriterioOrden;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.OrdenPorTiempoDeVuelo;
 
 import static org.mockito.Mockito.*;
 
@@ -23,21 +30,24 @@ public class AgenciaTest {
 	private List<Aerolinea> aerolineas;
 	private Aerolinea aerolineaMockito;
 	private Aerolinea aerolineaPrivadaDelTurco;
+	private Usuario juanMockito;
 
 	@Before
 	public void setUp() {
 		aerolineaMockito = mock(Aerolinea.class);
 		aerolineaPrivadaDelTurco = mock(Aerolinea.class);
-		aerolineas = new ArrayList<Aerolinea>();
-		aerolineas.add(aerolineaMockito);
-		aerolineas.add(aerolineaPrivadaDelTurco);
 		
+		juanMockito = mock(Usuario.class);
+		when(juanMockito.getFiltro()).thenReturn(new FiltroDummy());
+		
+		aerolineas = Arrays.asList(aerolineaMockito, aerolineaPrivadaDelTurco);
 		laAgencia = new Agencia(aerolineas);
 	}
 	
 	@Test
 	public void laAgenciaBuscaAsientosEnTodasLasAerolineas() {
-		laAgencia.buscarVuelos(mock(Busqueda.class), mock(Usuario.class), mock(FiltroAsiento.class));
+		List<Filtro<Asiento>> filtros = Arrays.asList(new FiltroDummy(), new FiltroLibres());
+		laAgencia.buscarVuelos(new ConsultaVuelos(mock(Busqueda.class), filtros, new OrdenPorTiempoDeVuelo()), juanMockito);
 		
 		verify(aerolineaMockito).buscarVuelos(any(Busqueda.class));
 		verify(aerolineaPrivadaDelTurco).buscarVuelos(any(Busqueda.class));
@@ -45,19 +55,23 @@ public class AgenciaTest {
 	
 	@Test
 	public void laAgenciaRegistraLaConsultaEnElUsuario() {
-		Usuario juanMockito = mock(Usuario.class);
-		laAgencia.buscarVuelos(mock(Busqueda.class), juanMockito, mock(FiltroAsiento.class));
+		List<Filtro<Asiento>> filtros = Arrays.asList(new FiltroDummy(), new FiltroLibres());
+		laAgencia.buscarVuelos(new ConsultaVuelos(mock(Busqueda.class), filtros, new OrdenPorTiempoDeVuelo()), juanMockito);
 
-		verify(juanMockito).registrarConsulta(any(ConsultaAsientos.class));
+		verify(juanMockito).registrarConsulta(any(ConsultaVuelos.class));
 	}
 	
 	@Test
 	public void laAgenciaFiltraLosAsientosSegunLosCriterios() {
-		FiltroAsiento filtros = mock(FiltroAsiento.class);
-		laAgencia.buscarVuelos(mock(Busqueda.class), mock(Usuario.class), filtros);
+		//TODO: mejorar este test...
+		Busqueda deNeuquenALaQuiaca = mock(Busqueda.class);
+		when(aerolineaMockito.buscarVuelos(deNeuquenALaQuiaca)).thenReturn(Arrays.asList(mock(VueloDirecto.class)));
+		
+		Filtro<Asiento> filtros = mock(Filtro.class);
+		when(filtros.filtrar(any(Stream.class))).thenReturn(mock(Stream.class));
+		
+		laAgencia.buscarVuelos(new ConsultaVuelos(deNeuquenALaQuiaca, Arrays.asList(filtros), new OrdenPorTiempoDeVuelo()), juanMockito);
 
-		verify(filtros).filtrar(anyListOf(Asiento.class));
+		verify(filtros).filtrar(any(Stream.class));
 	}
-
-	
 }

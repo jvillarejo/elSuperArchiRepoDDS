@@ -1,29 +1,25 @@
 package edu.utn.dds.aterrizar.aerolineas;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.oceanic.AerolineaOceanic;
-import com.oceanic.AsientoDTO;
 
 import edu.utn.dds.aterrizar.escalas.VueloDirecto;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
-import edu.utn.dds.aterrizar.vuelo.Reserva;
 
-public class AerolineaOceanicWrapper implements Aerolinea {
+public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolinea {
 
 	private static final Double PORCENTAJE_DE_VENTA = 0.15;
 	
 	private AerolineaOceanic aerolineaOceanic; 
 	private AerolineaOceanicParser parser; 
-	private ArrayList<Reserva> reservas;
 	
 	public AerolineaOceanicWrapper(AerolineaOceanic aerolineaOceanic) {
+		super();
 		this.aerolineaOceanic = aerolineaOceanic;
-		this.reservas = new ArrayList<Reserva>();
 	}
 	
 	@Override
@@ -48,7 +44,10 @@ public class AerolineaOceanicWrapper implements Aerolinea {
 	@Override
 	public void comprarAsiento(Asiento asientoDisponible, Usuario usuario) {
 		Boolean fueComprado = aerolineaOceanic.comprarSiHayDisponibilidad(usuario.getDni(), asientoDisponible.getCodigoDeVuelo(), asientoDisponible.getNumeroDeAsiento());
-		if(!fueComprado) {
+		if(fueComprado) {
+			super.comprarAsiento(asientoDisponible, usuario);
+			asientoDisponible.setEstado("C");
+		}else{
 			throw new AsientoNoDisponibleException("No se pudo comprar el asiento");
 		}
 		
@@ -61,11 +60,8 @@ public class AerolineaOceanicWrapper implements Aerolinea {
 	
 	@Override
 	public void reservarAsiento(Asiento asiento, Usuario usuario) {
-		Boolean respuesta = aerolineaOceanic.reservar(usuario.getDni(), asiento.getCodigoDeVuelo(), asiento.getNumeroDeAsiento());
-		if(respuesta){
-		}else{
-			throw new RuntimeException("No se pudo reservar el asiento");
-		}
+		aerolineaOceanic.reservar(usuario.getDni(), asiento.getCodigoDeVuelo(), asiento.getNumeroDeAsiento());
+		super.reservarAsiento(asiento, usuario);
 	}
 
 }

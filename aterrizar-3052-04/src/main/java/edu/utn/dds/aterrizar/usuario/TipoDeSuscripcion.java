@@ -1,14 +1,15 @@
 package edu.utn.dds.aterrizar.usuario;
 
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.filtros.FiltroAsiento;
+
+import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
 import edu.utn.dds.aterrizar.vuelo.filtros.FiltroSuperOfertas;
 
 public abstract class TipoDeSuscripcion {
 	
 	final Double RECARGO_DEFAULT = 0.0;
 	
-	public FiltroAsiento getFiltro() {
+	public Filtro<Asiento> getFiltro() {
 		return new FiltroSuperOfertas();
 	}
 	
