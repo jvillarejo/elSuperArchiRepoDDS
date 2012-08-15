@@ -10,7 +10,9 @@ import java.util.List;
 public class VueloConEscala extends VueloDirecto{
 private List<Vuelo> vuelos;
 
+
 public VueloConEscala(Vuelo vuelo, Vuelo next) {
+	super("","","","", vuelo.getAerolinea()); //solo para que pueda usar el otro constructor en la superclase ¬¬
 	this.vuelos.add(vuelo);
 	this.vuelos.add(next);
 }
@@ -18,10 +20,16 @@ public VueloConEscala(Vuelo vuelo, Vuelo next) {
 public long getDuration(){
 	long total= 0;
 	for (Vuelo vuelo:vuelos){
-		//falta agregar el tiempo de conexion
-		total += vuelo.getDuration();
+		Vuelo next = vuelos.listIterator().next();
+		total += vuelo.getDuration()+ this.tiempoDeConexion(next);
 	}
 	return total;
 }
+
+private long tiempoDeConexion(Vuelo next) {
+	return this.fechaLlegada.diasDeDiferenciaCon(next.getFechaSalida());
+
+}
+
 
 }

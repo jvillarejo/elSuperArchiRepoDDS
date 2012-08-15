@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.oceanic.AerolineaOceanic;
 
-import edu.utn.dds.aterrizar.escalas.Vuelo;
+import edu.utn.dds.aterrizar.escalas.VueloDirecto;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
@@ -22,7 +22,7 @@ public class AerolineaOceanicWrapper implements Aerolinea {
 	}
 	
 	@Override
-	public List<Vuelo> buscarVuelos(Busqueda busqueda) {
+	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
 		//TODO modificar el origen y destino para que cumpla con Oceanic
 		return this.parser.parse(
 				aerolineaOceanic.asientosDisponiblesParaOrigenYDestino(transformarCiudad(busqueda.getOrigen()), transformarCiudad(busqueda.getDestino()), SimpleDateParser.LatinAmerican().format(busqueda.getFecha())),

@@ -27,7 +27,7 @@ public class AsientoLanchitaFactoryTest {
 	@Test
 	public void laFactoryCreaUnVueloCorrectamente() {
 		String[] asientoLanchita = { "01202022220202-3", "159.90", "P", "V", "D", "" };
-		Vuelo vuelo = parser.create(asientoLanchita, mock(Busqueda.class), mock(AerolineaLanchitaWrapper.class));
+		Vuelo vuelo = parser.create(asientoLanchita, new Busqueda("BA", "LA", "17/08/2012"), mock(AerolineaLanchitaWrapper.class));
 		Assert.assertEquals(159.90, vuelo.getPrimerAsiento().getPrecio(), 0.0);	
 
 		Assert.assertEquals( "01202022220202", vuelo.getPrimerAsiento().getCodigoDeVuelo());
