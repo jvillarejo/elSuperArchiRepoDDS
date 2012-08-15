@@ -3,6 +3,7 @@ package edu.utn.dds.aterrizar.agencia;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.ListIterator;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.escalas.Vuelo;
@@ -12,7 +13,7 @@ import edu.utn.dds.aterrizar.usuario.ConsultaVuelos;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.filtros.BuscadorDeAsientos;
-import edu.utn.dds.aterrizar.vuelo.ordenamiento.Buscador;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.Query;
 import edu.utn.dds.aterrizar.vuelo.ordenamiento.BuscadorDeVuelos;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
@@ -41,36 +42,41 @@ public class Agencia {
 		for (Vuelo vuelo : vuelos)
 			vuelo.filtrarAsientos(consulta.getFiltros(), usuario);
 			
-		Buscador<Vuelo> buscador = new BuscadorDeVuelos(vuelos);
+		Query<Vuelo> buscador = new BuscadorDeVuelos(vuelos);
 		buscador.ordenarPor(consulta.getCriterioOrdenamiento());
 		
 		return buscador.buscar();	
 	}
 	
-	//FIXME lo estoy dejando aparte pero esto debería hacerse en lo que ahora es buscar asientos
-	public List<Vuelo> getVuelosDisponiblesDirectosYConEscalas(String origen, String destino, String fecha, Aerolinea aerolinea){
+	
+	public List<Vuelo>buscarVuelosConEscala(String origen, String destino, String fechaSalida, Aerolinea aerolinea){
 		//buscamos los vuelos directos, como siempre
 		List<Vuelo>vuelos= new ArrayList<Vuelo>();
-		List<VueloDirecto>todosLosVuelos= aerolinea.buscarVuelos(new Busqueda(origen, destino, fecha));
+		List<VueloDirecto>todosLosVuelos= aerolinea.buscarVuelos(new Busqueda(origen, "", fechaSalida, "", "",""));
+				todosLosVuelos.addAll(aerolinea.buscarVuelos(new Busqueda("",destino,"","","","")));
 		//y agregamos los vuelos con escala
-	   vuelos.addAll(this.buscarVuelosConEscala(todosLosVuelos));
+	   vuelos.addAll(this.armarVuelosConEscala(todosLosVuelos));
 		return vuelos;
 	}
-	public List<Vuelo> buscarVuelosConEscala(List<VueloDirecto> todosLosVuelos){
+	
+	public List<Vuelo> armarVuelosConEscala(List<VueloDirecto> todosLosVuelos){
 		List<Vuelo> vuelosConEscala= new ArrayList<Vuelo>();
 		for (Vuelo vuelo:todosLosVuelos){
-			Vuelo next = todosLosVuelos.listIterator().next();
+			ListIterator<VueloDirecto> listIterator = todosLosVuelos.listIterator();
+			while(listIterator.hasNext()){
+			Vuelo next = listIterator.next();
 			//esto es un filter, pero bleh, necesito recorrerlo a mano ¬¬
 			if (this.esEscala(vuelo, next)){
 				VueloConEscala nuevo = new VueloConEscala(vuelo, next);
 				vuelosConEscala.add(nuevo);
+			}
 			}
 		}
 		return vuelosConEscala;
 	}
 
 	public boolean esEscala(Vuelo unVuelo, Vuelo otroVuelo){
-		return unVuelo.getDestino().equals(otroVuelo.getOrigen()) && otroVuelo.getFechaSalida().esAnteriorA(unVuelo.getFechaLlegada());
+		return unVuelo.getDestino().equalsIgnoreCase(otroVuelo.getOrigen()) && otroVuelo.getFechaSalida().esAnteriorA(unVuelo.getFechaLlegada());
 	}
 	
 

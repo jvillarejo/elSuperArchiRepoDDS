@@ -1,6 +1,5 @@
 package edu.utn.dds.aterrizar.escalas;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.sf.staccatocommons.lambda.Lambda.*;
@@ -13,18 +12,10 @@ import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.filtros.BuscadorDeAsientos;
 import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
-import edu.utn.dds.aterrizar.vuelo.ordenamiento.Buscador;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.Query;
 
-public class VueloDirecto implements Vuelo {
- protected DateTime fechaSalida;
- protected DateTime fechaLlegada;
- protected String origen;
- protected String destino;
- private List<Asiento> asientos = new ArrayList<Asiento>();
-protected String codigo;
-protected Aerolinea aerolinea;
- 
-	public  VueloDirecto(String origen, String destino, String fechaSalida,
+public class VueloDirecto extends Vuelo {
+ public  VueloDirecto(String origen, String destino, String fechaSalida,
 		String fechaLlegada, Aerolinea aerolinea) {
 	this.origen= origen;
 	this.destino= destino;
@@ -36,6 +27,7 @@ protected Aerolinea aerolinea;
 	public VueloDirecto() {
 	}
 
+	@Override
 	public long getDuration(){
 		return this.fechaSalida.diasDeDiferenciaCon(this.fechaLlegada);
 	
@@ -45,58 +37,13 @@ protected Aerolinea aerolinea;
 		this.asientos.add(asiento);
 	}
 
-	@Override
-	public void setCodigo(String codigo) {
-		this.codigo= codigo;
-	}
-	@Override
-	public List<Asiento> getAsientos(){
-		return this.asientos;
-	}
-	@Override
+
 	public Asiento getPrimerAsiento(){
 		return this.asientos.get(0);
 	}
 
-	public void setOrigen(String origen) {
-		this.origen=origen;
-		
-	}
 
-	public void setDestino(String destino) {
-		this.destino= destino;
-	}
-
-	@Override
-	public DateTime getFechaLlegada() {
-		return this.fechaLlegada;
-	}
-
-	@Override
-	public DateTime getFechaSalida() {
-		return this.fechaSalida;
-	}
-		
-	@Override
-	public String getOrigen(){
-		return this.origen;
-	}
-	@Override
-	public String getDestino(){
-		return this.destino;
-	}
-
-	@Override
-	public Aerolinea getAerolinea() {
-		return this.aerolinea;
-	}
-
-	public String getCodigo() {
-		return this.codigo;
-	}
-
-
-	@Override
+@Override
 	public Double getPrecioMasBarato() {
 		return Streams
 			.from(this.getAsientos())
@@ -106,7 +53,7 @@ protected Aerolinea aerolinea;
 
 	@Override
 	public void filtrarAsientos(List<Filtro<Asiento>> filtros, Usuario usuario) {
-		Buscador<Asiento> buscador = new BuscadorDeAsientos(this.getAsientos(), usuario);
+		Query<Asiento> buscador = new BuscadorDeAsientos(this.getAsientos(), usuario);
 		buscador.agregarFiltros(filtros);
 		
 		this.asientos = buscador.buscar(); 
