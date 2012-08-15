@@ -30,8 +30,9 @@ public class Agencia {
 		List<VueloDirecto> vuelosDirectos = new ArrayList<VueloDirecto>();		
 		for (Aerolinea aerolinea : aerolineas) {
 			vuelosDirectos.addAll( aerolinea.buscarVuelos(consulta.getBusqueda()));
+		
 		}
-//esto si o si se tiene que hacer ANTES de armar las escalas (no tiene sentido hacerlo después)
+
 		List<Vuelo> vuelos = adaptarPreciosParaUsuario(vuelosDirectos, usuario);
 		
 		usuario.registrarConsulta(consulta);
