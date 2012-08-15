@@ -17,13 +17,13 @@ public class AerolineaOceanicWrapper implements Aerolinea {
 	private AerolineaOceanic aerolineaOceanic; 
 	private AerolineaOceanicParser parser; 
 	
-	public AerolineaOceanicWrapper(AerolineaOceanic aerolineaOceanic) {
+	public AerolineaOceanicWrapper(AerolineaOceanic aerolineaOceanic, AerolineaOceanicParser parser) {
 		this.aerolineaOceanic = aerolineaOceanic;
+		this.parser = parser;
 	}
 	
 	@Override
 	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
-		//TODO modificar el origen y destino para que cumpla con Oceanic
 		return this.parser.parse(
 				aerolineaOceanic.asientosDisponiblesParaOrigenYDestino(transformarCiudad(busqueda.getOrigen()), transformarCiudad(busqueda.getDestino()), SimpleDateParser.LatinAmerican().format(busqueda.getFecha())),
 						busqueda,
@@ -46,6 +46,8 @@ public class AerolineaOceanicWrapper implements Aerolinea {
 		if(!fueComprado) {
 			throw new AsientoNoDisponibleException("No se pudo comprar el asiento");
 		}
+		
+		asientoDisponible.setEstado("C");
 		
 	}
 
