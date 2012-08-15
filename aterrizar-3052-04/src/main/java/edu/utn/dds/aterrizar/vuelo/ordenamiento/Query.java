@@ -7,7 +7,7 @@ import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
 import net.sf.staccatocommons.collections.stream.Stream;
 import net.sf.staccatocommons.collections.stream.Streams;
 
-public class Buscador<T> {
+public class Query<T> {
 
 	private Stream<T> elementosFiltrados;
 
@@ -19,17 +19,17 @@ public class Buscador<T> {
 		return elementosFiltrados;
 	}
 
-	public void agregarFiltro(Filtro<T> filtro) {
+	public void filter(Filtro<T> filtro) {
 		Stream<T> elementosVueltosAFiltrar = filtro.filtrar(this.getElementosFiltrados());
 		this.setElementosFiltrados(elementosVueltosAFiltrar);
 	}
 
 	public void agregarFiltros(Filtro<T>... filtros) {
 		for (Filtro<T> filtro : filtros)
-			this.agregarFiltro(filtro);
+			this.filter(filtro);
 	}
 
-	public List<T> buscar() {
+	public List<T> execute() {
 		return this.getElementosFiltrados().toList();
 	}
 	
@@ -38,13 +38,13 @@ public class Buscador<T> {
 		this.setElementosFiltrados(vuelosOrdenados);
 	}
 
-	public Buscador(List<T> elementosOriginales) {
+	public Query(List<T> elementosOriginales) {
 		this.setElementosFiltrados(Streams.from(elementosOriginales));
 	}
 
 	public void agregarFiltros(List<Filtro<T>> filtros) {
 		for(Filtro<T> filtro : filtros)
-			this.agregarFiltro(filtro);
+			this.filter(filtro);
 	}
 
 }
