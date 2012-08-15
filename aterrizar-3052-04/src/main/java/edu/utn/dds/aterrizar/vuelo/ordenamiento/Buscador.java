@@ -2,6 +2,7 @@ package edu.utn.dds.aterrizar.vuelo.ordenamiento;
 
 import java.util.List;
 
+import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
 import net.sf.staccatocommons.collections.stream.Stream;
 import net.sf.staccatocommons.collections.stream.Streams;
@@ -39,6 +40,11 @@ public class Buscador<T> {
 
 	public Buscador(List<T> elementosOriginales) {
 		this.setElementosFiltrados(Streams.from(elementosOriginales));
+	}
+
+	public void agregarFiltros(List<Filtro<T>> filtros) {
+		for(Filtro<T> filtro : filtros)
+			this.agregarFiltro(filtro);
 	}
 
 }
