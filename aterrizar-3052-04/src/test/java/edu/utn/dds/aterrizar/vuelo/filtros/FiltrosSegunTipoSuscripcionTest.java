@@ -8,7 +8,7 @@ import org.junit.*;
 
 import edu.utn.dds.aterrizar.usuario.*;
 import edu.utn.dds.aterrizar.vuelo.*;
-import edu.utn.dds.aterrizar.vuelo.ordenamiento.Buscador;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.Query;
 
 import static org.junit.Assert.*;
 
@@ -45,26 +45,26 @@ public class FiltrosSegunTipoSuscripcionTest {
 	@Test
 	public void usuarioVipRecibeLasSuperOfertas() {
 		Usuario unTipoImportante = new Usuario("Barack", "Obama", "12331", new SuscripcionVip());
-		Buscador<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoImportante);
+		Query<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoImportante);
 		
-		assertEquals(asientosDisponibles, buscador.buscar()); 
+		assertEquals(asientosDisponibles, buscador.execute()); 
 	}
 	
 	@Test
 	public void usuarioEstandarNoRecibeLasSuperOfertas() {
 		Usuario unTipoComun = new Usuario("Federico", "Aloi", "9999", new SuscripcionEstandar());
-		Buscador<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoComun);
+		Query<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoComun);
 		
 		List<Asiento> asientosComunes = Arrays.asList(asientoNormalEnPrimera, asientoNormalEnTurista);
-		assertEquals(asientosComunes, buscador.buscar()); 
+		assertEquals(asientosComunes, buscador.execute()); 
 	}
 	
 	@Test
 	public void usuarioGratuitoNoRecibeLasSuperOfertas() {
 		Usuario unTipoTacanio = new Usuario("Ebenezer", "Scrooge", "0000", new SuscripcionGratuita());
-		Buscador<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoTacanio);
+		Query<Asiento> buscador = new BuscadorDeAsientos(asientosDisponibles, unTipoTacanio);
 		
 		List<Asiento> asientosComunes = Arrays.asList(asientoNormalEnPrimera, asientoNormalEnTurista);
-		assertEquals(asientosComunes, buscador.buscar()); 
+		assertEquals(asientosComunes, buscador.execute()); 
 	}
 }

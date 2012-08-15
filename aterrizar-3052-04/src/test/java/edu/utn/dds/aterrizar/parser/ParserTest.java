@@ -35,14 +35,14 @@ public class ParserTest {
 	@Test 
 	public void generacionDeListaDeAsientos(){
 		List <VueloDirecto> vuelosParseados= new Parser().parseDisponibles(asientosLanchita, 
-				new Busqueda("EZE", "USA", "20/12/2012"), mock(AerolineaLanchitaWrapper.class));
+				new Busqueda("EZE","USA","20/12/2012", "21/12/2012","14:00", "02:25"), mock(AerolineaLanchitaWrapper.class));
 		
 		Assert.assertFalse(vuelosParseados.isEmpty());
 	}
 	
 	@Test(expected= ParserException.class) 
 	public void fallaDeParseo(){
-		 new Parser().parseDisponibles(new String[][]{{}},new Busqueda("EZE", "PER", "20/12/2012"), mock(AerolineaLanchitaWrapper.class));
+		 new Parser().parseDisponibles(new String[][]{{}},mock(Busqueda.class), mock(AerolineaLanchitaWrapper.class));
 	}
 	
 	@Test(expected= ParserException.class)
