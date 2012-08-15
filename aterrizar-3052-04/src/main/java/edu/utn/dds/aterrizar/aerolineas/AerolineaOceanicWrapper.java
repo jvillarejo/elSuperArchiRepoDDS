@@ -6,7 +6,7 @@ import com.oceanic.AerolineaOceanic;
 
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.Vuelo;
+import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
 public class AerolineaOceanicWrapper implements Aerolinea {
 
@@ -19,7 +19,7 @@ public class AerolineaOceanicWrapper implements Aerolinea {
 	}
 	
 	@Override
-	public List<Asiento> buscarAsientos(Vuelo vuelo) {
+	public List<Asiento> buscarAsientos(Busqueda vuelo) {
 		// TODO pensar la busqueda ya que oceanic tiene dos métodos
 		return null;
 	}

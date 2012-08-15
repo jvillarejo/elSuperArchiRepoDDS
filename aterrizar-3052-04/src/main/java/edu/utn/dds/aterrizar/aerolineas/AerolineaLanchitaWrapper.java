@@ -6,6 +6,7 @@ import com.lanchita.AerolineaLanchita;
 import com.lanchita.excepciones.CodigoErroneoException;
 import com.lanchita.excepciones.EstadoErroneoException;
 
+import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.parser.*;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.*;
@@ -37,11 +38,11 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 	 * (un array de arrays de String) y los parsea para obtener una lista de Asientos. 
 	 */
 	@Override
-	public List<Asiento> buscarAsientos(Vuelo vuelo) {
+	public List<Vuelo> buscarVuelos(Busqueda busqueda) {
 
-		String[][] asientosDisponibles = aerolineaLanchita.getAsientosDisponibles(vuelo.getOrigen(), vuelo.getDestino(), vuelo.getFecha());
+		String[][] asientosDisponibles = aerolineaLanchita.getAsientosDisponibles(busqueda.getOrigen(), busqueda.getDestino(), busqueda.getFecha());
 
-		return this.lanchitaParser.parseDisponibles(asientosDisponibles, vuelo, this);
+		return this.lanchitaParser.parseDisponibles(asientosDisponibles, busqueda, this);
 	}
 
 	/**
