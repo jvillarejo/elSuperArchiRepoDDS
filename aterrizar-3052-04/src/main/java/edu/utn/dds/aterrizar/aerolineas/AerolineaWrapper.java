@@ -50,10 +50,10 @@ public abstract class AerolineaWrapper {
 		}
 	}
 	
-	public Reserva reservaExpirada(String codigo, String numeroAsiento){
+	public Usuario reservaExpirada(String codigo, String numeroAsiento){
 		Reserva reserva = contieneCodigo(joinStrings(codigo, numeroAsiento));
 		reserva.getUsuarios().remove(0);
-		return new Reserva();
+		return reserva.getUsuarios().get(0);
 	}
 	
 	private boolean contieneUsuario(Reserva reserva, String dni) {

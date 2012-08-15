@@ -68,9 +68,10 @@ public class AerolineaOceanicWrapperImpostor extends AerolineaWrapper implements
 	}
 	
 	@Override
-	public Reserva reservaExpirada(String codigo, String numeroAsiento){
-		Reserva nuevaReserva = super.reservaExpirada(codigo, numeroAsiento);
-		aerolineaOceanicImpostor.reservar(nuevaReserva.getUsuarios().get(0).getDni(), codigo, new Integer(numeroAsiento));
-		return nuevaReserva;
+	public Usuario reservaExpirada(String codigo, String numeroAsiento){
+		aerolineaOceanicImpostor.eliminarReserva(codigo, numeroAsiento);
+		Usuario usuario = super.reservaExpirada(codigo, numeroAsiento);
+		aerolineaOceanicImpostor.reservar(usuario.getDni(), codigo, new Integer(numeroAsiento));
+		return usuario;
 	}
 }

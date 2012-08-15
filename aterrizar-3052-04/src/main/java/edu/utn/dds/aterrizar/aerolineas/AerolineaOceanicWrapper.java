@@ -66,9 +66,9 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 	}
 	
 	@Override
-	public Reserva reservaExpirada(String codigo, String numeroAsiento){
-		Reserva nuevaReserva = super.reservaExpirada(codigo, numeroAsiento);
-		aerolineaOceanic.reservar(nuevaReserva.getUsuarios().get(0).getDni(), codigo, new Integer(numeroAsiento));
-		return nuevaReserva;
+	public Usuario reservaExpirada(String codigo, String numeroAsiento){
+		Usuario usuario = super.reservaExpirada(codigo, numeroAsiento);
+		aerolineaOceanic.reservar(usuario.getDni(), codigo, new Integer(numeroAsiento));
+		return usuario;
 	}
 }

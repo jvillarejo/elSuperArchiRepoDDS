@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.lanchita.AerolineaLanchita;
-import com.oceanic.AerolineaOceanic;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
@@ -100,5 +99,31 @@ public class ReservaTest {
 		usuarioEstandar.reservar(asientoOceanic);
 		assertEquals("R", asientoOceanic.getEstado());
 		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, otroUsuarioEstandar);
+	}
+	
+	@Test
+	public void reservanDosExpiroElPrimeroYElSegundoCompra() {
+		asientoOceanic.setCodigoDeVuelo("OC100");
+		asientoOceanic.setNumeroDeAsiento(10);
+		asientoOceanic.setEstado("D");
+		usuarioEstandar.reservar(asientoOceanic);
+		assertEquals("R", asientoOceanic.getEstado());
+		otroUsuarioEstandar.reservar(asientoOceanic);
+		Usuario usuario = comunicadorDeAerolineaOceanic.reservaExpirada("OC100", "10");
+		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, otroUsuarioEstandar);
+		assertEquals("C", asientoOceanic.getEstado());
+	}
+	
+	@Test
+	public void reservanDosCompraElPrimeroYElSegundoFalla() {
+		asientoOceanic.setCodigoDeVuelo("OC100");
+		asientoOceanic.setNumeroDeAsiento(10);
+		asientoOceanic.setEstado("D");
+		usuarioEstandar.reservar(asientoOceanic);
+		assertEquals("R", asientoOceanic.getEstado());
+		otroUsuarioEstandar.reservar(asientoOceanic);
+//		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, usuarioEstandar);
+//		assertEquals("C", asientoOceanic.getEstado());
+//		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, otroUsuarioEstandar);
 	}
 }

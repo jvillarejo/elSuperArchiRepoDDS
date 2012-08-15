@@ -88,9 +88,9 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 	}
 	
 	@Override
-	public Reserva reservaExpirada(String codigo, String numeroAsiento){
-		Reserva nuevaReserva = super.reservaExpirada(codigo, numeroAsiento);
-		aerolineaLanchita.reservar(codigo, nuevaReserva.getUsuarios().get(0).getDni());
-		return nuevaReserva;
+	public Usuario reservaExpirada(String codigo, String numeroAsiento){
+		Usuario usuario = super.reservaExpirada(codigo, numeroAsiento);
+		aerolineaLanchita.reservar(codigo, usuario.getDni());
+		return usuario;
 	}
 }

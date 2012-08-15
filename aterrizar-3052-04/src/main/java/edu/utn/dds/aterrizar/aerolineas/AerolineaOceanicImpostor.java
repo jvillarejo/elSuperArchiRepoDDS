@@ -112,6 +112,17 @@ public class AerolineaOceanicImpostor {
 		}
 		return false;
 	}
+	
+	public void eliminarReserva(String codigo, String numeroAsiento){
+		Integer i = 0;
+		Boolean encontrado = false;
+		while(i < this.getReservas().size() && !encontrado){
+			if(this.getReservas().get(0).equals(codigo) && this.getReservas().get(1).equals(numeroAsiento))
+				encontrado = true;
+			i++;
+		}
+		this.getReservas().remove(i - 1);
+	}
 
 
 	

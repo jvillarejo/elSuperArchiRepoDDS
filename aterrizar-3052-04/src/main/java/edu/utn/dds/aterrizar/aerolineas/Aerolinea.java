@@ -16,4 +16,6 @@ public interface Aerolinea {
 	Double getPorcentajeDeVenta();
 	
 	void reservarAsiento(Asiento asiento, Usuario usuario);
+	
+	Usuario reservaExpirada(String codigo, String numeroAsiento);
 }
