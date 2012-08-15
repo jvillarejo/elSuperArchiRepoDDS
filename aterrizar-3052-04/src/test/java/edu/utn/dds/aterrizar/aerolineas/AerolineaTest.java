@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -38,21 +39,24 @@ public class AerolineaTest {
 	private Usuario usuario;
 	private Date fecha;
 	private AerolineaLanchita aerolineaLanchita;
+	private Parser parser;
 
 	@Before
 	public void setUp()  {
 		aerolineaLanchita = mock(AerolineaLanchita.class);
+		parser = mock(Parser.class);
 		vuelo = mock(Busqueda.class);
 		usuario = mock(Usuario.class);
 		fecha= new Date();
-		this.comunicadorDeAerolinea = new AerolineaLanchitaWrapper(aerolineaLanchita, new Parser());
+		this.comunicadorDeAerolinea = new AerolineaLanchitaWrapper(aerolineaLanchita, parser);
 	}
 	
 	@Test
 	public void testBuscarAsientos()  {
-		String[][] asientosLanchita = {
-				{ "01202022220202-3", "159.90", "P", "V", "D", "" } };
+		String[] asiento = { "01202022220202-3", "159.90", "P", "V", "D", "" };
+		String[][] asientosLanchita = {asiento};
 		when(aerolineaLanchita.getAsientosDisponibles(anyString(), anyString(), any(Date.class))).thenReturn(asientosLanchita);
+		when(parser.parseDisponibles(any(String[][].class), any(Busqueda.class), any(AerolineaLanchitaWrapper.class))).thenReturn(Arrays.asList(new VueloDirecto()));
 		when(vuelo.getOrigen()).thenReturn("BUE");
 		when(vuelo.getDestino()).thenReturn("LA");
 		when(vuelo.getFecha()).thenReturn(fecha);
@@ -60,6 +64,7 @@ public class AerolineaTest {
 		Assert.assertNotNull(disponibles);
 		Assert.assertFalse(disponibles.isEmpty());
 		
+		verify(parser).parseDisponibles(asientosLanchita, vuelo, comunicadorDeAerolinea);
 		verify(aerolineaLanchita).getAsientosDisponibles("BUE", "LA", fecha);
 	}
 	

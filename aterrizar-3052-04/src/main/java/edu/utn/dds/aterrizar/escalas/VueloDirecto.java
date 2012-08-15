@@ -21,8 +21,8 @@ protected Aerolinea aerolinea;
 		String fechaLlegada, Aerolinea aerolinea) {
 	this.origen= origen;
 	this.destino= destino;
-	this.fechaSalida= new DateTime(SimpleDateParser.ISO8601(), fechaSalida);
-	this.fechaLlegada = new DateTime(SimpleDateParser.ISO8601(), fechaLlegada);
+	this.fechaSalida= new DateTime(SimpleDateParser.LatinAmerican(), fechaSalida);
+	this.fechaLlegada = new DateTime(SimpleDateParser.LatinAmerican(), fechaLlegada);
 	this.aerolinea= aerolinea;
 	}
 	

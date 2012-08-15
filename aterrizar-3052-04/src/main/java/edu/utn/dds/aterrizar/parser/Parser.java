@@ -45,9 +45,9 @@ public List<VueloDirecto> parseDisponibles(String[][] asientos, Busqueda busqued
 	public VueloDirecto create (String[] asientoLanchita, Busqueda busqueda, Aerolinea aerolinea){
 		//ahora el asiento es algo como
 		// "01202022220202-3", "159.90", "P", "V", "D", "", "14:00","02:25","EZE","USA","20/12/2012","21/12/2012"
-		String flightCode = this.getFlightCode(asientoLanchita[0]);
 		VueloDirecto vuelo;
-		try{	
+		try{
+        String flightCode = this.getFlightCode(asientoLanchita[0]);
 		busqueda.setCode(flightCode);
 		Asiento asiento = new Asiento(busqueda, aerolinea);
 		if (verificarSiExisteElVuelo(flightCode)){
@@ -88,6 +88,7 @@ public List<VueloDirecto> parseDisponibles(String[][] asientos, Busqueda busqued
 			String codigoLanchita, Vuelo vuelo) {
 		String[] values = codigoLanchita.split("-");
 		vuelo.setCodigo(values[0]);
+		asiento.setCodigoDeVuelo(values[0]);
 		asiento.setNumeroDeAsiento(Integer.valueOf(values[1]));
 
 	}
