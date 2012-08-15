@@ -26,6 +26,10 @@ public class Usuario {
 		consultasRealizadas = new ArrayList<ConsultaAsientos>();
 	}
 	
+	public void reservar(Asiento asiento) {
+		this.tipoDeSuscripcion.reservar(asiento, this);
+	}
+	
 	public void registrarConsulta(ConsultaAsientos consulta) {
 		this.consultasRealizadas.add(consulta);
 	}
