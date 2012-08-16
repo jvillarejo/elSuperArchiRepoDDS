@@ -37,7 +37,6 @@ public class AerolineaOceanicParser {
 			Vuelo vuelo = findVuelo(vuelos, asiento.getCodigoDeVuelo());
 			vuelo.getAsientos().add(asiento);
 		} catch (VueloNotFoundException e) { 
-			//TODO No me gusta esto muchos parametros ver de refactorizar
 			VueloDirecto vuelo = new VueloDirecto(asiento.getFlight().getOrigen(), 
 					asiento.getFlight().getDestino(), 
 					asientoDTO.getFechaDeSalida(), 

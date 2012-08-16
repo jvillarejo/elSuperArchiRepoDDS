@@ -31,7 +31,11 @@ public class Asiento {
 
 	public void comprar(final Usuario usuario) {
 		this.aerolinea.comprarAsiento(this, usuario);		
-	} 
+	}
+	
+	public void reservar(Usuario usuario){
+		this.aerolinea.reservarAsiento(this, usuario);
+	}
 	
 	public Boolean esSuperOferta() {
 		return 
