@@ -56,6 +56,6 @@ public class VueloDirecto extends Vuelo {
 		Query<Asiento> buscador = new BuscadorDeAsientos(this.getAsientos(), usuario);
 		buscador.agregarFiltros(filtros);
 		
-		this.asientos = buscador.buscar(); 
+		this.asientos = buscador.execute(); 
 	}
 }

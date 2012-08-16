@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sf.staccatocommons.collections.stream.Streams;
+import net.sf.staccatocommons.iterators.thriter.Thriterator;
+
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.escalas.VueloConEscala;
@@ -45,7 +48,7 @@ public class Agencia {
 		Query<Vuelo> buscador = new BuscadorDeVuelos(vuelos);
 		buscador.ordenarPor(consulta.getCriterioOrdenamiento());
 		
-		return buscador.buscar();	
+		return buscador.execute();	
 	}
 	
 	
@@ -59,24 +62,24 @@ public class Agencia {
 		return vuelos;
 	}
 	
-	public List<Vuelo> armarVuelosConEscala(List<VueloDirecto> todosLosVuelos){
-		List<Vuelo> vuelosConEscala= new ArrayList<Vuelo>();
-		for (Vuelo vuelo:todosLosVuelos){
-			ListIterator<VueloDirecto> listIterator = todosLosVuelos.listIterator();
+	public List<VueloConEscala> armarVuelosConEscala(List<VueloDirecto> todosLosVuelos){
+		ListIterator<VueloDirecto> listIterator = todosLosVuelos.listIterator();
+		List<VueloConEscala> vuelosConEscala= new ArrayList<VueloConEscala>();
+			Vuelo vuelo = listIterator.next();
 			while(listIterator.hasNext()){
-			Vuelo next = listIterator.next();
-			//esto es un filter, pero bleh, necesito recorrerlo a mano ¬¬
+				Vuelo next = listIterator.next();
 			if (this.esEscala(vuelo, next)){
 				VueloConEscala nuevo = new VueloConEscala(vuelo, next);
 				vuelosConEscala.add(nuevo);
+				vuelo = next;
 			}
 			}
-		}
+		
 		return vuelosConEscala;
 	}
 
 	public boolean esEscala(Vuelo unVuelo, Vuelo otroVuelo){
-		return unVuelo.getDestino().equalsIgnoreCase(otroVuelo.getOrigen()) && otroVuelo.getFechaSalida().esAnteriorA(unVuelo.getFechaLlegada());
+		return (unVuelo.getDestino().equals(otroVuelo.getOrigen()) && unVuelo.getFechaLlegada().esAnteriorA(otroVuelo.getFechaSalida()));
 	}
 	
 

@@ -36,7 +36,7 @@ public class ReservaTest {
 	@Before
 	public void setUp() {
 		aerolineaLanchita = mock(AerolineaLanchita.class);
-		aerolineaOceanicImpostor = AerolineaOceanicImpostor.getInstance();
+		aerolineaOceanicImpostor = new AerolineaOceanicImpostor();
 		usuarioGratuito = new Usuario("nombre", "apellido", "dni", new SuscripcionGratuita());
 		usuarioVip = new Usuario("nombre", "apellido", "dni", new SuscripcionVip());
 		usuarioEstandar = new Usuario("nombre", "apellido", "dni", new SuscripcionEstandar());
@@ -114,7 +114,7 @@ public class ReservaTest {
 		assertEquals("C", asientoOceanic.getEstado());
 	}
 	
-	@Test
+	@Test(expected = AsientoNoDisponibleException.class)
 	public void reservanDosCompraElPrimeroYElSegundoFalla() {
 		asientoOceanic.setCodigoDeVuelo("OC100");
 		asientoOceanic.setNumeroDeAsiento(10);
@@ -122,8 +122,8 @@ public class ReservaTest {
 		usuarioEstandar.reservar(asientoOceanic);
 		assertEquals("R", asientoOceanic.getEstado());
 		otroUsuarioEstandar.reservar(asientoOceanic);
-//		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, usuarioEstandar);
-//		assertEquals("C", asientoOceanic.getEstado());
-//		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, otroUsuarioEstandar);
+		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, usuarioEstandar);
+		assertEquals("C", asientoOceanic.getEstado());
+		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, otroUsuarioEstandar);
 	}
 }

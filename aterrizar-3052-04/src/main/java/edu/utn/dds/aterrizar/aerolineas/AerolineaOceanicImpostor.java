@@ -9,22 +9,11 @@ import com.oceanic.AsientoDTO;
 
 public class AerolineaOceanicImpostor {
 
-	private static AerolineaOceanicImpostor INSTANCE;
-
 	private List<AsientoDTO> asientosDisponibles = new ArrayList<AsientoDTO>();
 	private List<Object[]> asientosComprados;
 	private List<Object[]> reservas;
 
-	public static AerolineaOceanicImpostor getInstance() {
-		if(INSTANCE == null){
-			INSTANCE = new AerolineaOceanicImpostor();
-		}
-		
-		return INSTANCE;
-		
-	}
-
-	protected AerolineaOceanicImpostor() {
+	public AerolineaOceanicImpostor() {
 		asientosComprados = new ArrayList<Object[]>();
 		reservas = new ArrayList<Object[]>();
 		asientosDisponibles.add(new AsientoDTO("OC100",10,"15/08/2012","17/08/2012","10:35","05:35",new BigDecimal("3150.98"),"Ejecutiva","Pasillo",false,"_BS","SLA"));
