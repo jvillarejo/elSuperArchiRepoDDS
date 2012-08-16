@@ -15,12 +15,12 @@ public class Query<T> {
 		this.elementosFiltrados = elementosFiltrados;
 	}
 
-	public Stream<T> getElementosFiltrados() {
+	public Stream<T> getElementosAFiltrar() {
 		return elementosFiltrados;
 	}
 
 	public void filter(Filtro<T> filtro) {
-		Stream<T> elementosVueltosAFiltrar = filtro.filtrar(this.getElementosFiltrados());
+		Stream<T> elementosVueltosAFiltrar = filtro.filtrar(this.getElementosAFiltrar());
 		this.setElementosFiltrados(elementosVueltosAFiltrar);
 	}
 
@@ -30,11 +30,11 @@ public class Query<T> {
 	}
 
 	public List<T> execute() {
-		return this.getElementosFiltrados().toList();
+		return this.getElementosAFiltrar().toList();
 	}
 	
 	public void ordenarPor(CriterioOrden<T> criterioOrden) {
-		Stream<T> vuelosOrdenados = criterioOrden.ordenar(this.getElementosFiltrados());
+		Stream<T> vuelosOrdenados = criterioOrden.ordenar(this.getElementosAFiltrar());
 		this.setElementosFiltrados(vuelosOrdenados);
 	}
 
