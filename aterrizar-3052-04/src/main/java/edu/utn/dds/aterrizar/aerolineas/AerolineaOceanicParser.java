@@ -1,7 +1,9 @@
 package edu.utn.dds.aterrizar.aerolineas;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.oceanic.AsientoDTO;
 
@@ -45,6 +47,7 @@ public class AerolineaOceanicParser {
 			vuelo.setDestino(asiento.getFlight().getDestino());
 			vuelo.setOrigen(asiento.getFlight().getOrigen());
 			vuelo.agregarAsiento(asiento);
+			vuelos.add(vuelo);
 		}
 		
 	}
@@ -75,11 +78,23 @@ public class AerolineaOceanicParser {
 	}
 	
 	private Ubicacion parseUbicacion(String ubicacion) {
-		return Ubicacion.valueOf(ubicacion.toUpperCase());
+		Map<String, String > map = new HashMap<String, String>();
+		
+		map.put("ventana", "VENTANILLA");
+		map.put("pasillo", "PASILLO");
+		map.put("centro", "CENTRO");
+		
+		return Ubicacion.valueOf(map.get(ubicacion));
 	}
 
 	private Clase parseClase(String clase) {
-		return Clase.valueOf(clase.substring(0, clase.indexOf(" ")).toUpperCase());
+		Map<String, String > map = new HashMap<String, String>();
+		
+		map.put("primera clase", "PRIMERA");
+		map.put("turista", "TURISTA");
+		map.put("ejecutiva", "EJECUTIVA");
+		
+		return Clase.valueOf(map.get(clase));
 	}
 
 	private class VueloNotFoundException extends RuntimeException {
