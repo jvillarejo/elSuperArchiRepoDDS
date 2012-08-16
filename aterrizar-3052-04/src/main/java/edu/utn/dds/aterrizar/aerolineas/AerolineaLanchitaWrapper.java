@@ -6,7 +6,6 @@ import com.lanchita.AerolineaLanchita;
 import com.lanchita.excepciones.CodigoErroneoException;
 import com.lanchita.excepciones.EstadoErroneoException;
 
-import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.escalas.VueloDirecto;
 import edu.utn.dds.aterrizar.parser.*;
 import edu.utn.dds.aterrizar.usuario.Usuario;
@@ -18,7 +17,7 @@ import edu.utn.dds.aterrizar.vuelo.*;
  * @author clari, juani
  *
  */
-public class AerolineaLanchitaWrapper implements Aerolinea {
+public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aerolinea {
    // private static final AerolineaLanchita aerolinea= AerolineaLanchita.getInstance();
 	private static final double PORCENTAJE_DE_VENTA = 0.15;
 	private Parser lanchitaParser;
@@ -30,6 +29,7 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 	 * @param parser
 	 */
 	public AerolineaLanchitaWrapper(AerolineaLanchita aerolineaLanchita, Parser parser ){
+		super();
 		this.lanchitaParser= parser;
 		this.aerolineaLanchita = aerolineaLanchita;
 	}
@@ -57,10 +57,9 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 	 */
 	@Override
 	public void comprarAsiento(Asiento asientoDisponible,Usuario usuario) {
+		super.comprarAsiento(asientoDisponible, usuario);
 		try{
-
-			aerolineaLanchita.comprar(getCodigoLanchita(asientoDisponible) /*, usuario.getDni()*/);
-
+			aerolineaLanchita.comprar(getCodigo(asientoDisponible) /*, usuario.getDni()*/);
 		}
 		catch(EstadoErroneoException e){
 			throw new AsientoNoDisponibleException(e);
@@ -68,17 +67,30 @@ public class AerolineaLanchitaWrapper implements Aerolinea {
 		catch(CodigoErroneoException e1){
 			throw new RuntimeException("Código inválido");
 		}
-	
 		asientoDisponible.setEstado("C");
 	}
 
-	private String getCodigoLanchita(Asiento asientoDisponible) {
-		return asientoDisponible.getCodigoDeVuelo() + "-" + asientoDisponible.getNumeroDeAsiento();
-
-	}
 	@Override
 	public Double getPorcentajeDeVenta() {
 		return PORCENTAJE_DE_VENTA; 
 	}
-
+	
+	@Override
+	public void reservarAsiento(Asiento asiento, Usuario usuario) {
+		try{
+			aerolineaLanchita.reservar(getCodigo(asiento), usuario.getDni());
+			super.reservarAsiento(asiento, usuario);
+		}catch(CodigoErroneoException e){
+			throw new RuntimeException("Codigo recibido no existe", e);
+		}catch(EstadoErroneoException e1){
+			throw new AsientoNoDisponibleException(e1);
+		}
+	}
+	
+	@Override
+	public Usuario reservaExpirada(String codigo, String numeroAsiento){
+		Usuario usuario = super.reservaExpirada(codigo, numeroAsiento);
+		aerolineaLanchita.reservar(codigo, usuario.getDni());
+		return usuario;
+	}
 }
