@@ -27,11 +27,13 @@ public class AerolineaOceanicWrapperImpostor extends AerolineaWrapper implements
 	
 	@Override
 	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
-		//TODO modificar el origen y destino para que cumpla con Oceanic
 		return this.parser.parse(
-				aerolineaOceanicImpostor.asientosDisponiblesParaOrigenYDestino(transformarCiudad(busqueda.getOrigen()), transformarCiudad(busqueda.getDestino()), SimpleDateParser.LatinAmerican().format(busqueda.getFecha())),
-						busqueda,
-						this);
+				aerolineaOceanicImpostor.asientosDisponiblesParaOrigenYDestino(
+						transformarCiudad(busqueda.getOrigen()), 
+						transformarCiudad(busqueda.getDestino()), 
+						SimpleDateParser.LatinAmerican().format(busqueda.getFechaSalida().getDate())),
+				busqueda,
+				this);
 	}
 	
 	private String transformarCiudad(String ciudad) {
