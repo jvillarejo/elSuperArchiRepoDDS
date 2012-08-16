@@ -50,8 +50,9 @@ public class Agencia {
 	public List<Vuelo>buscarVuelosConEscala(String origen, String destino, String fechaSalida, Aerolinea aerolinea){
 		//buscamos los vuelos directos, como siempre
 		List<Vuelo>vuelos= new ArrayList<Vuelo>();
-		List<VueloDirecto>todosLosVuelos= aerolinea.buscarVuelos(new Busqueda(origen, "", fechaSalida, "", "",""));
-				todosLosVuelos.addAll(aerolinea.buscarVuelos(new Busqueda("",destino,"","","","")));
+		//FIXME: hacer esto bien, teniendo en cuenta los null.
+		List<VueloDirecto>todosLosVuelos= aerolinea.buscarVuelos(new Busqueda(origen, null, fechaSalida, "", "",""));
+		todosLosVuelos.addAll(aerolinea.buscarVuelos(new Busqueda(null, destino,"","","","")));
 		//y agregamos los vuelos con escala
 	   vuelos.addAll(this.armarVuelosConEscala(todosLosVuelos));
 		return vuelos;

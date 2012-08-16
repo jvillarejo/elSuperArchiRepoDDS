@@ -28,14 +28,12 @@ private VueloDirecto otroVuelo= new VueloDirecto("LA", "DC", "18/08/2012", "30/0
 private List<VueloDirecto> vuelosDisponibles = new ArrayList<VueloDirecto>();
 	@Test
 	public void testEsEscala() {
-		assertTrue(unVuelo.getDestino().equals(otroVuelo.getOrigen()));
-		assertTrue(unVuelo.getFechaLlegada().esAnteriorA(otroVuelo.getFechaSalida()));
 	assertTrue(new Agencia().esEscala(unVuelo,otroVuelo));
 	
 	}
 	
 	@Test
-	public void testBuscarVuelosConEscalasLanchita(){
+	public void testArmarVuelosConEscalaConAsientosDeLanchita(){
 		vuelosDisponibles.add(unVuelo);
 		vuelosDisponibles.add(otroVuelo);
 		List<VueloConEscala> vuelos = new Agencia().armarVuelosConEscala(vuelosDisponibles);

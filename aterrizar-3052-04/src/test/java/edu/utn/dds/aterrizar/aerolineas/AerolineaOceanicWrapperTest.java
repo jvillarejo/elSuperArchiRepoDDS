@@ -83,7 +83,7 @@ public class AerolineaOceanicWrapperTest {
 	@Test(expected=AsientoNoDisponibleException.class)
 	public void testComprarAsientoNoDisponible() {
 		
-		when(aerolineaOceanic.comprarSiHayDisponibilidad(anyString(), anyString(), anyInt())).thenReturn(Boolean.FALSE);
+		when(aerolineaOceanic.comprarSiHayDisponibilidad(anyString(), anyString(), anyInt())).thenReturn(false);
 		
 		aerolineaOceanicWrapper.comprarAsiento(asientoDisponible, usuario);
 		

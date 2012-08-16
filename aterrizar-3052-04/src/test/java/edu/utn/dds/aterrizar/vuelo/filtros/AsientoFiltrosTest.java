@@ -68,6 +68,11 @@ public class AsientoFiltrosTest {
 		Query<Asiento> buscador = new Query<Asiento>(Arrays.asList(asientoBarato, asientoCaro));
 		buscador.filter(new FiltroPrecioMinimo(2000D));
 
+		//construir
+		//agregar
+		//filtre
+		//ejecutar
+        		
 		assertEquals(Arrays.asList(asientoCaro), buscador.execute());
 	}
 	
