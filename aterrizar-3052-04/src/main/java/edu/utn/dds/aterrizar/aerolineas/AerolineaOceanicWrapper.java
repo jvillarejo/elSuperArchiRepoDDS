@@ -10,7 +10,7 @@ import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
-public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolinea {
+public class AerolineaOceanicWrapper implements Aerolinea {
 
 	private static final Double PORCENTAJE_DE_VENTA = 0.15;
 	
@@ -18,7 +18,6 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 	private AerolineaOceanicParser parser; 
 	
 	public AerolineaOceanicWrapper(AerolineaOceanic aerolineaOceanic, AerolineaOceanicParser parser) {
-		super();
 		this.aerolineaOceanic = aerolineaOceanic;
 		this.parser = parser;
 	}
@@ -47,10 +46,7 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 	@Override
 	public void comprarAsiento(Asiento asientoDisponible, Usuario usuario) {
 		Boolean fueComprado = aerolineaOceanic.comprarSiHayDisponibilidad(usuario.getDni(), asientoDisponible.getCodigoDeVuelo(), asientoDisponible.getNumeroDeAsiento());
-		if(fueComprado) {
-			super.comprarAsiento(asientoDisponible, usuario);
-			asientoDisponible.setEstado("C");
-		}else{
+		if(!fueComprado) {
 			throw new AsientoNoDisponibleException("No se pudo comprar el asiento");
 		}
 		
@@ -62,17 +58,7 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 	public Double getPorcentajeDeVenta() {
 		return PORCENTAJE_DE_VENTA;
 	}
+
 	
-	@Override
-	public void reservarAsiento(Asiento asiento, Usuario usuario) {
-		aerolineaOceanic.reservar(usuario.getDni(), asiento.getCodigoDeVuelo(), asiento.getNumeroDeAsiento());
-		super.reservarAsiento(asiento, usuario);
-	}
-	
-	@Override
-	public Usuario reservaExpirada(String codigo, String numeroAsiento){
-		Usuario usuario = super.reservaExpirada(codigo, numeroAsiento);
-		aerolineaOceanic.reservar(usuario.getDni(), codigo, new Integer(numeroAsiento));
-		return usuario;
-	}
+
 }

@@ -111,5 +111,5 @@ public class AerolineaTest {
 		
 		comunicadorDeAerolinea.comprarAsiento(asientoDisponible, usuario);
 		verify(aerolineaLanchita).comprar("01202022220202-3" /*, "35247037"*/);
-	}
+}
 }
