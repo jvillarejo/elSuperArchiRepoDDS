@@ -10,7 +10,7 @@ public abstract class AerolineaWrapper {
 	private ArrayList<Reserva> reservas;
 	private ArrayList<String> codigosComprados;
 	
-	public AerolineaWrapper(){
+	public AerolineaWrapper() {
 		this.reservas = new ArrayList<Reserva>();
 		this.codigosComprados = new ArrayList<String>();
 	}
@@ -41,10 +41,11 @@ public abstract class AerolineaWrapper {
 	protected void comprarAsiento(Asiento asientoDisponible, Usuario usuario){
 		String codigo = getCodigo(asientoDisponible);
 		Reserva reserva = contieneCodigo(codigo);
-		if(usuario.getDni().equals(reserva.getUsuarios().get(0).getDni())){
+		if(reserva == null){
 			codigosComprados.add(codigo);
-			if(reserva != null)
-				reservas.remove(reserva);
+		}else if(usuario.getDni().equals(reserva.getUsuarios().get(0).getDni())){
+			codigosComprados.add(codigo);
+			reservas.remove(reserva);
 		}else{
 			throw new AsientoNoDisponibleException("El asiento ha sido reservado por otra persona");
 		}

@@ -1,13 +1,40 @@
 elSuperArchiRepoDDS
 ===================
 
+Para correr el proyecto: 
+	Crear en la carpeta .m2 el archivo settings.xml
+	Pegar lo siguiente
+	
+	<settings xmlns="http://maven.apache.org/POM/4.0.0"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0  http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
-Seteado el proyecto aterrizar
+    <profiles>
+                <profile>
+                        <id>uqbar-wiki</id>
+                        <repositories>
+                                <repository>
+                                        <id>uqbar-wiki.org-releases</id>
+                                        <name>uqbar-wiki.org-releases</name>
+                                        <url>http://uqbar-wiki.org/mvn/releases</url>
+                                </repository>
+                                <repository>
+                                    <snapshots/>
+                                    <id>uqbar-wiki.org-snapshots</id>
+                                    <name>uqbar-wiki.org-snapshots</name>
+                                    <url>http://uqbar-wiki.org/mvn/snapshots</url>
+                                </repository>
+                        </repositories>
+                </profile>
+    </profiles>
 
-Para correrlo se necesitan los jar de Lanchita y Oceanic que subieron a la página. Para instalarlo hacemos lo siguiente:
-  - Desde una consola, nos paramos en el repo y corremos el script: _$ sh install_jar.sh_. Esto nos baja los jar y los agrega como Maven dependencies
-  
+    <activeProfiles>
+        <activeProfile>uqbar-wiki</activeProfile>
+    </activeProfiles>
 
+</settings>
+
+	Ejecutar en el proyecto de dominio "mvn clean compile install"
+	Luego ejecutar "mvn compile" en el proyecto de la UI
 
 
 

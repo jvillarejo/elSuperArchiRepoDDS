@@ -54,8 +54,6 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 			throw new AsientoNoDisponibleException("No se pudo comprar el asiento");
 		}
 		
-		asientoDisponible.setEstado("C");
-		
 	}
 
 	@Override
