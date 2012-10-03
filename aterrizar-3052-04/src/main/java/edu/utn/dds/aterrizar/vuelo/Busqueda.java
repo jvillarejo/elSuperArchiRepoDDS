@@ -23,10 +23,14 @@ public class Busqueda {
 	public Busqueda(String origen, String destino,  String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada){
 		this.origen=origen;
 		this.destino=destino;
+		try{
 		this.setFechaSalida(new DateTime(SimpleDateParser.LatinAmerican(), fechaSalida));
 		this.setFechaLlegada(new DateTime(SimpleDateParser.LatinAmerican(), fechaLlegada));
 		this.setHoraSalida(horaSalida);
 		this.setHoraLlegada(horaLlegada);
+		}
+		catch(NullPointerException e){
+		}
 	}
 
 	public String getCodigo() {
