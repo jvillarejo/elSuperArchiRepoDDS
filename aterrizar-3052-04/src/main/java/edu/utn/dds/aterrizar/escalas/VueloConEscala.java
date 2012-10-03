@@ -3,6 +3,7 @@ package edu.utn.dds.aterrizar.escalas;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
@@ -17,6 +18,10 @@ import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
 public class VueloConEscala extends Vuelo {
 	private List<Vuelo> vuelos= new ArrayList<Vuelo>();
 
+	public VueloConEscala(){
+		super();
+	}
+	
 	public VueloConEscala(Vuelo vuelo, Vuelo next) {
 		super(); 
 		this.vuelos.add(vuelo);
