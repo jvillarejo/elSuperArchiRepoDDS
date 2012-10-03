@@ -23,22 +23,28 @@ public class EscalasTest {
 
 private Aerolinea lanchita = mock(AerolineaLanchitaWrapper.class);
 private Aerolinea oceanic = mock(AerolineaOceanicWrapper.class);
-private VueloDirecto unVuelo= 	new VueloDirecto("BA", "LA", "14/08/2012", "17/08/2012", lanchita);
-private VueloDirecto otroVuelo= new VueloDirecto("LA", "DC", "18/08/2012", "30/08/2012", lanchita);
 private List<VueloDirecto> vuelosDisponibles = new ArrayList<VueloDirecto>();
-	@Test
-	public void testEsEscala() {
-	assertTrue(new Agencia().esEscala(unVuelo,otroVuelo));
-	
+
+@Before
+	public void setUp(){
+		vuelosDisponibles.add(new VueloDirecto("BA", "LA", "14/08/2012", "17/08/2012", lanchita));
+		vuelosDisponibles.add(new VueloDirecto("LA", "DC", "18/08/2012", "30/08/2012", lanchita));
+		vuelosDisponibles.add(new VueloDirecto("BA", "LA", "10/10/2012", "15/10/2012", oceanic));
+		vuelosDisponibles.add(new VueloDirecto("LA", "MX", "18/10/2012", "26/10/2012", oceanic));
 	}
 	
 	@Test
-	public void testArmarVuelosConEscalaConAsientosDeLanchita(){
-		vuelosDisponibles.add(unVuelo);
-		vuelosDisponibles.add(otroVuelo);
-		List<VueloConEscala> vuelos = new Agencia().armarVuelosConEscala(vuelosDisponibles);
+		public void testArmarVuelosConEscala(){
+			List<VueloConEscala> vuelos = new Agencia().armarVuelosConEscala(vuelosDisponibles);
+			assertFalse(vuelos.isEmpty());
+			assertEquals(2, vuelos.size());
+		}
+	
+	@Test 
+	public void testBuscarVuelosConEscalaDeLanchita(){
+		List<Vuelo> vuelos = new Agencia().buscarVuelosConEscala("EZE", "USA", "14/08/2012", lanchita);
 		assertFalse(vuelos.isEmpty());
-		assertTrue(vuelos.get(0).getVuelos().containsAll(vuelosDisponibles));
+		
 	}
 	
 	@Test
