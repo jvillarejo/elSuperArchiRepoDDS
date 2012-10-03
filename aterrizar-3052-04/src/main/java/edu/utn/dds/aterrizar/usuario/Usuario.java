@@ -72,5 +72,9 @@ public class Usuario {
 	public void registrarCompra(Asiento asiento) {
 			this.comprasEfectuadas.add(asiento.adaptarNuevoAsientoConPrecioPara(this));
 	}
+	
+	public String getNombreCompleto() {
+		return this.nombre + " " + this.apellido;
+	}
 
 }

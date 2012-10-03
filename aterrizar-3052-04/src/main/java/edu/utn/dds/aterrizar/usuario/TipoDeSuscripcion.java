@@ -5,6 +5,7 @@ import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
 import edu.utn.dds.aterrizar.vuelo.filtros.FiltroSuperOfertas;
 
+//TODO Refactorizar -> Solo deberia haber una instancia de cada una de las suscripciones, Usar enum o hacer protected el constructor e instanciarlos acá.
 public abstract class TipoDeSuscripcion {
 	
 	final Double RECARGO_DEFAULT = 0.0;
