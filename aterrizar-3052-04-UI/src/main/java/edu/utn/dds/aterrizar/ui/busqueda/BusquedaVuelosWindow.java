@@ -16,11 +16,10 @@ import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 
-
 public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 
-	public BusquedaVuelosWindow(WindowOwner parent, Busqueda model) {
-		super(parent, model);
+	public BusquedaVuelosWindow(WindowOwner parent) {
+		super(parent, new Busqueda());
 	//	this.getModelObject().search();
 	}
 
