@@ -1,4 +1,4 @@
-package edu.utn.dds.aterrizar.ui.busqueda;
+package edu.utn.dds.aterrizar.ui.transformers;
 
 public class EnumUtils {
 

@@ -2,15 +2,11 @@ package edu.utn.dds.aterrizar.ui.busqueda;
 
 import java.awt.Color;
 
-import edu.utn.dds.aterrizar.homes.UsuarioHome;
-import edu.utn.dds.aterrizar.ui.main.AterrizarMainWindow;
+import edu.utn.dds.aterrizar.ui.transformers.*;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
 import org.uqbar.arena.layout.ColumnLayout;
-import org.uqbar.arena.layout.HorizontalLayout;
-import org.uqbar.arena.layout.VerticalLayout;
-import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
