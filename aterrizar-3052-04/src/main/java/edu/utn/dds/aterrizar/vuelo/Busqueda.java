@@ -2,9 +2,6 @@ package edu.utn.dds.aterrizar.vuelo;
 
 import edu.utn.dds.aterrizar.manejoDeFechas.*;
 
-import java.util.Date;
-
-
 /**
  * Representa los parámetros de consulta de busqueda
  * @author clari, juani
@@ -20,9 +17,11 @@ public class Busqueda {
 	private String horaSalida;
 	private String horaLlegada;
 	
+	public Busqueda() {}
+	
 	public Busqueda(String origen, String destino,  String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada){
-		this.origen=origen;
-		this.destino=destino;
+		this.setOrigen(origen);
+		this.setDestino(destino);
 		this.setFechaSalida(new DateTime(SimpleDateParser.LatinAmerican(), fechaSalida));
 		this.setFechaLlegada(new DateTime(SimpleDateParser.LatinAmerican(), fechaLlegada));
 		this.setHoraSalida(horaSalida);
@@ -82,6 +81,14 @@ public class Busqueda {
 
 	public void setHoraLlegada(String horaLlegada) {
 		this.horaLlegada = horaLlegada;
+	}
+
+	public void setOrigen(String origen) {
+		this.origen = origen;
+	}
+
+	public void setDestino(String destino) {
+		this.destino = destino;
 	}
 
 }
