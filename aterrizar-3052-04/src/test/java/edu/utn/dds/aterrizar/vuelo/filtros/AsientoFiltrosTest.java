@@ -52,7 +52,7 @@ public class AsientoFiltrosTest {
 		asientoCaro.setPrecio(5000D);
 		
 		Query<Asiento> buscador = new Query<Asiento>(Arrays.asList(asientoBarato, asientoCaro));
-		buscador.filter(new FiltroPrecioMaximo(4500D));
+		buscador.addFilter(new FiltroPrecioMaximo(4500D));
 
 		assertEquals(Arrays.asList(asientoBarato), buscador.execute());
 	}
@@ -66,7 +66,7 @@ public class AsientoFiltrosTest {
 		asientoCaro.setPrecio(5000D);
 		
 		Query<Asiento> buscador = new Query<Asiento>(Arrays.asList(asientoBarato, asientoCaro));
-		buscador.filter(new FiltroPrecioMinimo(2000D));
+		buscador.addFilter(new FiltroPrecioMinimo(2000D));
 
 		//construir
 		//agregar
@@ -88,7 +88,7 @@ public class AsientoFiltrosTest {
 		
 		List<Asiento> asientos = Arrays.asList(asientoLibre, asientoReservado, otroAsientoReservado);
 		Query<Asiento> buscador = new Query<Asiento>(asientos);
-		buscador.filter(new FiltroLibres());
+		buscador.addFilter(new FiltroLibres());
 		
 		assertEquals(Arrays.asList(asientoLibre), buscador.execute());
 	}
@@ -106,7 +106,7 @@ public class AsientoFiltrosTest {
 		
 		List<Asiento> asientos = Arrays.asList(asientoBarato, asientoCaro, asientoCarisimo);
 		Query<Asiento> buscador = new Query<Asiento>(asientos);
-		buscador.agregarFiltros(new FiltroPrecioMaximo(5500D), new FiltroPrecioMinimo(2000D));
+		buscador.addManyFilters(new FiltroPrecioMaximo(5500D), new FiltroPrecioMinimo(2000D));
 
 		assertEquals(Arrays.asList(asientoCaro), buscador.execute());
 	}
@@ -115,7 +115,7 @@ public class AsientoFiltrosTest {
 	public void buscarAsientosEnElPasillo() {
 		List<Asiento> asientosEnElPasillo = Arrays.asList(asientoPasilloEnPrimera);
 		Query<Asiento> buscador = new Query<Asiento>(asientosEnElPasillo);
-		buscador.filter( new FiltroPorUbicacion(Ubicacion.PASILLO));
+		buscador.addFilter( new FiltroPorUbicacion(Ubicacion.PASILLO));
 
 		assertEquals(asientosEnElPasillo, buscador.execute());
 	}
@@ -124,7 +124,7 @@ public class AsientoFiltrosTest {
 	public void buscarAsientosEnVentanilla() {
 		List<Asiento> asientosEnVentanilla = Arrays.asList(asientoVentanillaEnTurista, asientoVentanillaEnEjecutivo);
 		Query<Asiento> buscador = new Query<Asiento>(asientosEnVentanilla);
-		buscador.filter(new FiltroPorUbicacion(Ubicacion.VENTANILLA));
+		buscador.addFilter(new FiltroPorUbicacion(Ubicacion.VENTANILLA));
 		
 		assertEquals(asientosEnVentanilla, buscador.execute());
 	}
@@ -133,7 +133,7 @@ public class AsientoFiltrosTest {
 	public void buscarAsientosEnPrimeraClase() {
 		List<Asiento> asientosEnPrimera = Arrays.asList(asientoCentroEnPrimera, asientoPasilloEnPrimera);
 		Query<Asiento> buscador = new Query<Asiento>(asientosEnPrimera);
-		buscador.filter(new FiltroPorClase(Clase.PRIMERA));
+		buscador.addFilter(new FiltroPorClase(Clase.PRIMERA));
 
 		assertEquals(asientosEnPrimera, buscador.execute());
 	}
@@ -141,7 +141,7 @@ public class AsientoFiltrosTest {
 	@Test
 	public void buscarAsientosVentanillaEnPrimera() {
 		Query<Asiento> buscador = new Query<Asiento>(asientosDisponibles);
-		buscador.agregarFiltros(new FiltroPorUbicacion(Ubicacion.VENTANILLA), new FiltroPorClase(Clase.PRIMERA));
+		buscador.addManyFilters(new FiltroPorUbicacion(Ubicacion.VENTANILLA), new FiltroPorClase(Clase.PRIMERA));
 		
 		assertTrue(buscador.execute().isEmpty());
 	}
@@ -149,7 +149,7 @@ public class AsientoFiltrosTest {
 	@Test
 	public void buscarAsientosEnTuristaOEnEjecutiva() {
 		Query<Asiento> buscador = new Query<Asiento>(asientosDisponibles);
-		buscador.agregarFiltros(new FiltroPorClase(Clase.TURISTA, Clase.EJECUTIVA));
+		buscador.addManyFilters(new FiltroPorClase(Clase.TURISTA, Clase.EJECUTIVA));
 		
 		assertEquals(Arrays.asList(asientoVentanillaEnTurista, asientoVentanillaEnEjecutivo), buscador.execute());
 	}
@@ -159,7 +159,7 @@ public class AsientoFiltrosTest {
 		List<Asiento> asientosVentanillaEnTurista = Arrays.asList(asientoVentanillaEnTurista);
 		
 		Query<Asiento> buscador = new Query<Asiento>(asientosDisponibles);
-		buscador.agregarFiltros(new FiltroPorUbicacion(Ubicacion.VENTANILLA), new FiltroPorClase(Clase.TURISTA));
+		buscador.addManyFilters(new FiltroPorUbicacion(Ubicacion.VENTANILLA), new FiltroPorClase(Clase.TURISTA));
 
 		assertEquals(asientosVentanillaEnTurista, buscador.execute());
 	}

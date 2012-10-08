@@ -41,7 +41,7 @@ public class Agencia {
 			vuelo.filtrarAsientos(consulta.getFiltros(), usuario);
 			
 		Query<Vuelo> buscador = new Query<Vuelo>(vuelos);
-		buscador.ordenarPor(consulta.getCriterioOrdenamiento());
+		buscador.addOrderByCriteria(consulta.getCriterioOrdenamiento());
 		
 		return buscador.execute();	
 	}
