@@ -51,8 +51,8 @@ public class Agencia {
 		//buscamos los vuelos directos, como siempre
 		List<Vuelo>vuelos= new ArrayList<Vuelo>();
 		//FIXME: hacer esto bien, teniendo en cuenta los null.
-		List<VueloDirecto>todosLosVuelos= aerolinea.buscarVuelos(new Busqueda(origen, null, fechaSalida, "", "",""));
-		todosLosVuelos.addAll(aerolinea.buscarVuelos(new Busqueda(null, destino,"","","","")));
+		List<VueloDirecto>todosLosVuelos= aerolinea.buscarVuelos(new Busqueda(origen, null, fechaSalida, null, null,null));
+		todosLosVuelos.addAll(aerolinea.buscarVuelos(new Busqueda(null, destino,null,null,null,null)));
 		//y agregamos los vuelos con escala
 	   vuelos.addAll(this.armarVuelosConEscala(todosLosVuelos));
 		return vuelos;
@@ -61,21 +61,24 @@ public class Agencia {
 	public List<VueloConEscala> armarVuelosConEscala(List<VueloDirecto> todosLosVuelos){
 		ListIterator<VueloDirecto> listIterator = todosLosVuelos.listIterator();
 		List<VueloConEscala> vuelosConEscala= new ArrayList<VueloConEscala>();
-			Vuelo vuelo = listIterator.next();
 			while(listIterator.hasNext()){
+				Vuelo vuelo = listIterator.next();
 				Vuelo next = listIterator.next();
 			if (this.esEscala(vuelo, next)){
 				VueloConEscala nuevo = new VueloConEscala(vuelo, next);
+				nuevo.setAerolinea(vuelo.getAerolinea());
+				nuevo.setOrigen(vuelo.getOrigen());
+				nuevo.setDestino(next.getDestino());
 				vuelosConEscala.add(nuevo);
-				vuelo = next;
 			}
+			vuelo = next;
 			}
 		
 		return vuelosConEscala;
 	}
 
 	public boolean esEscala(Vuelo unVuelo, Vuelo otroVuelo){
-		return (unVuelo.getDestino().equals(otroVuelo.getOrigen()) && unVuelo.getFechaLlegada().esAnteriorA(otroVuelo.getFechaSalida()));
+		return (unVuelo.getDestino().equals(otroVuelo.getOrigen()) && unVuelo.getFechaLlegada().esAnteriorA(otroVuelo.getFechaSalida()) && unVuelo.getAerolinea().equals(otroVuelo.getAerolinea()));
 	}
 	
 
