@@ -1,5 +1,7 @@
 package edu.utn.dds.aterrizar.vuelo;
 
+import org.uqbar.commons.utils.Observable;
+
 import edu.utn.dds.aterrizar.manejoDeFechas.*;
 
 /**
@@ -7,6 +9,7 @@ import edu.utn.dds.aterrizar.manejoDeFechas.*;
  * @author clari, juani
  *
  */
+@Observable
 public class Busqueda {
 
 	private String codigo;
