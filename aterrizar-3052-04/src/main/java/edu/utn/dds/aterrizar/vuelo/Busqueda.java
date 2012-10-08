@@ -27,6 +27,7 @@ public class Busqueda {
 		this.setFechaLlegada(new DateTime(SimpleDateParser.LatinAmerican(), fechaLlegada));
 		this.setHoraSalida(horaSalida);
 		this.setHoraLlegada(horaLlegada);
+		
 	}
 
 	public String getCodigo() {
@@ -52,7 +53,9 @@ public class Busqueda {
 	}
 
 	public void setFechaSalida(DateTime fechaSalida) {
+		if(fechaSalida != null)
 		this.fechaSalida = fechaSalida;
+		else this.fechaSalida= null;
 	}
 
 	public DateTime getFechaLlegada() {
@@ -60,7 +63,9 @@ public class Busqueda {
 	}
 
 	public void setFechaLlegada(DateTime fechaLlegada) {
-		this.fechaLlegada = fechaLlegada;
+		if(fechaLlegada != null)
+			this.fechaLlegada = fechaLlegada;
+			else this.fechaLlegada= null;
 	}
 
 	public String getHoraSalida() {

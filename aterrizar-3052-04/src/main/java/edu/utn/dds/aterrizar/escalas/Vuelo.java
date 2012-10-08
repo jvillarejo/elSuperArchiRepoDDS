@@ -59,4 +59,8 @@ public  abstract class Vuelo {
 	public String getCodigo() {
 		return this.codigo;
 	}
+	public void setAerolinea(Aerolinea aerolinea) {
+		this.aerolinea= aerolinea;
+		
+	}
 }
