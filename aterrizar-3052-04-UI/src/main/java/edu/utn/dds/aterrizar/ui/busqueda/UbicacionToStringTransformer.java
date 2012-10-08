@@ -7,12 +7,8 @@ public class UbicacionToStringTransformer implements
 		Transformer<Asiento, String> {
 
 	@Override
-	public String transform(Asiento asiento) {
-		return toPascalCase(asiento.getUbicacion().name());
-	}
-	
-	protected String toPascalCase(String original) {
-		return original.substring(0, 1).toUpperCase() + original.substring(1).toLowerCase(); 
+	public String transform(Asiento asiento) {		
+		return EnumUtils.toPascalCase(asiento.getUbicacion());
 	}
 
 }
