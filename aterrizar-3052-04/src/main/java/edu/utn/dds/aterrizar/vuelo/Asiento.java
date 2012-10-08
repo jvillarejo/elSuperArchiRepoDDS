@@ -1,8 +1,11 @@
 package edu.utn.dds.aterrizar.vuelo;
 
+import org.uqbar.commons.utils.Observable;
+
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 
+@Observable
 public class Asiento {
 
 	private Busqueda vuelo;

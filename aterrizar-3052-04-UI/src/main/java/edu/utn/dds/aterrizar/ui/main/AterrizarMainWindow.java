@@ -1,13 +1,17 @@
 package edu.utn.dds.aterrizar.ui.main;
 
+import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.MainWindow;
+import org.uqbar.arena.windows.Window;
 
 import edu.utn.dds.aterrizar.homes.UsuarioHome;
+import edu.utn.dds.aterrizar.ui.busqueda.BusquedaVuelosWindow;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 
 public class AterrizarMainWindow extends MainWindow<Usuario> {
@@ -35,10 +39,21 @@ public class AterrizarMainWindow extends MainWindow<Usuario> {
 		
 		new Button(buttonPanel).setCaption("Ver Compras");
 		new Button(buttonPanel).setCaption("Ver Reservas");
-		new Button(buttonPanel).setCaption("Buscar Asientos");
 		
-		
-
+		new Button(buttonPanel)
+			.setCaption("Buscar Asientos")
+			.onClick(new MessageSend(this, "buscarAsientos"));
 	}
+	
+	// ********************************************************
+	// ** Acciones
+	// ********************************************************
 
+	public void buscarAsientos() {
+		this.openWindow(new BusquedaVuelosWindow(this));
+	}
+	
+	private void openWindow(Window<?> window) {
+		window.open();
+	}
 }

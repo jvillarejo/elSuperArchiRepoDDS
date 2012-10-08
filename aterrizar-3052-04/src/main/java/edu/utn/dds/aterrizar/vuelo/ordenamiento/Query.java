@@ -2,7 +2,6 @@ package edu.utn.dds.aterrizar.vuelo.ordenamiento;
 
 import java.util.List;
 
-import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
 import net.sf.staccatocommons.collections.stream.Stream;
 import net.sf.staccatocommons.collections.stream.Streams;
@@ -19,21 +18,21 @@ public class Query<T> {
 		return elementosFiltrados;
 	}
 
-	public void filter(Filtro<T> filtro) {
+	public void addFilter(Filtro<T> filtro) {
 		Stream<T> elementosVueltosAFiltrar = filtro.filtrar(this.getElementosAFiltrar());
 		this.setElementosFiltrados(elementosVueltosAFiltrar);
 	}
 
-	public void agregarFiltros(Filtro<T>... filtros) {
+	public void addManyFilters(Filtro<T>... filtros) {
 		for (Filtro<T> filtro : filtros)
-			this.filter(filtro);
+			this.addFilter(filtro);
 	}
 
 	public List<T> execute() {
 		return this.getElementosAFiltrar().toList();
 	}
 	
-	public void ordenarPor(CriterioOrden<T> criterioOrden) {
+	public void addOrderByCriteria(CriterioOrden<T> criterioOrden) {
 		Stream<T> vuelosOrdenados = criterioOrden.ordenar(this.getElementosAFiltrar());
 		this.setElementosFiltrados(vuelosOrdenados);
 	}
@@ -42,9 +41,9 @@ public class Query<T> {
 		this.setElementosFiltrados(Streams.from(elementosOriginales));
 	}
 
-	public void agregarFiltros(List<Filtro<T>> filtros) {
+	public void addManyFilters(List<Filtro<T>> filtros) {
 		for(Filtro<T> filtro : filtros)
-			this.filter(filtro);
+			this.addFilter(filtro);
 	}
 
 }
