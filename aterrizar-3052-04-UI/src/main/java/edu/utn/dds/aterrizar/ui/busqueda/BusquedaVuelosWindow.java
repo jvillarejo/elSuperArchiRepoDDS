@@ -66,6 +66,7 @@ public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 		table.setWidth(450);
 
 		table.bindItemsToProperty("resultados");
+		table.bindValueToProperty("asientoSeleccionado");
 
 		this.describeResultsGrid(table);
 	}
@@ -86,9 +87,9 @@ public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 		.onClick(new MessageSend(this, "cerrar"));
 		
 		// Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
-//		NotNullObservable elementSelected = new NotNullObservable("vueloSeleccionado");
-//		buy.bindEnabled(elementSelected);
-//		makeReservation.bindEnabled(elementSelected);
+		NotNullObservable elementSelected = new NotNullObservable("asientoSeleccionado");
+		buy.bindEnabled(elementSelected);
+		makeReservation.bindEnabled(elementSelected);
 	}
 
 	protected void describeResultsGrid(Table<Asiento> table) {

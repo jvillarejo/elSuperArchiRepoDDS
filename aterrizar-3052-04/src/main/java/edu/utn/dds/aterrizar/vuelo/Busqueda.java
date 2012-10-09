@@ -24,6 +24,7 @@ public class Busqueda {
 	private String horaLlegada;
 	
 	private List<Asiento> resultados;
+	private Asiento asientoSeleccionado;
 	
 	public Busqueda() 
 	{
@@ -59,6 +60,14 @@ public class Busqueda {
 		asiento2.setClase(Clase.TURISTA);
 		
 		this.setResultados(Arrays.asList(asiento1, asiento2));
+	}
+	
+	public Asiento getAsientoSeleccionado(){
+		return this.asientoSeleccionado;
+	}
+	
+	public void setAsientoSeleccionado(Asiento asiento){
+		this.asientoSeleccionado= asiento;
 	}
 	
 	public String getCodigo() {
