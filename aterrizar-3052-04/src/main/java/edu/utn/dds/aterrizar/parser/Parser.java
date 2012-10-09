@@ -51,7 +51,7 @@ public List<VueloDirecto> parseDisponibles(String[][] asientos, Busqueda busqued
 		busqueda.setCode(flightCode);
 		Asiento asiento = new Asiento(busqueda, aerolinea);
 		if (verificarSiExisteElVuelo(flightCode)){
-			 vuelo = new VueloDirecto(busqueda.getOrigen(),busqueda.getDestino(),asientoLanchita[10] , asientoLanchita[11], aerolinea);		
+			 vuelo = new VueloDirecto(asientoLanchita[8],asientoLanchita[9],asientoLanchita[10] , asientoLanchita[11], aerolinea);		
 			 parseCodigoDeVueloYNumeroDeAsiento(asiento, asientoLanchita[0], vuelo);
 		}else {
 			vuelo =  getVueloConCodigo(flightCode);

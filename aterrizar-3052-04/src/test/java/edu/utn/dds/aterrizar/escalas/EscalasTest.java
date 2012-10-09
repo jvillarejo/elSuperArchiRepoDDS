@@ -7,15 +7,19 @@ import java.util.List;
 
 import org.junit.*;
 
+import com.lanchita.AerolineaLanchita;
+
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaOceanicWrapper;
 import edu.utn.dds.aterrizar.agencia.Agencia;
 
+import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
 
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 
@@ -48,6 +52,7 @@ private List<VueloDirecto> vuelosDisponibles = new ArrayList<VueloDirecto>();
 		
 		verify(lanchita, times(2)).buscarVuelos(any(Busqueda.class));
 	}
+
 	
 	@Test
 	public void buscarPrecioMasBaratoEnVueloDirecto() {
