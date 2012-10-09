@@ -42,9 +42,11 @@ private List<VueloDirecto> vuelosDisponibles = new ArrayList<VueloDirecto>();
 	
 	@Test 
 	public void testBuscarVuelosConEscalaDeLanchita(){
-		List<Vuelo> vuelos = new Agencia().buscarVuelosConEscala("EZE", "USA", "14/08/2012", lanchita);
+		when(lanchita.buscarVuelos(any(Busqueda.class))).thenReturn(vuelosDisponibles);
+		List<Vuelo> vuelos = new Agencia().buscarVuelosConEscala("BA", "DC", "14/08/2012", lanchita);
 		assertFalse(vuelos.isEmpty());
 		
+		verify(lanchita, times(2)).buscarVuelos(any(Busqueda.class));
 	}
 	
 	@Test
