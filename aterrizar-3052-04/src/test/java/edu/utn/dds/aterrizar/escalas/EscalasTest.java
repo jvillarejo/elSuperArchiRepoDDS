@@ -44,14 +44,15 @@ private List<VueloDirecto> vuelosDisponibles = new ArrayList<VueloDirecto>();
 			assertEquals(2, vuelos.size());
 		}
 	
-//	@Test 
-//	public void testBuscarVuelosConEscalaDeLanchita(){
-//		AerolineaLanchita lan = AerolineaLanchita.getInstance();
-//		AerolineaLanchitaWrapper aero = new AerolineaLanchitaWrapper(lan, mock(Parser.class));
-//		List<Vuelo> vuelos = new Agencia().buscarVuelosConEscala("EZE", "USA", "20/12/2012", aero);
-//		assertFalse(vuelos.isEmpty());
-//		
-//	}
+	@Test 
+	public void testBuscarVuelosConEscalaDeLanchita(){
+		when(lanchita.buscarVuelos(any(Busqueda.class))).thenReturn(vuelosDisponibles);
+		List<Vuelo> vuelos = new Agencia().buscarVuelosConEscala("BA", "DC", "14/08/2012", lanchita);
+		assertFalse(vuelos.isEmpty());
+		
+		verify(lanchita, times(2)).buscarVuelos(any(Busqueda.class));
+	}
+
 	
 	@Test
 	public void buscarPrecioMasBaratoEnVueloDirecto() {

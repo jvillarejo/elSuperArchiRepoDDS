@@ -31,7 +31,7 @@ public class SimpleDateParser implements DateParser {
 	@Override
 	public Date parse(String dateString) {
 		try {
-			return dateFormat.parse(dateString);
+			return dateString != null  ? dateFormat.parse(dateString) : null;
 		} catch (ParseException e) {
 			throw new DateParserException("No se pudo parsear la fecha.", e);
 		}

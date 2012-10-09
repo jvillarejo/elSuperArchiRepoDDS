@@ -16,6 +16,7 @@ public class Asiento {
 	private String estado;
 	private String codigoDeVuelo;
 	private Integer numeroDeAsiento;
+	private String nombreDeAerolinea;
 
 	public Asiento() {}
 	
@@ -26,6 +27,7 @@ public class Asiento {
 	public Asiento(Busqueda vuelo, Aerolinea aerolinea) {
 		this.vuelo = vuelo;
 		this.aerolinea = aerolinea;
+		this.nombreDeAerolinea = aerolinea.toString();
 	}
 
 	public Busqueda getFlight() {
@@ -115,6 +117,10 @@ public class Asiento {
 
 	public void setNumeroDeAsiento(Integer numeroDeAsiento) {
 		this.numeroDeAsiento = numeroDeAsiento;
+	}
+	
+	public String getNombreDeAerolinea() {
+		return this.nombreDeAerolinea;
 	}
 
 }
