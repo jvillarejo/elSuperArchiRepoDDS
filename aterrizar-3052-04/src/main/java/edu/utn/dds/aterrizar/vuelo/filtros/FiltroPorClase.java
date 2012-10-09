@@ -1,7 +1,8 @@
 package edu.utn.dds.aterrizar.vuelo.filtros;
 
-import static net.sf.staccatocommons.lambda.Lambda.*;
-import static net.sf.staccatocommons.lang.Compare.*;
+import static net.sf.staccatocommons.lambda.Lambda.$;
+import static net.sf.staccatocommons.lambda.Lambda.lambda;
+import static net.sf.staccatocommons.lang.Compare.in_;
 import net.sf.staccatocommons.collections.stream.Stream;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Clase;

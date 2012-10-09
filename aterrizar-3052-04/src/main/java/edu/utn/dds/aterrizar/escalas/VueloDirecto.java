@@ -53,8 +53,8 @@ public class VueloDirecto extends Vuelo {
 	@Override
 	public void filtrarAsientos(List<Filtro<Asiento>> filtros, Usuario usuario) {
 		Query<Asiento> buscador = new Query<Asiento>(this.getAsientos());
-		buscador.filter(usuario.getFiltro());
-		buscador.agregarFiltros(filtros);
+		buscador.addFilter(usuario.getFiltro());
+		buscador.addManyFilters(filtros);
 		
 		this.asientos = buscador.execute(); 
 	}
