@@ -2,18 +2,18 @@ package edu.utn.dds.aterrizar.ui.busqueda;
 
 import java.awt.Color;
 
-import edu.utn.dds.aterrizar.ui.transformers.*;
-import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.Busqueda;
-
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
-import org.uqbar.arena.widgets.tables.Column;
-import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
+
+import edu.utn.dds.aterrizar.ui.componentes.SimpleTable;
+import edu.utn.dds.aterrizar.ui.transformers.ClaseToStringTransformer;
+import edu.utn.dds.aterrizar.ui.transformers.UbicacionToStringTransformer;
+import edu.utn.dds.aterrizar.vuelo.Asiento;
+import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
 public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 
@@ -44,35 +44,20 @@ public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 	// ** RESULTADOS DE LA BUSQUEDA
 	// *************************************************************************
 
-	private Column<Asiento> createSimpleColumn(Table<Asiento> table, String title, String propertyName) {
-		return new Column<Asiento>(table)
-			.setTitle(title)
-			.bindContentsToProperty(propertyName);
-	}
-	
-	protected void createResultsGrid(Panel mainPanel) {
-		Table<Asiento> table = new Table<Asiento>(mainPanel, Asiento.class);
-		table.setHeigth(200);
-		table.setWidth(450);
-
-		table.bindItemsToProperty("resultados");
-
-		this.describeResultsGrid(table);
-	}
-
-	protected void describeResultsGrid(Table<Asiento> table) {
-		this.createSimpleColumn(table, "Asiento", "numeroDeAsiento");
-		this.createSimpleColumn(table, "Precio", "precio");
+	 protected void createResultsGrid(Panel mainPanel) {
+		SimpleTable<Asiento> simpleTable = new SimpleTable<Asiento>(mainPanel, Asiento.class);
+		simpleTable.setHeigth(200);
+		simpleTable.setWidth(450);
 		
-		new Column<Asiento>(table)
-			.setTitle("Ubicacion")
-			.bindContentsToTransformer(new UbicacionToStringTransformer());
-		
-		new Column<Asiento>(table)
-			.setTitle("Clase")
-			.bindContentsToTransformer(new ClaseToStringTransformer());
+		simpleTable.addColumn("Asiento", "numeroDeAsiento")
+			.addColumn("Precio", "precio")
+			.addColumn("Ubicacion",new UbicacionToStringTransformer())
+			.addColumn("Clase", new ClaseToStringTransformer());
+
+		simpleTable.bindItemsToProperty("resultados");
+
 	}
-	
+
 	@Override
 	protected void createFormPanel(Panel mainPanel) {
 		Panel searchFormPanel = new Panel(mainPanel);
