@@ -14,20 +14,18 @@ import static org.mockito.Mockito.*;
 public class AsientoTest {
 
 	private Aerolinea aerolineaMockito = mock(Aerolinea.class);
-	private Asiento asientoCaro = new Asiento(aerolineaMockito);
-	private Asiento asientoDemasiadoBarato = new Asiento(aerolineaMockito);
 	
 	@Before
 	public void setUp() {
-		asientoCaro.setPrecio(10000.0);
-		asientoDemasiadoBarato.setPrecio(100.0);
-		
 		when(aerolineaMockito.getPorcentajeDeVenta()).thenReturn(0.5);		
 	}
 	
 	@Test
 	public void asientoCaroCambiaSuPrecioParaUsuarioEstandar() { 
 		Usuario unTipoComun = new Usuario("Federico", "Aloi", "9999", new SuscripcionEstandar());
+		
+		Asiento asientoCaro = new Asiento(aerolineaMockito);	
+		asientoCaro.setPrecio(10000.0);
 		asientoCaro.adaptarPrecioPara(unTipoComun);
 		
 		Assert.assertEquals(Double.valueOf(15000.0), asientoCaro.getPrecio());
@@ -36,6 +34,9 @@ public class AsientoTest {
 	@Test
 	public void asientoBaratoCambiaSuPrecioParaUsuarioGratuito() { 
 		Usuario unTipoTacanio = new Usuario("Ebenezer", "Scrooge", "0000", new SuscripcionGratuita());
+		
+		Asiento asientoDemasiadoBarato = new Asiento(aerolineaMockito);
+		asientoDemasiadoBarato.setPrecio(100.0);
 		asientoDemasiadoBarato.adaptarPrecioPara(unTipoTacanio);
 		
 		Assert.assertEquals(Double.valueOf(170.0), asientoDemasiadoBarato.getPrecio());

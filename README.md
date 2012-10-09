@@ -5,36 +5,37 @@ Para correr el proyecto:
 	Crear en la carpeta .m2 el archivo settings.xml
 	Pegar lo siguiente
 	
-	<settings xmlns="http://maven.apache.org/POM/4.0.0"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    <settings xmlns="http://maven.apache.org/POM/4.0.0"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0  http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
-    <profiles>
-                <profile>
-                        <id>uqbar-wiki</id>
-                        <repositories>
-                                <repository>
-                                        <id>uqbar-wiki.org-releases</id>
-                                        <name>uqbar-wiki.org-releases</name>
-                                        <url>http://uqbar-wiki.org/mvn/releases</url>
-                                </repository>
-                                <repository>
-                                    <snapshots/>
-                                    <id>uqbar-wiki.org-snapshots</id>
-                                    <name>uqbar-wiki.org-snapshots</name>
-                                    <url>http://uqbar-wiki.org/mvn/snapshots</url>
-                                </repository>
-                        </repositories>
-                </profile>
-    </profiles>
+        <profiles>
+            <profile>
+                <id>uqbar-wiki</id>
+                <repositories>
+                    <repository>
+                        <id>uqbar-wiki.org-releases</id>
+                        <name>uqbar-wiki.org-releases</name>
+                        <url>http://uqbar-wiki.org/mvn/releases</url>
+                    </repository>
+                    <repository>
+                        <snapshots/>
+                        <id>uqbar-wiki.org-snapshots</id>
+                        <name>uqbar-wiki.org-snapshots</name>
+                        <url>http://uqbar-wiki.org/mvn/snapshots</url>
+                    </repository>
+                </repositories>
+            </profile>
+        </profiles>
 
-    <activeProfiles>
-        <activeProfile>uqbar-wiki</activeProfile>
-    </activeProfiles>
+        <activeProfiles>
+            <activeProfile>uqbar-wiki</activeProfile>
+        </activeProfiles>
 
-</settings>
+    </settings>
 
-	Ejecutar en el proyecto de dominio "mvn clean compile install"
-	Luego ejecutar "mvn compile" en el proyecto de la UI
+Ejecutar en el proyecto de dominio "mvn clean compile install"
+
+Luego ejecutar "mvn compile" en el proyecto de la UI
 
 
 
