@@ -50,8 +50,7 @@ public class Agencia {
 	public List<Vuelo>buscarVuelosConEscala(String origen, String destino, String fechaSalida, Aerolinea aerolinea){
 		//buscamos los vuelos directos, como siempre
 		List<Vuelo>vuelos= new ArrayList<Vuelo>();
-		//FIXME: hacer esto bien, teniendo en cuenta los null.
-		List<VueloDirecto>todosLosVuelos= aerolinea.buscarVuelos(new Busqueda(origen, null, fechaSalida, null, null,null));
+		List<VueloDirecto>todosLosVuelos= aerolinea.buscarVuelos(new Busqueda(origen, destino, fechaSalida, null, null,null));
 		todosLosVuelos.addAll(aerolinea.buscarVuelos(new Busqueda(null, destino,null,null,null,null)));
 		//y agregamos los vuelos con escala
 	   vuelos.addAll(this.armarVuelosConEscala(todosLosVuelos));
@@ -66,6 +65,7 @@ public class Agencia {
 				Vuelo next = listIterator.next();
 			if (this.esEscala(vuelo, next)){
 				VueloConEscala nuevo = new VueloConEscala(vuelo, next);
+				//eventualmente tendría que pasar esto en el constructor 
 				nuevo.setAerolinea(vuelo.getAerolinea());
 				nuevo.setOrigen(vuelo.getOrigen());
 				nuevo.setDestino(next.getDestino());

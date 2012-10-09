@@ -43,10 +43,11 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 
 		String[][] asientosDisponibles = aerolineaLanchita.asientosDisponibles(busqueda.getOrigen(),
 				busqueda.getDestino(), 
-				busqueda.getFechaSalida().toString(), 
+				(busqueda.getFechaSalida() != null) ? busqueda.getFechaSalida().toString():null, 
 				busqueda.getHoraSalida(), 
-				busqueda.getFechaLlegada().toString(),
+				(busqueda.getFechaLlegada() != null) ? busqueda.getFechaLlegada().toString():null,
 				busqueda.getHoraLlegada());
+		
 
 		return this.lanchitaParser.parseDisponibles(asientosDisponibles, busqueda, this);
 	}

@@ -2,8 +2,6 @@ package edu.utn.dds.aterrizar.vuelo;
 
 import edu.utn.dds.aterrizar.manejoDeFechas.*;
 
-import java.util.Date;
-
 
 /**
  * Representa los parámetros de consulta de busqueda
@@ -23,12 +21,23 @@ public class Busqueda {
 	public Busqueda(String origen, String destino,  String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada){
 		this.origen=origen;
 		this.destino=destino;
-		this.setFechaSalida(new DateTime(SimpleDateParser.LatinAmerican(), fechaSalida));
-		this.setFechaLlegada(new DateTime(SimpleDateParser.LatinAmerican(), fechaLlegada));
+		this.setFechaSalida(fechaSalida);
+		this.setFechaLlegada(fechaLlegada);
 		this.setHoraSalida(horaSalida);
 		this.setHoraLlegada(horaLlegada);
 		
 	}
+
+
+	public Busqueda() {
+		super();
+	}
+
+
+	private DateTime setFecha(String fecha) {
+		return (fecha != null) ?  new DateTime(SimpleDateParser.LatinAmerican(), fecha): null;
+	}
+
 
 	public String getCodigo() {
 		return codigo;
@@ -49,23 +58,20 @@ public class Busqueda {
 	}
 
 	public DateTime getFechaSalida() {
-		return fechaSalida;
+		return this.fechaSalida;
 	}
 
-	public void setFechaSalida(DateTime fechaSalida) {
-		if(fechaSalida != null)
-		this.fechaSalida = fechaSalida;
-		else this.fechaSalida= null;
+	public void setFechaSalida(String fechaSalida) {
+		this.fechaSalida= this.setFecha(fechaSalida);
 	}
 
 	public DateTime getFechaLlegada() {
-		return fechaLlegada;
+		return this.fechaLlegada;
 	}
 
-	public void setFechaLlegada(DateTime fechaLlegada) {
-		if(fechaLlegada != null)
-			this.fechaLlegada = fechaLlegada;
-			else this.fechaLlegada= null;
+
+	public void setFechaLlegada(String fechaLlegada) {
+			this.setFecha(fechaLlegada);
 	}
 
 	public String getHoraSalida() {
