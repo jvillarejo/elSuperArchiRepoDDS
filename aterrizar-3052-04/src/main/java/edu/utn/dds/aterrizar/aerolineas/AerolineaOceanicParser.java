@@ -34,6 +34,7 @@ public class AerolineaOceanicParser {
 
 	private void addOrCreate(List<VueloDirecto> vuelos, Asiento asiento, AsientoDTO asientoDTO, Aerolinea aerolinea) {
 		try { 
+			asiento.validar();
 			Vuelo vuelo = findVuelo(vuelos, asiento.getCodigoDeVuelo());
 			vuelo.getAsientos().add(asiento);
 		} catch (VueloNotFoundException e) { 
@@ -49,7 +50,7 @@ public class AerolineaOceanicParser {
 			vuelo.agregarAsiento(asiento);
 			vuelos.add(vuelo);
 		}
-		
+
 	}
 
 	private VueloDirecto findVuelo(List<VueloDirecto> vuelos, String codigoDeVuelo) {

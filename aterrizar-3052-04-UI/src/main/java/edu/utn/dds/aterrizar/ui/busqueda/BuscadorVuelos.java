@@ -38,7 +38,7 @@ public class BuscadorVuelos implements Serializable {
 			.setDestino(this.destino)
 			.setFechaSalida(fechaSalida);
 		
-		this.setResultados(this.getAsientos(busqueda, this.user));
+		this.resultados= this.getAsientos(busqueda, this.user);
 	}
 
 	private List<Asiento> getAsientos(final Busqueda busqueda, final Usuario usuario) {

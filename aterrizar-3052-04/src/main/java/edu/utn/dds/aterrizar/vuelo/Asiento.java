@@ -1,12 +1,17 @@
 package edu.utn.dds.aterrizar.vuelo;
 
+import org.uqbar.commons.model.Entity;
+import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
+import org.uqbar.commons.utils.Transactional;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 
+@SuppressWarnings("serial")
 @Observable
-public class Asiento {
+@Transactional
+public class Asiento extends Entity{
 
 	private Busqueda vuelo;
 	private Aerolinea aerolinea;
@@ -34,6 +39,31 @@ public class Asiento {
 		return vuelo;
 	}
 
+	public void validar(){
+		if(!this.ingresoOrigen()){
+			throw new UserException("Debe ingresar una ciudad de origen");
+		}
+		if(!this.ingresoDestino()){
+			throw new UserException("Debe ingresar una ciudad destino");
+		}
+		if(!this.ingresoFechaSalida()){
+			throw new UserException("Debe ingresar una fecha de salida");
+		}
+		//validar el formato de la fecha
+	}
+	
+	public boolean ingresoOrigen(){
+		return this.vuelo.getOrigen() != null && !this.vuelo.getOrigen().equals("");
+	}
+	
+	public boolean ingresoDestino(){
+		return this.vuelo.getDestino() != null && !this.vuelo.getDestino().equals("");
+	}
+	
+	public boolean ingresoFechaSalida(){
+		return this.vuelo.getFechaSalida()!= null;
+	}
+	
 	public void comprar(final Usuario usuario) {
 		this.aerolinea.comprarAsiento(this, usuario);		
 	}

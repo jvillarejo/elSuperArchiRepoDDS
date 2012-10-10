@@ -53,11 +53,11 @@ public class Agencia {
 	// ****************************************************************
 
 	public List<Vuelo> buscarVuelos(final Busqueda busqueda, final Usuario usuario) {
-		// TODO: MUY IMPORTANTE hacer que este buscar vuelos llame al de las
-		// escalas!
+	
 		List<VueloDirecto> vuelosDirectos = new ArrayList<VueloDirecto>();
 		for (Aerolinea aerolinea : aerolineas) {
 			vuelosDirectos.addAll(aerolinea.buscarVuelos(busqueda));
+			
 		}
 
 		List<Vuelo> vuelos = adaptarPreciosParaUsuario(vuelosDirectos, usuario);
