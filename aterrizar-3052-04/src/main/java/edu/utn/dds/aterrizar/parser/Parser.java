@@ -50,6 +50,7 @@ public List<VueloDirecto> parseDisponibles(String[][] asientos, Busqueda busqued
         String flightCode = this.getFlightCode(asientoLanchita[0]);
 		busqueda.setCode(flightCode);
 		Asiento asiento = new Asiento(busqueda, aerolinea);
+		asiento.validar();
 		if (verificarSiExisteElVuelo(flightCode)){
 			 vuelo = new VueloDirecto(asientoLanchita[8],asientoLanchita[9],asientoLanchita[10] , asientoLanchita[11], aerolinea);		
 			 parseCodigoDeVueloYNumeroDeAsiento(asiento, asientoLanchita[0], vuelo);
@@ -63,7 +64,8 @@ public List<VueloDirecto> parseDisponibles(String[][] asientos, Busqueda busqued
 				asiento.setEstado(asientoLanchita[4]);
 				vuelo.agregarAsiento(asiento);
 				return vuelo;
-	} catch(RuntimeException e){
+	}
+		catch(RuntimeException e){
 		throw new ParserException("Error en el parseo", e);
 	}
 
