@@ -2,7 +2,6 @@ package edu.utn.dds.aterrizar.vuelo;
 
 import java.util.Arrays;
 import java.util.List;
-
 import org.uqbar.commons.utils.Observable;
 
 import edu.utn.dds.aterrizar.manejoDeFechas.DateTime;
@@ -25,6 +24,7 @@ public class Busqueda {
 	private String horaLlegada;
 	
 	private List<Asiento> resultados;
+	private Asiento asientoSeleccionado;
 	
 	public Busqueda() 
 	{
@@ -34,11 +34,17 @@ public class Busqueda {
 	public Busqueda(String origen, String destino,  String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada){
 		this.setOrigen(origen);
 		this.setDestino(destino);
-		this.setFechaSalida(new DateTime(SimpleDateParser.LatinAmerican(), fechaSalida));
-		this.setFechaLlegada(new DateTime(SimpleDateParser.LatinAmerican(), fechaLlegada));
+		this.setFechaSalida(fechaSalida);
+		this.setFechaLlegada(fechaLlegada);
 		this.setHoraSalida(horaSalida);
 		this.setHoraLlegada(horaLlegada);
 	}
+
+
+	private DateTime setFecha(String fecha) {
+		return (fecha != null) ?  new DateTime(SimpleDateParser.LatinAmerican(), fecha): null;
+	}
+
 
 	private void inventarAsientos() {
 		Asiento asiento1 = new Asiento();
@@ -54,6 +60,14 @@ public class Busqueda {
 		asiento2.setClase(Clase.TURISTA);
 		
 		this.setResultados(Arrays.asList(asiento1, asiento2));
+	}
+	
+	public Asiento getAsientoSeleccionado(){
+		return this.asientoSeleccionado;
+	}
+	
+	public void setAsientoSeleccionado(Asiento asiento){
+		this.asientoSeleccionado= asiento;
 	}
 	
 	public String getCodigo() {
@@ -75,23 +89,20 @@ public class Busqueda {
 	}
 
 	public DateTime getFechaSalida() {
-		return fechaSalida;
+		return this.fechaSalida;
 	}
 
-	public void setFechaSalida(DateTime fechaSalida) {
-		if(fechaSalida != null)
-		this.fechaSalida = fechaSalida;
-		else this.fechaSalida= null;
+	public void setFechaSalida(String fechaSalida) {
+		this.fechaSalida= this.setFecha(fechaSalida);
 	}
 
 	public DateTime getFechaLlegada() {
-		return fechaLlegada;
+		return this.fechaLlegada;
 	}
 
-	public void setFechaLlegada(DateTime fechaLlegada) {
-		if(fechaLlegada != null)
-			this.fechaLlegada = fechaLlegada;
-			else this.fechaLlegada= null;
+
+	public void setFechaLlegada(String fechaLlegada) {
+			this.setFecha(fechaLlegada);
 	}
 
 	public String getHoraSalida() {
