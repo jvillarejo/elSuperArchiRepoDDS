@@ -50,8 +50,7 @@ public List<VueloDirecto> parseDisponibles(String[][] asientos, Busqueda busqued
         String flightCode = this.getFlightCode(asientoLanchita[0]);
 		busqueda.setCode(flightCode);
 		Asiento asiento = new Asiento(busqueda, aerolinea);
-		asiento.validar();
-		if (verificarSiExisteElVuelo(flightCode)){
+		if (!verificarSiExisteElVuelo(flightCode)){
 			 vuelo = new VueloDirecto(asientoLanchita[8],asientoLanchita[9],asientoLanchita[10] , asientoLanchita[11], aerolinea);		
 			 parseCodigoDeVueloYNumeroDeAsiento(asiento, asientoLanchita[0], vuelo);
 		}else {
@@ -62,6 +61,7 @@ public List<VueloDirecto> parseDisponibles(String[][] asientos, Busqueda busqued
 				asiento.setClase(this.stringToClase(asientoLanchita[2]));
 				asiento.setUbicacion(this.stringToUbicacion(asientoLanchita[3]));
 				asiento.setEstado(asientoLanchita[4]);
+				asiento.validar();
 				vuelo.agregarAsiento(asiento);
 				return vuelo;
 	}
@@ -80,10 +80,13 @@ public List<VueloDirecto> parseDisponibles(String[][] asientos, Busqueda busqued
 
 
 	private boolean verificarSiExisteElVuelo(String flightCode) {
-		return Streams
+		if (!disponibles.isEmpty()){
+			return Streams
 		.from(disponibles)
 		.filter(lambda($(VueloDirecto.class).getCodigo()).equal(flightCode))
 		.isEmpty();
+		}
+		return false;
 	}
 
 	private void parseCodigoDeVueloYNumeroDeAsiento(Asiento asiento,
