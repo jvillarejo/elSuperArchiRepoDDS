@@ -12,7 +12,10 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
+import org.uqbar.commons.model.UserException;
 
+import edu.utn.dds.aterrizar.aerolineas.AsientoNoDisponibleException;
+import edu.utn.dds.aterrizar.homes.UsuarioHome;
 import edu.utn.dds.aterrizar.ui.componentes.SimpleTable;
 import edu.utn.dds.aterrizar.ui.transformers.ClaseToStringTransformer;
 import edu.utn.dds.aterrizar.ui.transformers.UbicacionToStringTransformer;
@@ -109,10 +112,27 @@ public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 	}
 
 	public void comprarAsiento(){
-		//TODO: acá deberíamos llamar al comprar de la agencia. Eso podría estar en una home
+		try{
+			Asiento asiento = this.getModelObject().getAsientoSeleccionado();
+			asiento.comprar(UsuarioHome.getInstance().getDefaultUser());
+			throw new UserException("El asiento " + asiento.getCodigoDeVuelo() + " ha sido comprado exitosamente");
+		}catch(AsientoNoDisponibleException nde){
+			throw new UserException("Ha ocurrido un error en su reserva: " + nde.getMessage() + ". Por favor intente nuevamente");
+		}catch(RuntimeException re){
+			throw new UserException("Ha ocurrido un error en su reserva: " + re.getMessage() + ". Por favor intente nuevamente");
+		}
 	}
+	
+	
 	public void reservarAsiento(){
-		//TODO: idem lo de arriba
+		try{
+			Asiento asiento = this.getModelObject().getAsientoSeleccionado();
+			asiento.reservar(UsuarioHome.getInstance().getDefaultUser());
+			throw new UserException("El asiento " + asiento.getCodigoDeVuelo() + " ha sido reservado exitosamente");
+		}catch(AsientoNoDisponibleException nde){
+		}catch(RuntimeException re){
+			throw new UserException("Ha ocurrido un error en su reserva: " + re.getMessage() + ". Por favor intente nuevamente");
+		}
 	}
 	
 	public void cerrar(){
