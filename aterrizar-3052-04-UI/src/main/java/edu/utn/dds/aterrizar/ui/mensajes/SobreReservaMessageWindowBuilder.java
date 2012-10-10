@@ -15,7 +15,7 @@ public class SobreReservaMessageWindowBuilder extends MessageWindowBuilder {
 	public SimpleMessageWindow build(WindowOwner owner, Asiento asiento) {
 		SimpleMessageWindow simpleMessageWindow = super.build(owner, asiento);
 		//TODO cambiar esto cuando este en agencia la sobrereserva
-		return simpleMessageWindow.addActionButton("Sobrereservar", new MessageSend(simpleMessageWindow, "close"));
+		return simpleMessageWindow.addActionButton("Sobrereservar", new MessageSend(asiento, "sobreReservar"));
 	}
 	
 	@Override
