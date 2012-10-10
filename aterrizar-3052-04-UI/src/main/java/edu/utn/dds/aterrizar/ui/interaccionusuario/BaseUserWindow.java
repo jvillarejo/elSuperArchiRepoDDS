@@ -27,9 +27,8 @@ abstract public class BaseUserWindow extends Window<Usuario> {
 		
 		new Label(panel).setText(getLabelText());
 		
-		SimpleTable<Asiento> simpleTable = new SimpleTable<Asiento>(panel, Asiento.class);
-		
-		simpleTable.addColumn("Salida", new SalidaAsientoToStringTransformer())
+		new SimpleTable<Asiento>(panel, Asiento.class)
+			.addColumn("Salida", new SalidaAsientoToStringTransformer())
 			.addColumn("Aerolinea", "nombreDeAerolinea")
 			.addColumn("Vuelo", "codigoDeVuelo")
 			.addColumn("Asiento", "numeroDeAsiento")

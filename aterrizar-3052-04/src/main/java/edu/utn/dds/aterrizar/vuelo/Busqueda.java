@@ -66,7 +66,6 @@ public class Busqueda {
 	public String getDestino() {
 		return this.destino;
 	}
-
 	
 	public void setCode(String code) {
 		this.codigo= code;
@@ -77,8 +76,9 @@ public class Busqueda {
 		return this.fechaSalida;
 	}
 
-	public void setFechaSalida(String fechaSalida) {
+	public Busqueda setFechaSalida(String fechaSalida) {
 		this.fechaSalida= this.setFecha(fechaSalida);
+		return this;
 	}
 
 	public DateTime getFechaLlegada() {
@@ -106,12 +106,14 @@ public class Busqueda {
 		this.horaLlegada = horaLlegada;
 	}
 
-	public void setOrigen(String origen) {
+	public Busqueda setOrigen(String origen) {
 		this.origen = origen;
+		return this;
 	}
 
-	public void setDestino(String destino) {
+	public Busqueda setDestino(String destino) {
 		this.destino = destino;
+		return this;
 	}
 
 	public List<Filtro<Asiento>> getFiltros() {
