@@ -20,6 +20,10 @@ public class ConsultaVuelos {
 		this.criterioOrdenamiento = criterioOrdenamiento;
 	}
 	
+	public ConsultaVuelos(Busqueda busqueda) {
+		this.busqueda= busqueda;
+	}
+
 	public Busqueda getBusqueda() {
 		return busqueda;
 	}
