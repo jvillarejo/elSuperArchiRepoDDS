@@ -11,8 +11,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -37,7 +35,6 @@ public class AerolineaTest {
 	private Aerolinea comunicadorDeAerolinea;
 	private Busqueda vuelo;
 	private Usuario usuario;
-	private Date fecha;
 	private AerolineaLanchita aerolineaLanchita;
 	private Parser parser;
 
@@ -47,7 +44,6 @@ public class AerolineaTest {
 		parser = mock(Parser.class);
 		vuelo = mock(Busqueda.class);
 		usuario = mock(Usuario.class);
-		fecha= new Date();
 		this.comunicadorDeAerolinea = new AerolineaLanchitaWrapper(aerolineaLanchita, parser);
 	}
 	

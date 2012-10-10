@@ -8,14 +8,9 @@ import org.junit.Test;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.agencia.Agencia;
-import edu.utn.dds.aterrizar.usuario.ConsultaVuelos;
 import edu.utn.dds.aterrizar.usuario.Usuario;
-import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
-import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
 import edu.utn.dds.aterrizar.vuelo.filtros.FiltroDummy;
-import edu.utn.dds.aterrizar.vuelo.filtros.FiltroLibres;
-import edu.utn.dds.aterrizar.vuelo.ordenamiento.OrdenPorTiempoDeVuelo;
 
 import static org.mockito.Mockito.*;
 
@@ -41,18 +36,18 @@ public class AgenciaTest {
 	
 	@Test
 	public void laAgenciaBuscaAsientosEnTodasLasAerolineas() {
-		List<Filtro<Asiento>> filtros = Arrays.asList(new FiltroDummy(), new FiltroLibres());
-		laAgencia.buscarVuelos(new ConsultaVuelos(mock(Busqueda.class), filtros, new OrdenPorTiempoDeVuelo()), juanMockito);
+		Busqueda busquedaDummy = new Busqueda();
+		laAgencia.buscarVuelos(busquedaDummy, juanMockito);
 		
-		verify(aerolineaMockito).buscarVuelos(any(Busqueda.class));
-		verify(aerolineaPrivadaDelTurco).buscarVuelos(any(Busqueda.class));
+		verify(aerolineaMockito).buscarVuelos(busquedaDummy);
+		verify(aerolineaPrivadaDelTurco).buscarVuelos(busquedaDummy);
 	}
 	
 	@Test
 	public void laAgenciaRegistraLaConsultaEnElUsuario() {
-		List<Filtro<Asiento>> filtros = Arrays.asList(new FiltroDummy(), new FiltroLibres());
-		laAgencia.buscarVuelos(new ConsultaVuelos(mock(Busqueda.class), filtros, new OrdenPorTiempoDeVuelo()), juanMockito);
+		Busqueda busquedaDummy = new Busqueda();
+		laAgencia.buscarVuelos(busquedaDummy, juanMockito);
 
-		verify(juanMockito).registrarConsulta(any(ConsultaVuelos.class));
+		verify(juanMockito).registrarConsulta(busquedaDummy);
 	}
 }

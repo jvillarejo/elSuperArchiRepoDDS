@@ -1,12 +1,17 @@
 package edu.utn.dds.aterrizar.vuelo;
 
+import org.uqbar.commons.model.Entity;
+import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
+import org.uqbar.commons.utils.Transactional;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 
+@SuppressWarnings("serial")
 @Observable
-public class Asiento {
+@Transactional
+public class Asiento extends Entity{
 
 	private Busqueda vuelo;
 	private Aerolinea aerolinea;
@@ -16,7 +21,6 @@ public class Asiento {
 	private String estado;
 	private String codigoDeVuelo;
 	private Integer numeroDeAsiento;
-	private String nombreDeAerolinea;
 
 	public Asiento() {}
 	
@@ -27,19 +31,46 @@ public class Asiento {
 	public Asiento(Busqueda vuelo, Aerolinea aerolinea) {
 		this.vuelo = vuelo;
 		this.aerolinea = aerolinea;
-		this.nombreDeAerolinea = aerolinea.toString();
 	}
 
 	public Busqueda getFlight() {
 		return vuelo;
 	}
 
+	public void validar(){
+		if(!this.ingresoOrigen()){
+			throw new UserException("Debe ingresar una ciudad de origen");
+		}
+		if(!this.ingresoDestino()){
+			throw new UserException("Debe ingresar una ciudad destino");
+		}
+		if(!this.ingresoFechaSalida()){
+			throw new UserException("Debe ingresar una fecha de salida");
+		}
+	}
+	
+	public boolean ingresoOrigen(){
+		return this.vuelo.getOrigen() != null && !this.vuelo.getOrigen().equals("");
+	}
+	
+	public boolean ingresoDestino(){
+		return this.vuelo.getDestino() != null && !this.vuelo.getDestino().equals("");
+	}
+	
+	public boolean ingresoFechaSalida(){
+		return this.vuelo.getFechaSalida()!= null;
+	}
+	
 	public void comprar(final Usuario usuario) {
 		this.aerolinea.comprarAsiento(this, usuario);		
 	}
 	
 	public void reservar(Usuario usuario){
 		this.aerolinea.reservarAsiento(this, usuario);
+	}
+	
+	public void sobreReservar(Usuario usuario) {
+		this.aerolinea.sobreReservarAsiento(this, usuario);
 	}
 	
 	public Boolean esSuperOferta() {
@@ -63,6 +94,10 @@ public class Asiento {
 	public void setEstado(String string) {
 		this.estado= string;
 		
+	}
+	
+	public Aerolinea getAerolinea() {
+		return this.aerolinea;
 	}
 
 	public Double getPrecio() {
@@ -117,10 +152,6 @@ public class Asiento {
 
 	public void setNumeroDeAsiento(Integer numeroDeAsiento) {
 		this.numeroDeAsiento = numeroDeAsiento;
-	}
-	
-	public String getNombreDeAerolinea() {
-		return this.nombreDeAerolinea;
 	}
 
 }

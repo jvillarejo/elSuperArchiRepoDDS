@@ -1,11 +1,16 @@
 package edu.utn.dds.aterrizar.vuelo;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+
 import org.uqbar.commons.utils.Observable;
 
+import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.manejoDeFechas.DateTime;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
+import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.CriterioOrden;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.OrdenDefault;
 
 /**
  * Representa los parámetros de consulta de busqueda
@@ -23,15 +28,21 @@ public class Busqueda {
 	private String horaSalida;
 	private String horaLlegada;
 	
-	private List<Asiento> resultados;
-	private Asiento asientoSeleccionado;
+	private List<Filtro<Asiento>> filtros;
+	private CriterioOrden<Vuelo> criterioOrdenamiento;
 	
-	public Busqueda() 
-	{
-		this.inventarAsientos();
+	private void init() {
+		this.filtros = new ArrayList<Filtro<Asiento>>();
+		this.setCriterioOrdenamiento(new OrdenDefault());
+	}
+	
+	public Busqueda() {
+		this.init();
 	}
 	
 	public Busqueda(String origen, String destino,  String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada){
+		this.init();
+		
 		this.setOrigen(origen);
 		this.setDestino(destino);
 		this.setFechaSalida(fechaSalida);
@@ -40,34 +51,8 @@ public class Busqueda {
 		this.setHoraLlegada(horaLlegada);
 	}
 
-
 	private DateTime setFecha(String fecha) {
 		return (fecha != null) ?  new DateTime(SimpleDateParser.LatinAmerican(), fecha): null;
-	}
-
-
-	private void inventarAsientos() {
-		Asiento asiento1 = new Asiento();
-		asiento1.setPrecio(100.0);
-		asiento1.setNumeroDeAsiento(1);
-		asiento1.setUbicacion(Ubicacion.PASILLO);
-		asiento1.setClase(Clase.PRIMERA);
-
-		Asiento asiento2 = new Asiento();
-		asiento2.setPrecio(200.0);
-		asiento2.setNumeroDeAsiento(2);
-		asiento2.setUbicacion(Ubicacion.VENTANILLA);
-		asiento2.setClase(Clase.TURISTA);
-		
-		this.setResultados(Arrays.asList(asiento1, asiento2));
-	}
-	
-	public Asiento getAsientoSeleccionado(){
-		return this.asientoSeleccionado;
-	}
-	
-	public void setAsientoSeleccionado(Asiento asiento){
-		this.asientoSeleccionado= asiento;
 	}
 	
 	public String getCodigo() {
@@ -81,7 +66,6 @@ public class Busqueda {
 	public String getDestino() {
 		return this.destino;
 	}
-
 	
 	public void setCode(String code) {
 		this.codigo= code;
@@ -92,8 +76,9 @@ public class Busqueda {
 		return this.fechaSalida;
 	}
 
-	public void setFechaSalida(String fechaSalida) {
+	public Busqueda setFechaSalida(String fechaSalida) {
 		this.fechaSalida= this.setFecha(fechaSalida);
+		return this;
 	}
 
 	public DateTime getFechaLlegada() {
@@ -121,21 +106,31 @@ public class Busqueda {
 		this.horaLlegada = horaLlegada;
 	}
 
-	public void setOrigen(String origen) {
+	public Busqueda setOrigen(String origen) {
 		this.origen = origen;
+		return this;
 	}
 
-	public void setDestino(String destino) {
+	public Busqueda setDestino(String destino) {
 		this.destino = destino;
+		return this;
 	}
 
-	public List<Asiento> getResultados() {
-		return resultados;
+	public List<Filtro<Asiento>> getFiltros() {
+		return filtros;
 	}
 
-	public void setResultados(List<Asiento> resultados) {
-		this.resultados = resultados;
+	public Busqueda agregarFiltro(Filtro<Asiento> filtro) {
+		this.getFiltros().add(filtro);
+		return this;
 	}
 
+	public CriterioOrden<Vuelo> getCriterioOrdenamiento() {
+		return criterioOrdenamiento;
+	}
+
+	public void setCriterioOrdenamiento(CriterioOrden<Vuelo> criterioOrdenamiento) {
+		this.criterioOrdenamiento = criterioOrdenamiento;
+	}
 }
 
