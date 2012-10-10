@@ -32,7 +32,7 @@ abstract public class BaseUserWindow extends Window<Usuario> {
 		
 		new Label(panel).setText(getLabelText());
 		
-		new SimpleTable<Asiento>(panel, Asiento.class)
+		SimpleTable<Asiento> simpleTable = new SimpleTable<Asiento>(panel, Asiento.class)
 			.addColumn("Salida", new SalidaAsientoToStringTransformer())
 			.addColumn("Aerolinea", "nombreDeAerolinea")
 			.addColumn("Vuelo", "codigoDeVuelo")
@@ -40,6 +40,7 @@ abstract public class BaseUserWindow extends Window<Usuario> {
 			.addColumn("Precio", "precio");
 		
 		simpleTable.bindItemsToProperty("resultados");
+		
 		
 		new Button(panel).setCaption("Cerrar")
 			.onClick(new MessageSend(this, "close"));
