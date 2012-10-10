@@ -18,4 +18,6 @@ public interface Aerolinea {
 	void reservarAsiento(Asiento asiento, Usuario usuario);
 	
 	Usuario reservaExpirada(String codigo, String numeroAsiento);
+	
+	String getName();
 }

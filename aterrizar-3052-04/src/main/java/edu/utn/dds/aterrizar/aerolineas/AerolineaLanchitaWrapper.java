@@ -97,4 +97,9 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 		aerolineaLanchita.reservar(codigo, usuario.getDni());
 		return usuario;
 	}
+
+	@Override
+	public String getName() {
+		return "Lanchita";
+	}
 }

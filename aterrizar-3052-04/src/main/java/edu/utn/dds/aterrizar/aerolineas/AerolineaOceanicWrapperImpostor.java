@@ -71,4 +71,10 @@ public class AerolineaOceanicWrapperImpostor extends AerolineaWrapper implements
 		aerolineaOceanicImpostor.reservar(usuario.getDni(), codigo, new Integer(numeroAsiento));
 		return usuario;
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

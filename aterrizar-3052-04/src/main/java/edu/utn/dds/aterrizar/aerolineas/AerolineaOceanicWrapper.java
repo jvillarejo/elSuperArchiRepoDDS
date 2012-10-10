@@ -73,4 +73,9 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 		aerolineaOceanic.reservar(usuario.getDni(), codigo, new Integer(numeroAsiento));
 		return usuario;
 	}
+
+	@Override
+	public String getName() {
+		return "Oceanic";
+	}
 }
