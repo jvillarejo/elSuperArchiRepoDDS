@@ -1,5 +1,6 @@
 package edu.utn.dds.aterrizar.manejoDeFechas;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import junit.framework.Assert;
@@ -50,6 +51,12 @@ public class DateTimeConverterTests {
 		FlexibleDateParser parserFlexible = new FlexibleDateParser(Arrays.<DateParser>asList(SimpleDateParser.NorthAmerican(), SimpleDateParser.LatinAmerican()));				
 		DateTime fechaFlexible = new DateTime(parserFlexible, "30/10/1991");
 		Assert.assertEquals(fechaInicial, fechaFlexible.getDate());
+	}
+	
+	@Test
+	public void convertirDateTimeAFormatoLatinoamericano() {
+		DateTime unDiaPeronista = new DateTime(17, 10, 1945);
+		Assert.assertEquals("17/10/1945", SimpleDateParser.LatinAmerican().toString(unDiaPeronista));
 	}
 	
 	@Test(expected = DateParserException.class)

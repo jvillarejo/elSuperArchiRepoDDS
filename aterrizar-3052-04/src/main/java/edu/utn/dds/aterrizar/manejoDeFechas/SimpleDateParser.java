@@ -6,14 +6,15 @@ import java.util.Date;
 
 import edu.utn.dds.aterrizar.manejoDeFechas.exceptions.DateParserException;
 
+
 public class SimpleDateParser implements DateParser {
 
 	private String pattern;
-	private SimpleDateFormat dateFormat;
+	private SimpleDateFormat formatter;
 	
 	public SimpleDateParser(String pattern) {
 		this.setPattern(pattern);
-		dateFormat = new SimpleDateFormat(pattern);
+		this.formatter = new SimpleDateFormat(getPattern());
 	}
 
 	protected void setPattern(String pattern) {
@@ -24,22 +25,20 @@ public class SimpleDateParser implements DateParser {
 		return pattern;
 	}
 	
-	public String format(Date date) { 
-		return dateFormat.format(date);
-	}
-	
 	@Override
 	public Date parse(String dateString) {
 		try {
-			return dateString != null  ? dateFormat.parse(dateString) : null;
+			return this.formatter.parse(dateString);
 		} catch (ParseException e) {
 			throw new DateParserException("No se pudo parsear la fecha.", e);
 		}
 	}
-
 	
-	//TODO: tiene que haber una forma mejor de resolver esto...
+	public String toString(DateTime dateTime) {
+		return this.formatter.format(dateTime.getDate());
+	}
 	
+	//Implementaciones default
 	public static SimpleDateParser ISO8601() {
 		return new SimpleDateParser("yyyy-MM-dd");
 	}
