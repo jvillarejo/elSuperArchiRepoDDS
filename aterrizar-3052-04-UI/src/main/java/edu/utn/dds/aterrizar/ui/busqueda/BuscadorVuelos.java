@@ -43,7 +43,7 @@ public class BuscadorVuelos implements Serializable {
 
 	private List<Asiento> getAsientos(final Busqueda busqueda, final Usuario usuario) {
 		List<Asiento> asientos = new ArrayList<Asiento>();
-		List<Vuelo> vuelos = (agencia.buscarVuelos(busqueda, usuario));
+		List<Vuelo> vuelos = agencia.buscarVuelos(busqueda, usuario);
 		for (Vuelo vuelo : vuelos) {
 			asientos.addAll(vuelo.getAsientos());
 		}

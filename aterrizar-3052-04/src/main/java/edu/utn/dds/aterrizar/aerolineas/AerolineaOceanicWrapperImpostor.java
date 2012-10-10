@@ -26,7 +26,7 @@ public class AerolineaOceanicWrapperImpostor extends AerolineaWrapper implements
 				aerolineaOceanicImpostor.asientosDisponiblesParaOrigenYDestino(
 						transformarCiudad(busqueda.getOrigen()), 
 						transformarCiudad(busqueda.getDestino()), 
-						SimpleDateParser.LatinAmerican().format(busqueda.getFechaSalida().getDate())),
+						SimpleDateParser.LatinAmerican().toString(busqueda.getFechaSalida())),
 				busqueda,
 				this);
 	}

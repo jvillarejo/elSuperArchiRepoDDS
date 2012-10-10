@@ -29,7 +29,7 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 				aerolineaOceanic.asientosDisponiblesParaOrigenYDestino(
 						transformarCiudad(busqueda.getOrigen()), 
 						transformarCiudad(busqueda.getDestino()), 
-						SimpleDateParser.LatinAmerican().format(busqueda.getFechaSalida().getDate())),
+						SimpleDateParser.LatinAmerican().toString(busqueda.getFechaSalida())),
 				busqueda,
 				this);
 	}
