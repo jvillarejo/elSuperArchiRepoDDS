@@ -1,7 +1,5 @@
 package edu.utn.dds.aterrizar.vuelo;
 
-import java.util.Arrays;
-import java.util.List;
 import org.uqbar.commons.utils.Observable;
 
 import edu.utn.dds.aterrizar.manejoDeFechas.DateTime;
@@ -23,13 +21,6 @@ public class Busqueda {
 	private String horaSalida;
 	private String horaLlegada;
 	
-	private List<Asiento> resultados;
-	private Asiento asientoSeleccionado;
-	
-	public Busqueda() 
-	{
-		this.inventarAsientos();
-	}
 	
 	public Busqueda(String origen, String destino,  String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada){
 		this.setOrigen(origen);
@@ -46,29 +37,7 @@ public class Busqueda {
 	}
 
 
-	private void inventarAsientos() {
-		Asiento asiento1 = new Asiento();
-		asiento1.setPrecio(100.0);
-		asiento1.setNumeroDeAsiento(1);
-		asiento1.setUbicacion(Ubicacion.PASILLO);
-		asiento1.setClase(Clase.PRIMERA);
-
-		Asiento asiento2 = new Asiento();
-		asiento2.setPrecio(200.0);
-		asiento2.setNumeroDeAsiento(2);
-		asiento2.setUbicacion(Ubicacion.VENTANILLA);
-		asiento2.setClase(Clase.TURISTA);
-		
-		this.setResultados(Arrays.asList(asiento1, asiento2));
-	}
 	
-	public Asiento getAsientoSeleccionado(){
-		return this.asientoSeleccionado;
-	}
-	
-	public void setAsientoSeleccionado(Asiento asiento){
-		this.asientoSeleccionado= asiento;
-	}
 	
 	public String getCodigo() {
 		return codigo;
@@ -129,13 +98,7 @@ public class Busqueda {
 		this.destino = destino;
 	}
 
-	public List<Asiento> getResultados() {
-		return resultados;
-	}
-
-	public void setResultados(List<Asiento> resultados) {
-		this.resultados = resultados;
-	}
+	
 
 }
 

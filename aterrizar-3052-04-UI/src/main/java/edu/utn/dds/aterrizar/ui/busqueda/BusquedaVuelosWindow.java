@@ -17,13 +17,13 @@ import edu.utn.dds.aterrizar.ui.componentes.SimpleTable;
 import edu.utn.dds.aterrizar.ui.transformers.ClaseToStringTransformer;
 import edu.utn.dds.aterrizar.ui.transformers.UbicacionToStringTransformer;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
-public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
+
+public class BusquedaVuelosWindow extends SimpleWindow<BuscadorVuelos>{
 
 	public BusquedaVuelosWindow(WindowOwner parent) {
-		super(parent, new Busqueda());
-	//	this.getModelObject().search();
+		super(parent, new BuscadorVuelos());
+		//this.getModelObject().search();
 	}
 
 	private static final long serialVersionUID = -7226693291529135759L;
@@ -109,13 +109,15 @@ public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 	}
 
 	public void comprarAsiento(){
-		//TODO: acá deberíamos llamar al comprar de la agencia. Eso podría estar en una home
-	}
+		this.getModelObject().comprar();
+			}
+	
 	public void reservarAsiento(){
-		//TODO: idem lo de arriba
+		this.getModelObject().reservar();
 	}
 	
 	public void cerrar(){
 		this.close();
 	}
+	
 }
