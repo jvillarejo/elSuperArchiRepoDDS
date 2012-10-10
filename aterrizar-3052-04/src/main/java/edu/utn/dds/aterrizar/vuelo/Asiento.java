@@ -42,6 +42,10 @@ public class Asiento {
 		this.aerolinea.reservarAsiento(this, usuario);
 	}
 	
+	public void sobreReservar(Usuario usuario){
+		this.aerolinea.sobreReservarAsiento(this, usuario);
+	}
+	
 	public Boolean esSuperOferta() {
 		return 
 			this.getClase() == Clase.PRIMERA && this.getPrecio() < 8000
