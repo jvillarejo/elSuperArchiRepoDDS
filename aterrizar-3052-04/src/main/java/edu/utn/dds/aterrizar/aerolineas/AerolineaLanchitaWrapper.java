@@ -7,6 +7,8 @@ import com.lanchita.excepciones.CodigoErroneoException;
 import com.lanchita.excepciones.EstadoErroneoException;
 
 import edu.utn.dds.aterrizar.escalas.VueloDirecto;
+import edu.utn.dds.aterrizar.manejoDeFechas.DateParser;
+import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.parser.*;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.*;
@@ -22,6 +24,7 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 	private static final double PORCENTAJE_DE_VENTA = 0.15;
 	private Parser lanchitaParser;
 	private AerolineaLanchita aerolineaLanchita;
+	private DateParser formatter;
 	
 	/**
 	 * Constructor del wrapper con su correspondiente parser específico
@@ -32,6 +35,7 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 		super();
 		this.lanchitaParser= parser;
 		this.aerolineaLanchita = aerolineaLanchita;
+		this.formatter = SimpleDateParser.LatinAmerican();
 	}
 
 	/**
@@ -40,14 +44,13 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 	 */
 	@Override
 	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
-
-		String[][] asientosDisponibles = aerolineaLanchita.asientosDisponibles(busqueda.getOrigen(),
+		String[][] asientosDisponibles = aerolineaLanchita.asientosDisponibles(
+				busqueda.getOrigen(), 
 				busqueda.getDestino(), 
-				(busqueda.getFechaSalida() != null) ? busqueda.getFechaSalida().toString():null, 
+				busqueda.getFechaSalida() != null ? this.formatter.toString(busqueda.getFechaSalida()) : null, 
 				busqueda.getHoraSalida(), 
-				(busqueda.getFechaLlegada() != null) ? busqueda.getFechaLlegada().toString():null,
-				busqueda.getHoraLlegada());
-		
+				busqueda.getFechaLlegada() != null ? this.formatter.toString(busqueda.getFechaLlegada()) : null,
+				busqueda.getHoraLlegada());		
 
 		return this.lanchitaParser.parseDisponibles(asientosDisponibles, busqueda, this);
 	}

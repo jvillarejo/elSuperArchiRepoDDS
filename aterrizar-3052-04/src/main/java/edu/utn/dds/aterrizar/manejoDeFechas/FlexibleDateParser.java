@@ -34,5 +34,11 @@ public class FlexibleDateParser implements DateParser {
 	private Collection<DateParser> getDateParsers() {
 		return dateParsers;
 	}
+
+	@Override
+	public String toString(DateTime date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

@@ -2,16 +2,11 @@ package edu.utn.dds.aterrizar.aerolineas;
 
 import java.util.List;
 
-import javax.print.DocFlavor.STRING;
-
-import com.oceanic.AerolineaOceanic;
-
 import edu.utn.dds.aterrizar.escalas.VueloDirecto;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
-import edu.utn.dds.aterrizar.vuelo.Reserva;
 
 public class AerolineaOceanicWrapperImpostor extends AerolineaWrapper implements Aerolinea {
 
@@ -31,7 +26,7 @@ public class AerolineaOceanicWrapperImpostor extends AerolineaWrapper implements
 				aerolineaOceanicImpostor.asientosDisponiblesParaOrigenYDestino(
 						transformarCiudad(busqueda.getOrigen()), 
 						transformarCiudad(busqueda.getDestino()), 
-						SimpleDateParser.LatinAmerican().format(busqueda.getFechaSalida().getDate())),
+						SimpleDateParser.LatinAmerican().toString(busqueda.getFechaSalida())),
 				busqueda,
 				this);
 	}
