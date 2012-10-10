@@ -1,9 +1,16 @@
 package edu.utn.dds.aterrizar.vuelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.uqbar.commons.utils.Observable;
 
+import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.manejoDeFechas.DateTime;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
+import edu.utn.dds.aterrizar.vuelo.filtros.Filtro;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.CriterioOrden;
+import edu.utn.dds.aterrizar.vuelo.ordenamiento.OrdenDefault;
 
 /**
  * Representa los parámetros de consulta de busqueda
@@ -21,8 +28,21 @@ public class Busqueda {
 	private String horaSalida;
 	private String horaLlegada;
 	
+	private List<Filtro<Asiento>> filtros;
+	private CriterioOrden<Vuelo> criterioOrdenamiento;
+	
+	private void init() {
+		this.filtros = new ArrayList<Filtro<Asiento>>();
+		this.setCriterioOrdenamiento(new OrdenDefault());
+	}
+	
+	public Busqueda() {
+		this.init();
+	}
 	
 	public Busqueda(String origen, String destino,  String fechaSalida, String fechaLlegada, String horaSalida, String horaLlegada){
+		this.init();
+		
 		this.setOrigen(origen);
 		this.setDestino(destino);
 		this.setFechaSalida(fechaSalida);
@@ -31,13 +51,9 @@ public class Busqueda {
 		this.setHoraLlegada(horaLlegada);
 	}
 
-
 	private DateTime setFecha(String fecha) {
 		return (fecha != null) ?  new DateTime(SimpleDateParser.LatinAmerican(), fecha): null;
 	}
-
-
-	
 	
 	public String getCodigo() {
 		return codigo;
@@ -98,7 +114,21 @@ public class Busqueda {
 		this.destino = destino;
 	}
 
-	
+	public List<Filtro<Asiento>> getFiltros() {
+		return filtros;
+	}
 
+	public Busqueda agregarFiltro(Filtro<Asiento> filtro) {
+		this.getFiltros().add(filtro);
+		return this;
+	}
+
+	public CriterioOrden<Vuelo> getCriterioOrdenamiento() {
+		return criterioOrdenamiento;
+	}
+
+	public void setCriterioOrdenamiento(CriterioOrden<Vuelo> criterioOrdenamiento) {
+		this.criterioOrdenamiento = criterioOrdenamiento;
+	}
 }
 
