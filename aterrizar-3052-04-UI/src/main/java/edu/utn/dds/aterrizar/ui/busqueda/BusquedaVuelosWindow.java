@@ -14,6 +14,8 @@ import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 
 import edu.utn.dds.aterrizar.ui.componentes.SimpleTable;
+import edu.utn.dds.aterrizar.ui.transformers.AsientoToAerolineaNameTransformer;
+import edu.utn.dds.aterrizar.ui.transformers.AsientoToCodigoVueloTransformer;
 import edu.utn.dds.aterrizar.ui.transformers.ClaseToStringTransformer;
 import edu.utn.dds.aterrizar.ui.transformers.UbicacionToStringTransformer;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
@@ -61,8 +63,10 @@ public class BusquedaVuelosWindow extends SimpleWindow<BuscadorVuelos>{
 		simpleTable.setWidth(450);
 
 		simpleTable.addColumn("Asiento", "numeroDeAsiento")
+			.addColumn("Aerolinea", new AsientoToAerolineaNameTransformer())
+			.addColumn("Vuelo", new AsientoToCodigoVueloTransformer())
 			.addColumn("Precio", "precio")
-			.addColumn("Ubicacion",new UbicacionToStringTransformer())
+			.addColumn("Ubicacion", new UbicacionToStringTransformer())
 			.addColumn("Clase", new ClaseToStringTransformer());
 
 		simpleTable.bindItemsToProperty("resultados");

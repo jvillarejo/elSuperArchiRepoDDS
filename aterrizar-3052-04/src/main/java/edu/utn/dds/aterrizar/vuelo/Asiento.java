@@ -21,7 +21,6 @@ public class Asiento extends Entity{
 	private String estado;
 	private String codigoDeVuelo;
 	private Integer numeroDeAsiento;
-	private String nombreDeAerolinea;
 
 	public Asiento() {}
 	
@@ -32,7 +31,6 @@ public class Asiento extends Entity{
 	public Asiento(Busqueda vuelo, Aerolinea aerolinea) {
 		this.vuelo = vuelo;
 		this.aerolinea = aerolinea;
-		this.nombreDeAerolinea = aerolinea.toString();
 	}
 
 	public Busqueda getFlight() {
@@ -94,6 +92,10 @@ public class Asiento extends Entity{
 		this.estado= string;
 		
 	}
+	
+	public Aerolinea getAerolinea() {
+		return this.aerolinea;
+	}
 
 	public Double getPrecio() {
 		return precio;
@@ -147,10 +149,6 @@ public class Asiento extends Entity{
 
 	public void setNumeroDeAsiento(Integer numeroDeAsiento) {
 		this.numeroDeAsiento = numeroDeAsiento;
-	}
-	
-	public String getNombreDeAerolinea() {
-		return this.nombreDeAerolinea;
 	}
 
 }
