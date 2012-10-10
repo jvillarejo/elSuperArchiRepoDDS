@@ -31,4 +31,8 @@ public class DateTime {
 	public Date getDate(){
 		return this.date;
 	}
+	
+	public String toString(DateParser formatter){
+		return formatter.toString(this);
+	}
 }

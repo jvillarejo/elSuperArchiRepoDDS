@@ -3,6 +3,7 @@ package edu.utn.dds.aterrizar.aerolineas;
 import java.util.List;
 
 import edu.utn.dds.aterrizar.escalas.VueloDirecto;
+import edu.utn.dds.aterrizar.manejoDeFechas.DateParser;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
@@ -14,12 +15,19 @@ public class AerolineaOceanicWrapperImpostor extends AerolineaWrapper implements
 	
 	private AerolineaOceanicImpostor aerolineaOceanicImpostor; 
 	private AerolineaOceanicParser parser; 
+	private DateParser formatter;
 	
 	public AerolineaOceanicWrapperImpostor(AerolineaOceanicImpostor aerolineaOceanicImpostor) {
 		super();
 		this.aerolineaOceanicImpostor = aerolineaOceanicImpostor;
+		this.setFormatter(SimpleDateParser.LatinAmerican());
 	}
 	
+	private void setFormatter(DateParser formatter) {
+		this.formatter= formatter;
+		
+	}
+
 	@Override
 	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
 		return this.parser.parse(
@@ -74,7 +82,11 @@ public class AerolineaOceanicWrapperImpostor extends AerolineaWrapper implements
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "OceanicImpostor";
+	}
+
+	@Override
+	public DateParser getFormatter() {
+		return this.formatter;
 	}
 }

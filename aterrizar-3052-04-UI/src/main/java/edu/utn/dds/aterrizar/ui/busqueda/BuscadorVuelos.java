@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
 
+import edu.utn.dds.aterrizar.aerolineas.AsientoNoDisponibleException;
 import edu.utn.dds.aterrizar.agencia.Agencia;
 import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.homes.UsuarioHome;
@@ -19,6 +21,7 @@ public class BuscadorVuelos implements Serializable {
 	/**
 	 * @author clari
 	 */
+	
 	private static final long serialVersionUID = 2589233978711139624L;
 	private final Agencia agencia = Agencia.getInstance();
 	// por ahora hardcodeamos el usuario
@@ -52,12 +55,29 @@ public class BuscadorVuelos implements Serializable {
 	}
 
 	public void comprar() {
-		this.agencia.comprarAsiento(this.asientoSeleccionado, this.user);
+		try {
+			this.agencia.comprarAsiento(this.asientoSeleccionado, this.user);
+			throw new UserException("El asiento "
+					+ this.asientoSeleccionado.getCodigoDeVuelo()
+					+ " ha sido comprado exitosamente");
+		} catch(AsientoNoDisponibleException e){
+			throw new UserException("Ha ocurrido un error en su reserva: "
+					+ e.getMessage() + ". Por favor intente nuevamente");
+		}
 	}
 
 	public void reservar() {
-		this.agencia.reservarAsiento(this.asientoSeleccionado, this.user);
+		try {
+			this.agencia.reservarAsiento(this.asientoSeleccionado, this.user);
+			throw new UserException("El asiento "
+					+ this.asientoSeleccionado.getCodigoDeVuelo()
+					+ " ha sido reservado exitosamente");
+		} catch (RuntimeException re) {
+			throw new UserException("Ha ocurrido un error en su reserva: "
+					+ re.getMessage() + ". Por favor intente nuevamente");
+		}
 	}
+	
 
 	// ********************************************************
 	// ** Accessors

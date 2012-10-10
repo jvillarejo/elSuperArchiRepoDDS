@@ -47,7 +47,6 @@ public class Asiento extends Entity{
 		if(!this.ingresoFechaSalida()){
 			throw new UserException("Debe ingresar una fecha de salida");
 		}
-		//validar el formato de la fecha
 	}
 	
 	public boolean ingresoOrigen(){
@@ -68,6 +67,10 @@ public class Asiento extends Entity{
 	
 	public void reservar(Usuario usuario){
 		this.aerolinea.reservarAsiento(this, usuario);
+	}
+	
+	public void sobreReservar(Usuario usuario) {
+		this.aerolinea.sobreReservarAsiento(this, usuario);
 	}
 	
 	public Boolean esSuperOferta() {

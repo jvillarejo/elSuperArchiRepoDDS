@@ -18,14 +18,26 @@ public class VueloDirecto extends Vuelo {
 		String fechaLlegada, Aerolinea aerolinea) {
 	this.origen= origen;
 	this.destino= destino;
-	this.fechaSalida= new DateTime(SimpleDateParser.LatinAmerican(), fechaSalida);
-	this.fechaLlegada = new DateTime(SimpleDateParser.LatinAmerican(), fechaLlegada);
+	this.setFechaSalida(fechaSalida);
+	this.setFechaLlegada(fechaLlegada);
 	this.aerolinea= aerolinea;
 	}
 	
 	public VueloDirecto() {
 	}
 
+	private DateTime setFecha(String fecha) {
+    return (fecha != null) ?  new DateTime(SimpleDateParser.LatinAmerican(), fecha): null;
+	}
+	
+	public void setFechaSalida(String fechaSalida) {
+		this.fechaSalida= this.setFecha(fechaSalida);
+	   }
+	
+	public void setFechaLlegada(String fechaLlegada) {
+	    this.setFecha(fechaLlegada);
+	   }
+	
 	@Override
 	public long getDuration(){
 		return this.fechaSalida.diasDeDiferenciaCon(this.fechaLlegada);

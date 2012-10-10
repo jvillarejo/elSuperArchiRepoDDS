@@ -35,7 +35,7 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 		super();
 		this.lanchitaParser= parser;
 		this.aerolineaLanchita = aerolineaLanchita;
-		this.formatter = SimpleDateParser.LatinAmerican();
+		this.setFormatter(SimpleDateParser.LatinAmerican());
 	}
 
 	/**
@@ -47,9 +47,9 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 		String[][] asientosDisponibles = aerolineaLanchita.asientosDisponibles(
 				busqueda.getOrigen(), 
 				busqueda.getDestino(), 
-				busqueda.getFechaSalida() != null ? this.formatter.toString(busqueda.getFechaSalida()) : null, 
+				busqueda.getFechaSalida() != null ? this.getFormatter().toString(busqueda.getFechaSalida()) : null, 
 				busqueda.getHoraSalida(), 
-				busqueda.getFechaLlegada() != null ? this.formatter.toString(busqueda.getFechaLlegada()) : null,
+				busqueda.getFechaLlegada() != null ? this.getFormatter().toString(busqueda.getFechaLlegada()) : null,
 				busqueda.getHoraLlegada());		
 
 		return this.lanchitaParser.parseDisponibles(asientosDisponibles, busqueda, this);
@@ -101,5 +101,13 @@ public class AerolineaLanchitaWrapper extends AerolineaWrapper implements Aeroli
 	@Override
 	public String getName() {
 		return "Lanchita";
+	}
+
+	public DateParser getFormatter() {
+		return formatter;
+	}
+
+	public void setFormatter(DateParser formatter) {
+		this.formatter = formatter;
 	}
 }

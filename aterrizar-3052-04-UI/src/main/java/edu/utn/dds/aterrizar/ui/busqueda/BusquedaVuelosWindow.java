@@ -11,7 +11,9 @@ import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.SimpleWindow;
+import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
+import org.uqbar.commons.model.UserException;
 
 import edu.utn.dds.aterrizar.ui.componentes.SimpleTable;
 import edu.utn.dds.aterrizar.ui.transformers.AsientoToAerolineaNameTransformer;
@@ -102,22 +104,32 @@ public class BusquedaVuelosWindow extends SimpleWindow<BuscadorVuelos>{
 		Panel searchFormPanel = new Panel(mainPanel);
 		searchFormPanel.setLayout(new ColumnLayout(2));
 
-		new Label(searchFormPanel).setText("Origen").setForeground(Color.BLUE);
+		new Label(searchFormPanel).setText("Origen").setForeground(Color.BLACK);
 		new TextBox(searchFormPanel).bindValueToProperty("origen");
 
-		new Label(searchFormPanel).setText("Destino").setForeground(Color.BLUE);
+		new Label(searchFormPanel).setText("Destino").setForeground(Color.BLACK);
 		new TextBox(searchFormPanel).bindValueToProperty("destino");
 		
-		new Label(searchFormPanel).setText("Fecha").setForeground(Color.BLUE);
+		new Label(searchFormPanel).setText("Fecha").setForeground(Color.BLACK);
 		new TextBox(searchFormPanel).bindValueToProperty("fechaSalida");
+		
 	}
 
 	public void comprarAsiento(){
 		this.getModelObject().comprar();
 			}
 	
-	public void reservarAsiento(){
-		this.getModelObject().reservar();
+	public void reservarAsiento() {
+		try {
+			this.getModelObject().reservar();
+		} catch (UserException are) {
+			this.openWindow(new SobreReservaWindow(this, this.getModelObject()
+					.getAsientoSeleccionado()));
+		}
+	}
+	
+	private void openWindow(Window<?> window) {
+		window.open();
 	}
 	
 	public void cerrar(){

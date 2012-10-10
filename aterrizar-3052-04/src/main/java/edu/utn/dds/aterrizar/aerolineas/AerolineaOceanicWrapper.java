@@ -5,6 +5,7 @@ import java.util.List;
 import com.oceanic.AerolineaOceanic;
 
 import edu.utn.dds.aterrizar.escalas.VueloDirecto;
+import edu.utn.dds.aterrizar.manejoDeFechas.DateParser;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
@@ -16,13 +17,19 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 	
 	private AerolineaOceanic aerolineaOceanic; 
 	private AerolineaOceanicParser parser; 
+	private DateParser formatter;
 	
 	public AerolineaOceanicWrapper(AerolineaOceanic aerolineaOceanic, AerolineaOceanicParser parser) {
 		super();
 		this.aerolineaOceanic = aerolineaOceanic;
 		this.parser = parser;
+		this.setFormatter(SimpleDateParser.LatinAmerican());
 	}
 	
+	private void setFormatter(DateParser formatter) {
+		this.formatter= formatter;
+	}
+
 	@Override
 	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
 		return this.parser.parse(
@@ -77,5 +84,10 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 	@Override
 	public String getName() {
 		return "Oceanic";
+	}
+
+	@Override
+	public DateParser getFormatter() {
+		return this.formatter;
 	}
 }

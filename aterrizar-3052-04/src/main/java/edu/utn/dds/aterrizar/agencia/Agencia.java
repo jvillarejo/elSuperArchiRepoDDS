@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import com.lanchita.AerolineaLanchita;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
+import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaMock;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
 import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.escalas.VueloConEscala;
 import edu.utn.dds.aterrizar.escalas.VueloDirecto;
+//import edu.utn.dds.aterrizar.manejoDeFechas.DateParser;
 import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.ordenamiento.Query;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
 public class Agencia {
@@ -39,9 +39,9 @@ public class Agencia {
 		if (instance == null) {
 			List<Aerolinea> aeros = new ArrayList<Aerolinea>();
 			// aeros.add(new
-			// AerolineaOceanicWrapper(AerolineaOceanic.getInstance(), new
+			// AerolineaOceanicWrapper(AerolineaOceanicImpostor.getInstance(), new
 			// AerolineaOceanicParser()));
-			aeros.add(new AerolineaLanchitaWrapper(AerolineaLanchita
+			aeros.add(new AerolineaLanchitaWrapper(AerolineaLanchitaMock
 					.getInstance(), new Parser()));
 			instance = new Agencia(aeros);
 		}
@@ -53,24 +53,24 @@ public class Agencia {
 	// ****************************************************************
 
 	public List<Vuelo> buscarVuelos(final Busqueda busqueda, final Usuario usuario) {
-		// TODO: MUY IMPORTANTE hacer que este buscar vuelos llame al de las
-		// escalas!
-		List<VueloDirecto> vuelosDirectos = new ArrayList<VueloDirecto>();
+	
+		List<Vuelo> vuelosDirectos = new ArrayList<Vuelo>();
 		for (Aerolinea aerolinea : aerolineas) {
 			vuelosDirectos.addAll(aerolinea.buscarVuelos(busqueda));
 		}
 
-		List<Vuelo> vuelos = adaptarPreciosParaUsuario(vuelosDirectos, usuario);
+		//List<Vuelo> vuelos = adaptarPreciosParaUsuario(vuelosDirectos, usuario);
 
 		usuario.registrarConsulta(busqueda);
 
-		for (Vuelo vuelo : vuelos)
-			vuelo.filtrarAsientos(busqueda.getFiltros(), usuario);
-
-		Query<Vuelo> buscador = new Query<Vuelo>(vuelos);
-		buscador.addOrderByCriteria(busqueda.getCriterioOrdenamiento());
-
-		return buscador.execute();
+//		for (Vuelo vuelo : vuelosDirectos)
+//			vuelo.filtrarAsientos(busqueda.getFiltros(), usuario);
+//
+//		Query<Vuelo> buscador = new Query<Vuelo>(vuelosDirectos);
+//		buscador.addOrderByCriteria(busqueda.getCriterioOrdenamiento());
+//
+//		return buscador.execute();
+		return vuelosDirectos;
 	}
 
 	public List<Vuelo> buscarVuelosConEscala(String origen, String destino,
@@ -124,23 +124,25 @@ public class Agencia {
 		asiento.reservar(usuario);
 	}
 
-	private List<Vuelo> adaptarPreciosParaUsuario(List<VueloDirecto> vuelos,
-			Usuario usuario) {
-		List<Vuelo> vuelosConAsientosAdaptados = new ArrayList<Vuelo>();
-
-		for (VueloDirecto vuelo : vuelos) {
-			for (Asiento asiento : vuelo.getAsientos()) {
-				VueloDirecto nuevoVuelo = new VueloDirecto(vuelo.getOrigen(),
-						vuelo.getDestino(), vuelo.getFechaSalida().toString(),
-						vuelo.getFechaLlegada().toString(),
-						vuelo.getAerolinea());
-				vuelo.agregarAsiento(asiento
-						.adaptarNuevoAsientoConPrecioPara(usuario));
-				vuelosConAsientosAdaptados.add(nuevoVuelo);
-			}
-		}
-
-		return vuelosConAsientosAdaptados;
-	}
+//	private List<Vuelo> adaptarPreciosParaUsuario(List<VueloDirecto> vuelos,
+//			Usuario usuario) {
+//		List<Vuelo> vuelosConAsientosAdaptados = new ArrayList<Vuelo>();
+//
+//		for (VueloDirecto vuelo : vuelos) {
+//			for (Asiento asiento : vuelo.getAsientos()) {
+//				DateParser formatter= vuelo.getAerolinea().getFormatter();
+//				VueloDirecto nuevoVuelo = new VueloDirecto(vuelo.getOrigen(),
+//						vuelo.getDestino(), vuelo.getFechaSalida().toString(formatter),
+//						vuelo.getFechaLlegada().toString(formatter),
+//						asiento.getAerolinea());
+//				vuelo.agregarAsiento(asiento
+//					.adaptarNuevoAsientoConPrecioPara(usuario)
+//						);
+//				vuelosConAsientosAdaptados.add(nuevoVuelo);
+//			}
+//		}
+//
+//		return vuelosConAsientosAdaptados;
+//	}
 
 }

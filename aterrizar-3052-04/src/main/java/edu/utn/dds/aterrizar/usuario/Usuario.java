@@ -16,7 +16,7 @@ public class Usuario {
 	private String dni;
 	private TipoDeSuscripcion tipoDeSuscripcion;
 	private List<Busqueda> consultasRealizadas;
-	private List<Asiento> comprasEfectuadas;
+	private List<Asiento> comprasEfectuadas = new ArrayList<Asiento>();
 	
 	public Usuario(String nombre, String apellido, String dni, TipoDeSuscripcion tipoDeSuscripcion) {
 		this.nombre = nombre;
@@ -71,7 +71,7 @@ public class Usuario {
 	}
 
 	public void registrarCompra(Asiento asiento) {
-			this.comprasEfectuadas.add(asiento.adaptarNuevoAsientoConPrecioPara(this));
+			this.comprasEfectuadas.add(asiento/*.adaptarNuevoAsientoConPrecioPara(this)*/);
 	}
 	
 	public String getNombreCompleto() {
