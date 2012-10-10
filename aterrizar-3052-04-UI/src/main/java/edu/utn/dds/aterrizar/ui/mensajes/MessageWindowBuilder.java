@@ -7,7 +7,7 @@ import edu.utn.dds.aterrizar.vuelo.Asiento;
 
 public class MessageWindowBuilder {
 
-	private Accion accion;
+	protected Accion accion;
 
 	public MessageWindowBuilder(Accion accion) {
 		this.accion = accion;
@@ -24,11 +24,12 @@ public class MessageWindowBuilder {
 	}
 
 	private String buildErrorMessage(String message) {
-		return "Ha ocurrido un error en su " + this.getAccionError() + ":" + message + "\n" + "Por favor intente nuevamente"; 
+		return "Ha ocurrido un error en su " + this.getAccionError() + ":" + 
+				"\n\n" + "<" + message + ">" + "\n\n" + "Por favor intente nuevamente \n"; 
 	}
 
 	protected String buildSuccessMessage(String codigoDeVuelo) {
-		return "El asiento " + codigoDeVuelo + " ha sido " + getAccion() + "exitosamente";
+		return "El asiento " + codigoDeVuelo + " ha sido " + getAccion() + " exitosamente \n";
 	}
 	
 	private String getAccionError() {
