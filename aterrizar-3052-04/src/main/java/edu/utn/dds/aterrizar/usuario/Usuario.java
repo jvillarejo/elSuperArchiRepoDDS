@@ -76,5 +76,9 @@ public class Usuario {
 	public String getNombreCompleto() {
 		return this.nombre + " " + this.apellido;
 	}
-
+	
+	public List<Asiento> getComprasEfectuadas() {
+		return new ArrayList<Asiento>(this.comprasEfectuadas);
+	}
+	
 }
