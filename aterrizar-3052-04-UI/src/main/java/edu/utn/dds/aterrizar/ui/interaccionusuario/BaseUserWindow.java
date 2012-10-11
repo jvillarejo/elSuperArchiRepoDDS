@@ -10,20 +10,19 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
 
+import edu.utn.dds.aterrizar.ui.appmodels.AsientoModel;
+import edu.utn.dds.aterrizar.ui.appmodels.AsientoModelAdapter;
+import edu.utn.dds.aterrizar.ui.appmodels.UsuarioModel;
 import edu.utn.dds.aterrizar.ui.componentes.SimpleTable;
-import edu.utn.dds.aterrizar.ui.transformers.SalidaAsientoToStringTransformer;
-import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 
-abstract public class BaseUserWindow extends Window<Usuario> {
+abstract public class BaseUserWindow extends Window<UsuarioModel> {
 
 	private static final long serialVersionUID = 6354269494094294267L;
 
-	private List<Asiento> resultados;
-	
-	public BaseUserWindow(WindowOwner owner, Usuario model) {
+	public BaseUserWindow(WindowOwner owner, UsuarioModel model) {
 		super(owner, model);
-		resultados = this.getResultados(model);
+		model.setResultados(this.getResultados(model));
 	}
 
 	@Override
@@ -32,11 +31,11 @@ abstract public class BaseUserWindow extends Window<Usuario> {
 		
 		new Label(panel).setText(getLabelText());
 		
-		SimpleTable<Asiento> simpleTable = new SimpleTable<Asiento>(panel, Asiento.class)
-			.addColumn("Salida", new SalidaAsientoToStringTransformer())
-			.addColumn("Aerolinea", "nombreDeAerolinea")
+		SimpleTable<AsientoModel> simpleTable = new SimpleTable<AsientoModel>(panel, AsientoModel.class)
+			.addColumn("Salida", "fechaSalida")
+			.addColumn("Aerolinea", "nombreAerolinea")
 			.addColumn("Vuelo", "codigoDeVuelo")
-			.addColumn("Asiento", "numeroDeAsiento")
+			.addColumn("Asiento", "numeroAsiento")
 			.addColumn("Precio", "precio");
 		
 		simpleTable.bindItemsToProperty("resultados");
@@ -46,7 +45,10 @@ abstract public class BaseUserWindow extends Window<Usuario> {
 			.onClick(new MessageSend(this, "close"));
 	}
 
-	abstract protected List<Asiento> getResultados(Usuario model);
-	abstract protected String getLabelText();
-
+	protected List<AsientoModel> getResultados(UsuarioModel model) {
+		return AsientoModelAdapter.toApplicationModel(this.getAsientos(model));
+	}
+	
+	protected abstract List<Asiento> getAsientos(UsuarioModel model);
+	protected abstract String getLabelText();
 }

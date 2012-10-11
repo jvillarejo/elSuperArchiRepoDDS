@@ -74,10 +74,6 @@ public class Usuario {
 			this.comprasEfectuadas.add(asiento/*.adaptarNuevoAsientoConPrecioPara(this)*/);
 	}
 	
-	public String getNombreCompleto() {
-		return this.nombre + " " + this.apellido;
-	}
-	
 	public List<Asiento> getComprasEfectuadas() {
 		return new ArrayList<Asiento>(this.comprasEfectuadas);
 	}

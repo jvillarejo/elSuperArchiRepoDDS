@@ -31,7 +31,7 @@ public class SobreReservaWindow extends SimpleWindow<Asiento> {
 
 	public void sobreReservar() {
 		this.getModelObject().sobreReservar(
-				UsuarioHome.getInstance().getDefaultUser());
+				UsuarioHome.getInstance().getDefaultUser().getUsuarioOriginal());
 	}
 
 	@Override

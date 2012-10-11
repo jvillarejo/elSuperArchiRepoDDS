@@ -1,4 +1,4 @@
-package edu.utn.dds.aterrizar.ui.transformers;
+package edu.utn.dds.aterrizar.ui.utils;
 
 public class EnumUtils {
 

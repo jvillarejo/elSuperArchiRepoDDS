@@ -1,9 +1,10 @@
-package edu.utn.dds.aterrizar.ui.transformers;
+package edu.utn.dds.aterrizar.ui.utils;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import edu.utn.dds.aterrizar.ui.utils.EnumUtils;
 import edu.utn.dds.aterrizar.vuelo.Ubicacion;
 
 public class EnumUtilsTest {
