@@ -13,7 +13,7 @@ import edu.utn.dds.aterrizar.usuario.Usuario;
 @Transactional
 public class Asiento extends Entity{
 
-	private Busqueda vuelo;
+	private Busqueda busqueda;
 	private Aerolinea aerolinea;
 	private Double precio;
 	private Clase clase;
@@ -29,12 +29,12 @@ public class Asiento extends Entity{
 	}
 	
 	public Asiento(Busqueda vuelo, Aerolinea aerolinea) {
-		this.vuelo = vuelo;
+		this.setBusqueda(vuelo);
 		this.aerolinea = aerolinea;
 	}
 
-	public Busqueda getFlight() {
-		return vuelo;
+	public Busqueda getBusqueda() {
+		return busqueda;
 	}
 
 	public void validar(){
@@ -50,15 +50,15 @@ public class Asiento extends Entity{
 	}
 	
 	public boolean ingresoOrigen(){
-		return this.vuelo.getOrigen() != null && !this.vuelo.getOrigen().equals("");
+		return this.getBusqueda().getOrigen() != null && !this.getBusqueda().getOrigen().equals("");
 	}
 	
 	public boolean ingresoDestino(){
-		return this.vuelo.getDestino() != null && !this.vuelo.getDestino().equals("");
+		return this.getBusqueda().getDestino() != null && !this.getBusqueda().getDestino().equals("");
 	}
 	
 	public boolean ingresoFechaSalida(){
-		return this.vuelo.getFechaSalida()!= null;
+		return this.getBusqueda().getFechaSalida()!= null;
 	}
 	
 	public void comprar(final Usuario usuario) {
@@ -129,7 +129,7 @@ public class Asiento extends Entity{
 	}
 
 	public Asiento adaptarNuevoAsientoConPrecioPara(Usuario usuario) {
-		Asiento asientoAdaptado = new Asiento(this.vuelo, this.aerolinea);
+		Asiento asientoAdaptado = new Asiento(this.getBusqueda(), this.aerolinea);
 		asientoAdaptado.adaptarPrecioPara(usuario);
 		return asientoAdaptado;
 	}
@@ -152,6 +152,10 @@ public class Asiento extends Entity{
 
 	public void setNumeroDeAsiento(Integer numeroDeAsiento) {
 		this.numeroDeAsiento = numeroDeAsiento;
+	}
+
+	public void setBusqueda(Busqueda busqueda) {
+		this.busqueda = busqueda;
 	}
 
 }

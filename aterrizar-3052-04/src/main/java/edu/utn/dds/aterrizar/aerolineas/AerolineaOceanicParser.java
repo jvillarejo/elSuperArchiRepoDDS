@@ -38,15 +38,15 @@ public class AerolineaOceanicParser {
 			Vuelo vuelo = findVuelo(vuelos, asiento.getCodigoDeVuelo());
 			vuelo.getAsientos().add(asiento);
 		} catch (VueloNotFoundException e) { 
-			VueloDirecto vuelo = new VueloDirecto(asiento.getFlight().getOrigen(), 
-					asiento.getFlight().getDestino(), 
+			VueloDirecto vuelo = new VueloDirecto(asiento.getBusqueda().getOrigen(), 
+					asiento.getBusqueda().getDestino(), 
 					asientoDTO.getFechaDeSalida(), 
 					asientoDTO.getFechaDeLlegada(),
 					aerolinea);
 			
 			vuelo.setCodigo(asiento.getCodigoDeVuelo());
-			vuelo.setDestino(asiento.getFlight().getDestino());
-			vuelo.setOrigen(asiento.getFlight().getOrigen());
+			vuelo.setDestino(asiento.getBusqueda().getDestino());
+			vuelo.setOrigen(asiento.getBusqueda().getOrigen());
 			vuelo.agregarAsiento(asiento);
 			vuelos.add(vuelo);
 		}
