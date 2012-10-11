@@ -11,6 +11,9 @@ import edu.utn.dds.aterrizar.aerolineas.AsientoNoDisponibleException;
 import edu.utn.dds.aterrizar.agencia.Agencia;
 import edu.utn.dds.aterrizar.escalas.Vuelo;
 import edu.utn.dds.aterrizar.homes.UsuarioHome;
+import edu.utn.dds.aterrizar.ui.appmodels.AsientoModel;
+import edu.utn.dds.aterrizar.ui.appmodels.AsientoModelAdapter;
+import edu.utn.dds.aterrizar.ui.appmodels.UsuarioModel;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
@@ -25,11 +28,11 @@ public class BuscadorVuelos implements Serializable {
 	private static final long serialVersionUID = 2589233978711139624L;
 	private final Agencia agencia = Agencia.getInstance();
 	// por ahora hardcodeamos el usuario
-	private final Usuario user = UsuarioHome.getInstance().getDefaultUser();
+	private final UsuarioModel user = UsuarioHome.getInstance().getDefaultUser();
 	private String origen;
 	private String destino;
 	private String fechaSalida;
-	private List<Asiento> resultados;
+	private List<AsientoModel> resultados;
 	private Asiento asientoSeleccionado;
 
 	// ********************************************************
@@ -41,22 +44,22 @@ public class BuscadorVuelos implements Serializable {
 			.setDestino(this.destino)
 			.setFechaSalida(fechaSalida);
 		
-		this.resultados= this.getAsientos(busqueda, this.user);
+		this.resultados = this.getAsientos(busqueda, this.user.getUsuarioOriginal());
 	}
 
-	private List<Asiento> getAsientos(final Busqueda busqueda, final Usuario usuario) {
+	private List<AsientoModel> getAsientos(final Busqueda busqueda, final Usuario usuario) {
 		List<Asiento> asientos = new ArrayList<Asiento>();
 		List<Vuelo> vuelos = agencia.buscarVuelos(busqueda, usuario);
 		for (Vuelo vuelo : vuelos) {
 			asientos.addAll(vuelo.getAsientos());
 		}
 		
-		return asientos;
+		return AsientoModelAdapter.toApplicationModel(asientos);
 	}
 
 	public void comprar() {
 		try {
-			this.agencia.comprarAsiento(this.asientoSeleccionado, this.user);
+			this.agencia.comprarAsiento(this.asientoSeleccionado, this.user.getUsuarioOriginal());
 			throw new UserException("El asiento "
 					+ this.asientoSeleccionado.getCodigoDeVuelo()
 					+ " ha sido comprado exitosamente");
@@ -68,7 +71,7 @@ public class BuscadorVuelos implements Serializable {
 
 	public void reservar() {
 		try {
-			this.agencia.reservarAsiento(this.asientoSeleccionado, this.user);
+			this.agencia.reservarAsiento(this.asientoSeleccionado, this.user.getUsuarioOriginal());
 			throw new UserException("El asiento "
 					+ this.asientoSeleccionado.getCodigoDeVuelo()
 					+ " ha sido reservado exitosamente");
@@ -91,12 +94,8 @@ public class BuscadorVuelos implements Serializable {
 		this.asientoSeleccionado = asiento;
 	}
 
-	public List<Asiento> getResultados() {
+	public List<AsientoModel> getResultados() {
 		return this.resultados;
-	}
-
-	public void setResultados(List<Asiento> resultados) {
-		this.resultados = resultados;
 	}
 
 	public String getOrigen() {

@@ -23,7 +23,7 @@ import edu.utn.dds.aterrizar.ui.transformers.AsientoToCodigoVueloTransformer;
 import edu.utn.dds.aterrizar.ui.transformers.ClaseToStringTransformer;
 import edu.utn.dds.aterrizar.ui.transformers.UbicacionToStringTransformer;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-
+import edu.utn.dds.aterrizar.ui.appmodels.AsientoModel;
 
 public class BusquedaVuelosWindow extends SimpleWindow<BuscadorVuelos>{
 
@@ -41,7 +41,6 @@ public class BusquedaVuelosWindow extends SimpleWindow<BuscadorVuelos>{
 		.onClick(new MessageSend(this.getModelObject(), "search"))
 		.setAsDefault()
 		.disableOnError();
-		
 	}
 	
 	
@@ -59,17 +58,19 @@ public class BusquedaVuelosWindow extends SimpleWindow<BuscadorVuelos>{
 	// *************************************************************************
 	// ** RESULTADOS DE LA BUSQUEDA
 	// *************************************************************************
-
 	
 	protected void createResultsGrid(Panel mainPanel) {
-		SimpleTable<Asiento> simpleTable = new SimpleTable<Asiento>(mainPanel, Asiento.class);
+		SimpleTable<AsientoModel> simpleTable = new SimpleTable<AsientoModel>(mainPanel, AsientoModel.class);
 		simpleTable.setHeigth(200);
 		simpleTable.setWidth(450);
 
-		simpleTable.addColumn("Asiento", "numeroDeAsiento")
+		simpleTable
+			.addColumn("Asiento", "numeroAsiento")
+			.addColumn("Aerolinea", "nombreAerolinea")
+			.addColumn("Vuelo", "codigoDeVuelo")
 			.addColumn("Precio", "precio")
-			.addColumn("Ubicacion",new UbicacionToStringTransformer())
-			.addColumn("Clase", new ClaseToStringTransformer());
+			.addColumn("Ubicacion", "ubicacion")
+			.addColumn("Clase", "clase");
 
 		simpleTable.bindItemsToProperty("resultados");
 		simpleTable.bindValueToProperty("asientoSeleccionado");
@@ -118,7 +119,7 @@ public class BusquedaVuelosWindow extends SimpleWindow<BuscadorVuelos>{
 	public void comprarAsiento(){
 		try{
 			Asiento asiento = this.getModelObject().getAsientoSeleccionado();
-			asiento.comprar(UsuarioHome.getInstance().getDefaultUser());
+			asiento.comprar(UsuarioHome.getInstance().getDefaultUser().getUsuarioOriginal());
 			throw new UserException("El asiento " + asiento.getCodigoDeVuelo() + " ha sido comprado exitosamente");
 		}catch(RuntimeException re){
 			throw new UserException("Ha ocurrido un error en su reserva: " + re.getMessage() + ". Por favor intente nuevamente");

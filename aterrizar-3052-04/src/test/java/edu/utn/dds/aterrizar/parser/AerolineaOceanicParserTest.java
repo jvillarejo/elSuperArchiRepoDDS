@@ -83,7 +83,7 @@ public class AerolineaOceanicParserTest {
 		
 		Asiento asiento = parser.parse(asientoDTO, aerolinea, busqueda);
 		
-		assertEquals(busqueda, asiento.getFlight());
+		assertEquals(busqueda, asiento.getBusqueda());
 		assertEquals(Ubicacion.PASILLO, asiento.getUbicacion());
 		assertEquals(Clase.PRIMERA, asiento.getClase());
 		assertEquals("E8", asiento.getCodigoDeVuelo());
