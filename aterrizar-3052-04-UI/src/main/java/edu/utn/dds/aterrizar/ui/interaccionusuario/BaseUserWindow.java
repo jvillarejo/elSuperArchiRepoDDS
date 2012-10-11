@@ -10,8 +10,9 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
 
+import edu.utn.dds.aterrizar.ui.appmodels.AsientoModel;
+import edu.utn.dds.aterrizar.ui.appmodels.AsientoModelAdapter;
 import edu.utn.dds.aterrizar.ui.componentes.SimpleTable;
-import edu.utn.dds.aterrizar.ui.transformers.SalidaAsientoToStringTransformer;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 
@@ -19,7 +20,7 @@ abstract public class BaseUserWindow extends Window<Usuario> {
 
 	private static final long serialVersionUID = 6354269494094294267L;
 
-	private List<Asiento> resultados;
+	private List<AsientoModel> resultados;
 	
 	public BaseUserWindow(WindowOwner owner, Usuario model) {
 		super(owner, model);
@@ -33,10 +34,10 @@ abstract public class BaseUserWindow extends Window<Usuario> {
 		new Label(panel).setText(getLabelText());
 		
 		SimpleTable<Asiento> simpleTable = new SimpleTable<Asiento>(panel, Asiento.class)
-			.addColumn("Salida", new SalidaAsientoToStringTransformer())
-			.addColumn("Aerolinea", "nombreDeAerolinea")
+			.addColumn("Salida", "fechaSalida")
+			.addColumn("Aerolinea", "nombreAerolinea")
 			.addColumn("Vuelo", "codigoDeVuelo")
-			.addColumn("Asiento", "numeroDeAsiento")
+			.addColumn("Asiento", "numeroAsiento")
 			.addColumn("Precio", "precio");
 		
 		simpleTable.bindItemsToProperty("resultados");
@@ -46,7 +47,10 @@ abstract public class BaseUserWindow extends Window<Usuario> {
 			.onClick(new MessageSend(this, "close"));
 	}
 
-	abstract protected List<Asiento> getResultados(Usuario model);
-	abstract protected String getLabelText();
-
+	protected List<AsientoModel> getResultados(Usuario model) {
+		return AsientoModelAdapter.toApplicationModel(this.getAsientos(model));
+	}
+	
+	protected abstract List<Asiento> getAsientos(Usuario model);
+	protected abstract String getLabelText();
 }

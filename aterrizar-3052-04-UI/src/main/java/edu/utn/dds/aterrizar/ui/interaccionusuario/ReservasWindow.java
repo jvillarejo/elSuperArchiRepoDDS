@@ -21,7 +21,8 @@ public class ReservasWindow extends BaseUserWindow {
 	}
 
 	@Override
-	protected List<Asiento> getResultados(Usuario model) {
+	protected List<Asiento> getAsientos(Usuario model) {
+		//FIXME esto probablemente rompa porque no puede hacer el mappeo
 		return null;
 	}
 

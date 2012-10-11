@@ -21,7 +21,7 @@ public class ComprasWindow extends BaseUserWindow {
 	}
 
 	@Override
-	protected List<Asiento> getResultados(Usuario usuario) {
+	protected List<Asiento> getAsientos(Usuario usuario) {
 		return usuario.getComprasEfectuadas();
 	}
 
