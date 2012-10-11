@@ -23,13 +23,13 @@ import edu.utn.dds.aterrizar.ui.transformers.AsientoToCodigoVueloTransformer;
 import edu.utn.dds.aterrizar.ui.transformers.ClaseToStringTransformer;
 import edu.utn.dds.aterrizar.ui.transformers.UbicacionToStringTransformer;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
-import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
-public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
+
+public class BusquedaVuelosWindow extends SimpleWindow<BuscadorVuelos>{
 
 	public BusquedaVuelosWindow(WindowOwner parent) {
-		super(parent, new Busqueda());
-	//	this.getModelObject().search();
+		super(parent, new BuscadorVuelos());
+		//this.getModelObject().search();
 	}
 
 	private static final long serialVersionUID = -7226693291529135759L;
@@ -67,10 +67,8 @@ public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 		simpleTable.setWidth(450);
 
 		simpleTable.addColumn("Asiento", "numeroDeAsiento")
-			.addColumn("Aerolinea", new AsientoToAerolineaNameTransformer())
-			.addColumn("Vuelo", new AsientoToCodigoVueloTransformer())
 			.addColumn("Precio", "precio")
-			.addColumn("Ubicacion", new UbicacionToStringTransformer())
+			.addColumn("Ubicacion",new UbicacionToStringTransformer())
 			.addColumn("Clase", new ClaseToStringTransformer());
 
 		simpleTable.bindItemsToProperty("resultados");
@@ -142,4 +140,5 @@ public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 	public void cerrar(){
 		this.close();
 	}
+	
 }

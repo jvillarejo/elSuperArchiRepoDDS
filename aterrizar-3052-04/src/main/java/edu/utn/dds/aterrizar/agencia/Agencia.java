@@ -52,11 +52,12 @@ public class Agencia {
 	// ** QUERIES
 	// ****************************************************************
 
-	public List<Vuelo> buscarVuelos(final Busqueda busqueda, final Usuario usuario) {
+	public List<VueloDirecto> buscarVuelos(final Busqueda busqueda, final Usuario usuario) {
 	
-		List<Vuelo> vuelosDirectos = new ArrayList<Vuelo>();
+		List<VueloDirecto> vuelosDirectos = new ArrayList<VueloDirecto>();
 		for (Aerolinea aerolinea : aerolineas) {
 			vuelosDirectos.addAll(aerolinea.buscarVuelos(busqueda));
+			
 		}
 
 		//List<Vuelo> vuelos = adaptarPreciosParaUsuario(vuelosDirectos, usuario);
