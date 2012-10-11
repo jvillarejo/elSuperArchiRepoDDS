@@ -32,6 +32,10 @@ public class Usuario {
 		this.tipoDeSuscripcion.reservar(asiento, this);
 	}
 	
+	public void sobreReservar(Asiento asiento) {
+		this.tipoDeSuscripcion.sobreReservar(asiento, this);
+	}
+	
 	public void registrarConsulta(Busqueda consulta) {
 		this.consultasRealizadas.add(consulta);
 	}
