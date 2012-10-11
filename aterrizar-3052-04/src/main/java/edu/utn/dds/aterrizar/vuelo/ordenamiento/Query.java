@@ -18,32 +18,25 @@ public class Query<T> {
 		return elementosFiltrados;
 	}
 
-	public void addFilter(Filtro<T> filtro) {
+	public Query<T> addFilter(Filtro<T> filtro) {
 		Stream<T> elementosVueltosAFiltrar = filtro.filtrar(this.getElementosAFiltrar());
 		this.setElementosFiltrados(elementosVueltosAFiltrar);
-	}
-
-	public void addManyFilters(Filtro<T>... filtros) {
-		for (Filtro<T> filtro : filtros)
-			this.addFilter(filtro);
+		
+		return this;
 	}
 
 	public List<T> execute() {
 		return this.getElementosAFiltrar().toList();
 	}
 	
-	public void addOrderByCriteria(CriterioOrden<T> criterioOrden) {
+	public Query<T> addOrderByCriteria(CriterioOrden<T> criterioOrden) {
 		Stream<T> vuelosOrdenados = criterioOrden.ordenar(this.getElementosAFiltrar());
 		this.setElementosFiltrados(vuelosOrdenados);
+		
+		return this;
 	}
 
 	public Query(List<T> elementosOriginales) {
 		this.setElementosFiltrados(Streams.from(elementosOriginales));
 	}
-
-	public void addManyFilters(List<Filtro<T>> filtros) {
-		for(Filtro<T> filtro : filtros)
-			this.addFilter(filtro);
-	}
-
 }

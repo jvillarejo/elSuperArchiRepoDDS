@@ -109,7 +109,6 @@ public class ReservaTest {
 		usuarioEstandar.reservar(asientoOceanic);
 		assertEquals("R", asientoOceanic.getEstado());
 		otroUsuarioEstandar.reservar(asientoOceanic);
-		Usuario usuario = comunicadorDeAerolineaOceanic.reservaExpirada("OC100", "10");
 		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, otroUsuarioEstandar);
 		assertEquals("C", asientoOceanic.getEstado());
 	}

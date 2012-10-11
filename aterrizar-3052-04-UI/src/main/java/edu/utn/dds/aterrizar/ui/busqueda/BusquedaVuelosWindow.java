@@ -15,10 +15,11 @@ import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.model.UserException;
 
-import edu.utn.dds.aterrizar.aerolineas.AsientoReservadoException;
 import edu.utn.dds.aterrizar.homes.UsuarioHome;
 import edu.utn.dds.aterrizar.ui.componentes.SimpleTable;
 import edu.utn.dds.aterrizar.ui.interaccionusuario.ReservasWindow;
+import edu.utn.dds.aterrizar.ui.transformers.AsientoToAerolineaNameTransformer;
+import edu.utn.dds.aterrizar.ui.transformers.AsientoToCodigoVueloTransformer;
 import edu.utn.dds.aterrizar.ui.transformers.ClaseToStringTransformer;
 import edu.utn.dds.aterrizar.ui.transformers.UbicacionToStringTransformer;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
@@ -66,8 +67,10 @@ public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 		simpleTable.setWidth(450);
 
 		simpleTable.addColumn("Asiento", "numeroDeAsiento")
+			.addColumn("Aerolinea", new AsientoToAerolineaNameTransformer())
+			.addColumn("Vuelo", new AsientoToCodigoVueloTransformer())
 			.addColumn("Precio", "precio")
-			.addColumn("Ubicacion",new UbicacionToStringTransformer())
+			.addColumn("Ubicacion", new UbicacionToStringTransformer())
 			.addColumn("Clase", new ClaseToStringTransformer());
 
 		simpleTable.bindItemsToProperty("resultados");
@@ -103,14 +106,15 @@ public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 		Panel searchFormPanel = new Panel(mainPanel);
 		searchFormPanel.setLayout(new ColumnLayout(2));
 
-		new Label(searchFormPanel).setText("Origen").setForeground(Color.BLUE);
+		new Label(searchFormPanel).setText("Origen").setForeground(Color.BLACK);
 		new TextBox(searchFormPanel).bindValueToProperty("origen");
 
-		new Label(searchFormPanel).setText("Destino").setForeground(Color.BLUE);
+		new Label(searchFormPanel).setText("Destino").setForeground(Color.BLACK);
 		new TextBox(searchFormPanel).bindValueToProperty("destino");
 		
-		new Label(searchFormPanel).setText("Fecha").setForeground(Color.BLUE);
+		new Label(searchFormPanel).setText("Fecha").setForeground(Color.BLACK);
 		new TextBox(searchFormPanel).bindValueToProperty("fechaSalida");
+		
 	}
 
 	public void comprarAsiento(){
@@ -123,16 +127,11 @@ public class BusquedaVuelosWindow extends SimpleWindow<Busqueda>{
 		}
 	}
 	
-	
-	public void reservarAsiento(){
-		try{
-			Asiento asiento = this.getModelObject().getAsientoSeleccionado();
-			asiento.reservar(UsuarioHome.getInstance().getDefaultUser());
-			throw new UserException("El asiento " + asiento.getCodigoDeVuelo() + " ha sido reservado exitosamente");
-		}catch(AsientoReservadoException are){
+	public void reservarAsiento() {
+		try {
+			this.getModelObject().reservar();
+		} catch (UserException are) {
 			this.openWindow(new SobreReservaWindow(this, this.getModelObject().getAsientoSeleccionado()));
-		}catch(RuntimeException re){
-			throw new UserException("Ha ocurrido un error en su reserva: " + re.getMessage() + ". Por favor intente nuevamente");
 		}
 	}
 	

@@ -40,11 +40,6 @@ public class ParserTest {
 		Assert.assertFalse(vuelosParseados.isEmpty());
 	}
 	
-	@Test(expected= ParserException.class) 
-	public void fallaDeParseo(){
-		 new Parser().parseDisponibles(new String[][]{{}},mock(Busqueda.class), mock(AerolineaLanchitaWrapper.class));
-	}
-	
 	@Test(expected= ParserException.class)
 	public void parseoDeAsientoConUbicacionErronea() {
 		new Parser().parseDisponibles(new String[][]{{ "01202022220298-2", "528.81", "P", "ERRONEA", "D", "" }}, mock(Busqueda.class), mock(AerolineaLanchitaWrapper.class));

@@ -5,6 +5,7 @@ import java.util.List;
 import com.oceanic.AerolineaOceanic;
 
 import edu.utn.dds.aterrizar.escalas.VueloDirecto;
+import edu.utn.dds.aterrizar.manejoDeFechas.DateParser;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
@@ -16,20 +17,26 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 	
 	private AerolineaOceanic aerolineaOceanic; 
 	private AerolineaOceanicParser parser; 
+	private DateParser formatter;
 	
 	public AerolineaOceanicWrapper(AerolineaOceanic aerolineaOceanic, AerolineaOceanicParser parser) {
 		super();
 		this.aerolineaOceanic = aerolineaOceanic;
 		this.parser = parser;
+		this.setFormatter(SimpleDateParser.LatinAmerican());
 	}
 	
+	private void setFormatter(DateParser formatter) {
+		this.formatter= formatter;
+	}
+
 	@Override
 	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
 		return this.parser.parse(
 				aerolineaOceanic.asientosDisponiblesParaOrigenYDestino(
 						transformarCiudad(busqueda.getOrigen()), 
 						transformarCiudad(busqueda.getDestino()), 
-						SimpleDateParser.LatinAmerican().format(busqueda.getFechaSalida().getDate())),
+						SimpleDateParser.LatinAmerican().toString(busqueda.getFechaSalida())),
 				busqueda,
 				this);
 	}
@@ -72,5 +79,15 @@ public class AerolineaOceanicWrapper extends AerolineaWrapper implements Aerolin
 		Usuario usuario = super.reservaExpirada(codigo, numeroAsiento);
 		aerolineaOceanic.reservar(usuario.getDni(), codigo, new Integer(numeroAsiento));
 		return usuario;
+	}
+
+	@Override
+	public String getName() {
+		return "Oceanic";
+	}
+
+	@Override
+	public DateParser getFormatter() {
+		return this.formatter;
 	}
 }

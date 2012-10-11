@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import org.uqbar.commons.model.UserException;
+
 import net.sf.staccatocommons.collections.stream.Streams;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
@@ -46,26 +48,33 @@ public List<VueloDirecto> parseDisponibles(String[][] asientos, Busqueda busqued
 		//ahora el asiento es algo como
 		// "01202022220202-3", "159.90", "P", "V", "D", "", "14:00","02:25","EZE","USA","20/12/2012","21/12/2012"
 		VueloDirecto vuelo;
-		try{
-        String flightCode = this.getFlightCode(asientoLanchita[0]);
-		busqueda.setCode(flightCode);
-		Asiento asiento = new Asiento(busqueda, aerolinea);
-		if (verificarSiExisteElVuelo(flightCode)){
-			 vuelo = new VueloDirecto(asientoLanchita[8],asientoLanchita[9],asientoLanchita[10] , asientoLanchita[11], aerolinea);		
-			 parseCodigoDeVueloYNumeroDeAsiento(asiento, asientoLanchita[0], vuelo);
-		}else {
-			vuelo =  getVueloConCodigo(flightCode);
-					this.parseNumeroDeAsiento(asiento, asientoLanchita[0]);
+		try {
+			String flightCode = this.getFlightCode(asientoLanchita[0]);
+			busqueda.setCode(flightCode);
+			Asiento asiento = new Asiento(busqueda, aerolinea);
+			asiento.validar();
+			
+			if (!this.yaExisteElVuelo(flightCode)) {
+				vuelo = new VueloDirecto(asientoLanchita[8],
+						asientoLanchita[9], asientoLanchita[10],
+						asientoLanchita[11], aerolinea);
+				parseCodigoDeVueloYNumeroDeAsiento(asiento, asientoLanchita[0],
+						vuelo);
+			} else {
+				vuelo = getVueloConCodigo(flightCode);
+				this.parseNumeroDeAsiento(asiento, asientoLanchita[0]);
+			}
+			
+			asiento.setPrecio(this.adaptToDouble(asientoLanchita[1]));
+			asiento.setClase(this.stringToClase(asientoLanchita[2]));
+			asiento.setUbicacion(this.stringToUbicacion(asientoLanchita[3]));
+			asiento.setEstado(asientoLanchita[4]);
+			
+			vuelo.agregarAsiento(asiento);
+			return vuelo;
+		} catch (UserException e) {
+			throw new ParserException("Error en el parseo", e);
 		}
-				asiento.setPrecio(this.adaptToDouble(asientoLanchita[1]));
-				asiento.setClase(this.stringToClase(asientoLanchita[2]));
-				asiento.setUbicacion(this.stringToUbicacion(asientoLanchita[3]));
-				asiento.setEstado(asientoLanchita[4]);
-				vuelo.agregarAsiento(asiento);
-				return vuelo;
-	} catch(RuntimeException e){
-		throw new ParserException("Error en el parseo", e);
-	}
 
 	}
 
@@ -77,11 +86,12 @@ public List<VueloDirecto> parseDisponibles(String[][] asientos, Busqueda busqued
 	}
 
 
-	private boolean verificarSiExisteElVuelo(String flightCode) {
-		return Streams
-		.from(disponibles)
-		.filter(lambda($(VueloDirecto.class).getCodigo()).equal(flightCode))
-		.isEmpty();
+	private boolean yaExisteElVuelo(final String flightCode) {
+		for (VueloDirecto vuelo : this.disponibles)
+			if (vuelo.getCodigo().equals(flightCode))
+				return true;
+		
+		return false;
 	}
 
 	private void parseCodigoDeVueloYNumeroDeAsiento(Asiento asiento,

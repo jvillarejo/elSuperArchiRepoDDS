@@ -1,5 +1,7 @@
 package edu.utn.dds.aterrizar.ui.interaccionusuario;
 
+import java.util.List;
+
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -17,8 +19,11 @@ abstract public class BaseUserWindow extends Window<Usuario> {
 
 	private static final long serialVersionUID = 6354269494094294267L;
 
+	private List<Asiento> resultados;
+	
 	public BaseUserWindow(WindowOwner owner, Usuario model) {
 		super(owner, model);
+		resultados = this.getResultados(model);
 	}
 
 	@Override
@@ -27,18 +32,21 @@ abstract public class BaseUserWindow extends Window<Usuario> {
 		
 		new Label(panel).setText(getLabelText());
 		
-		SimpleTable<Asiento> simpleTable = new SimpleTable<Asiento>(panel, Asiento.class);
-		
-		simpleTable.addColumn("Salida", new SalidaAsientoToStringTransformer())
+		SimpleTable<Asiento> simpleTable = new SimpleTable<Asiento>(panel, Asiento.class)
+			.addColumn("Salida", new SalidaAsientoToStringTransformer())
 			.addColumn("Aerolinea", "nombreDeAerolinea")
 			.addColumn("Vuelo", "codigoDeVuelo")
 			.addColumn("Asiento", "numeroDeAsiento")
 			.addColumn("Precio", "precio");
 		
+		simpleTable.bindItemsToProperty("resultados");
+		
+		
 		new Button(panel).setCaption("Cerrar")
 			.onClick(new MessageSend(this, "close"));
 	}
 
+	abstract protected List<Asiento> getResultados(Usuario model);
 	abstract protected String getLabelText();
 
 }

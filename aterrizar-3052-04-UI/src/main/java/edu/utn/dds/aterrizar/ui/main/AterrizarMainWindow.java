@@ -21,7 +21,6 @@ public class AterrizarMainWindow extends MainWindow<Usuario> {
 		super(model);
 	}
 
-
 	private static final long serialVersionUID = -7226693291529135758L;
 
 	public static void main(String[] args) {

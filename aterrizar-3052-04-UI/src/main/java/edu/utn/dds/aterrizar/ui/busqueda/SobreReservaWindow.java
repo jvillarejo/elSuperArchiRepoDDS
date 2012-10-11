@@ -11,29 +11,37 @@ import org.uqbar.arena.windows.WindowOwner;
 import edu.utn.dds.aterrizar.homes.UsuarioHome;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 
-public class SobreReservaWindow extends SimpleWindow<Asiento>{
-	
+public class SobreReservaWindow extends SimpleWindow<Asiento> {
+
+	/**
+	 * @author ariel
+	 */
+	private static final long serialVersionUID = 1113616832155881509L;
+
 	public SobreReservaWindow(WindowOwner owner, Asiento model) {
 		super(owner, model);
 	}
 
-	
 	protected void addActions(Panel actionsPanel) {
-		new Button(actionsPanel).setCaption("Sobrereservar").onClick(new MessageSend(this.getModelObject(), "sobreReservar"));
-		new Button(actionsPanel).setCaption("Seguir Buscando").onClick(new MessageSend(this, "close"));
-	}
-	
-	public void sobreReservar(){
-		this.getModelObject().sobreReservar(UsuarioHome.getInstance().getDefaultUser());
+		new Button(actionsPanel).setCaption("Sobrereservar").onClick(
+				new MessageSend(this.getModelObject(), "sobreReservar"));
+		new Button(actionsPanel).setCaption("Seguir Buscando").onClick(
+				new MessageSend(this, "close"));
 	}
 
+	public void sobreReservar() {
+		this.getModelObject().sobreReservar(
+				UsuarioHome.getInstance().getDefaultUser());
+	}
 
 	@Override
 	protected void createFormPanel(Panel mainPanel) {
 		mainPanel.setLayout(new VerticalLayout());
-		new Label(mainPanel).setText("El asiento " + this.getModelObject().getCodigoDeVuelo() + " ya se encuentra reservado.");
+		new Label(mainPanel).setText("El asiento "
+				+ this.getModelObject().getCodigoDeVuelo()
+				+ " ya se encuentra reservado.");
 		new Label(mainPanel).setText("¿Qué desea hacer?");
-		
+
 	}
 
 }

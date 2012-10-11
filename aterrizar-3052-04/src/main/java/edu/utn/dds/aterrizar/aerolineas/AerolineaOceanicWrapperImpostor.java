@@ -2,16 +2,12 @@ package edu.utn.dds.aterrizar.aerolineas;
 
 import java.util.List;
 
-import javax.print.DocFlavor.STRING;
-
-import com.oceanic.AerolineaOceanic;
-
 import edu.utn.dds.aterrizar.escalas.VueloDirecto;
+import edu.utn.dds.aterrizar.manejoDeFechas.DateParser;
 import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
 import edu.utn.dds.aterrizar.usuario.Usuario;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
-import edu.utn.dds.aterrizar.vuelo.Reserva;
 
 public class AerolineaOceanicWrapperImpostor extends AerolineaWrapper implements Aerolinea {
 
@@ -19,19 +15,26 @@ public class AerolineaOceanicWrapperImpostor extends AerolineaWrapper implements
 	
 	private AerolineaOceanicImpostor aerolineaOceanicImpostor; 
 	private AerolineaOceanicParser parser; 
+	private DateParser formatter;
 	
 	public AerolineaOceanicWrapperImpostor(AerolineaOceanicImpostor aerolineaOceanicImpostor) {
 		super();
 		this.aerolineaOceanicImpostor = aerolineaOceanicImpostor;
+		this.setFormatter(SimpleDateParser.LatinAmerican());
 	}
 	
+	private void setFormatter(DateParser formatter) {
+		this.formatter= formatter;
+		
+	}
+
 	@Override
 	public List<VueloDirecto> buscarVuelos(Busqueda busqueda) {
 		return this.parser.parse(
 				aerolineaOceanicImpostor.asientosDisponiblesParaOrigenYDestino(
 						transformarCiudad(busqueda.getOrigen()), 
 						transformarCiudad(busqueda.getDestino()), 
-						SimpleDateParser.LatinAmerican().format(busqueda.getFechaSalida().getDate())),
+						SimpleDateParser.LatinAmerican().toString(busqueda.getFechaSalida())),
 				busqueda,
 				this);
 	}
@@ -75,5 +78,15 @@ public class AerolineaOceanicWrapperImpostor extends AerolineaWrapper implements
 		Usuario usuario = super.reservaExpirada(codigo, numeroAsiento);
 		aerolineaOceanicImpostor.reservar(usuario.getDni(), codigo, new Integer(numeroAsiento));
 		return usuario;
+	}
+
+	@Override
+	public String getName() {
+		return "OceanicImpostor";
+	}
+
+	@Override
+	public DateParser getFormatter() {
+		return this.formatter;
 	}
 }

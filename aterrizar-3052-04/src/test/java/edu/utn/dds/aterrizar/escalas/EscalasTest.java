@@ -7,29 +7,23 @@ import java.util.List;
 
 import org.junit.*;
 
-import com.lanchita.AerolineaLanchita;
-
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaOceanicWrapper;
 import edu.utn.dds.aterrizar.agencia.Agencia;
 
-import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 import edu.utn.dds.aterrizar.vuelo.Busqueda;
 
-
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
-
 
 public class EscalasTest {
 
-private Aerolinea lanchita = mock(AerolineaLanchitaWrapper.class);
-private Aerolinea oceanic = mock(AerolineaOceanicWrapper.class);
-private List<VueloDirecto> vuelosDisponibles = new ArrayList<VueloDirecto>();
-
-@Before
+	private Aerolinea lanchita = mock(AerolineaLanchitaWrapper.class);
+	private Aerolinea oceanic = mock(AerolineaOceanicWrapper.class);
+	private List<VueloDirecto> vuelosDisponibles = new ArrayList<VueloDirecto>();
+	
+	@Before
 	public void setUp(){
 		vuelosDisponibles.add(new VueloDirecto("BA", "LA", "14/08/2012", "17/08/2012", lanchita));
 		vuelosDisponibles.add(new VueloDirecto("LA", "DC", "18/08/2012", "30/08/2012", lanchita));
