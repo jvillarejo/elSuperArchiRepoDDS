@@ -10,14 +10,14 @@ import org.uqbar.arena.windows.MainWindow;
 import org.uqbar.arena.windows.Window;
 
 import edu.utn.dds.aterrizar.homes.UsuarioHome;
+import edu.utn.dds.aterrizar.ui.appmodels.UsuarioModel;
 import edu.utn.dds.aterrizar.ui.busqueda.BusquedaVuelosWindow;
 import edu.utn.dds.aterrizar.ui.interaccionusuario.ComprasWindow;
 import edu.utn.dds.aterrizar.ui.interaccionusuario.ReservasWindow;
-import edu.utn.dds.aterrizar.usuario.Usuario;
 
-public class AterrizarMainWindow extends MainWindow<Usuario> {
+public class AterrizarMainWindow extends MainWindow<UsuarioModel> {
 
-	public AterrizarMainWindow(Usuario model) {
+	public AterrizarMainWindow(UsuarioModel model) {
 		super(model);
 	}
 
@@ -32,8 +32,8 @@ public class AterrizarMainWindow extends MainWindow<Usuario> {
 	public void createContents(Panel mainPanel) {
 		mainPanel.setLayout(new VerticalLayout());
 
-		//TODO Bindear el nombre con el label no setearselo a manopla
-		new Label(mainPanel).setText("Hola " + this.getModelObject().getNombreCompleto() + "\n\n" + "¿Qué desea hacer?" + "\n");
+		new Label(mainPanel)
+			.bindValueToProperty("mensajeBienvenida");
 		
 		Panel buttonPanel = new Panel(mainPanel).setLayout(new HorizontalLayout());
 		
