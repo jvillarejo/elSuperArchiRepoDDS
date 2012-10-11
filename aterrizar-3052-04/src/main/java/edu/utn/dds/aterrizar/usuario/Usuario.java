@@ -17,6 +17,7 @@ public class Usuario {
 	private TipoDeSuscripcion tipoDeSuscripcion;
 	private List<Busqueda> consultasRealizadas;
 	private List<Asiento> comprasEfectuadas = new ArrayList<Asiento>();
+	private List<Asiento> reservas = new ArrayList<Asiento>();
 	
 	public Usuario(String nombre, String apellido, String dni, TipoDeSuscripcion tipoDeSuscripcion) {
 		this.nombre = nombre;
@@ -29,6 +30,10 @@ public class Usuario {
 	
 	public void reservar(Asiento asiento) {
 		this.tipoDeSuscripcion.reservar(asiento, this);
+	}
+	
+	public void sobreReservar(Asiento asiento) {
+		this.tipoDeSuscripcion.sobreReservar(asiento, this);
 	}
 	
 	public void registrarConsulta(Busqueda consulta) {
@@ -74,8 +79,20 @@ public class Usuario {
 			this.comprasEfectuadas.add(asiento/*.adaptarNuevoAsientoConPrecioPara(this)*/);
 	}
 	
+	public void addReserva(Asiento asiento) {
+		this.reservas.add(asiento);
+	}
+	
+	public String getNombreCompleto() {
+		return this.nombre + " " + this.apellido;
+	}
+	
 	public List<Asiento> getComprasEfectuadas() {
 		return new ArrayList<Asiento>(this.comprasEfectuadas);
+	}
+	
+	public List<Asiento> getReservas() {
+		return new ArrayList<Asiento>(this.reservas);
 	}
 	
 }

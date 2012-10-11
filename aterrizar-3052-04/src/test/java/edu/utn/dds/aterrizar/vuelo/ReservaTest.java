@@ -12,8 +12,10 @@ import com.lanchita.AerolineaLanchita;
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaLanchitaWrapper;
 import edu.utn.dds.aterrizar.aerolineas.AerolineaOceanicImpostor;
-import edu.utn.dds.aterrizar.aerolineas.AerolineaOceanicWrapperImpostor;
+import edu.utn.dds.aterrizar.aerolineas.AerolineaOceanicParser;
+import edu.utn.dds.aterrizar.aerolineas.AerolineaOceanicWrapper;
 import edu.utn.dds.aterrizar.aerolineas.AsientoNoDisponibleException;
+import edu.utn.dds.aterrizar.aerolineas.AsientoReservadoException;
 import edu.utn.dds.aterrizar.parser.Parser;
 import edu.utn.dds.aterrizar.usuario.SuscripcionEstandar;
 import edu.utn.dds.aterrizar.usuario.SuscripcionGratuita;
@@ -31,18 +33,16 @@ public class ReservaTest {
 	private Aerolinea comunicadorDeAerolineaLanchita;
 	private Aerolinea comunicadorDeAerolineaOceanic;
 	private AerolineaLanchita aerolineaLanchita;
-	private AerolineaOceanicImpostor aerolineaOceanicImpostor;
 
 	@Before
 	public void setUp() {
 		aerolineaLanchita = mock(AerolineaLanchita.class);
-		aerolineaOceanicImpostor = new AerolineaOceanicImpostor();
 		usuarioGratuito = new Usuario("nombre", "apellido", "dni", new SuscripcionGratuita());
 		usuarioVip = new Usuario("nombre", "apellido", "dni", new SuscripcionVip());
 		usuarioEstandar = new Usuario("nombre", "apellido", "dni", new SuscripcionEstandar());
 		otroUsuarioEstandar = new Usuario("otroNombre", "otroApellido", "otroDni", new SuscripcionEstandar());
 		this.comunicadorDeAerolineaLanchita = new AerolineaLanchitaWrapper(aerolineaLanchita, new Parser());
-		this.comunicadorDeAerolineaOceanic = new AerolineaOceanicWrapperImpostor(aerolineaOceanicImpostor);
+		this.comunicadorDeAerolineaOceanic = new AerolineaOceanicWrapper(AerolineaOceanicImpostor.getInstance(), new AerolineaOceanicParser());
 		asientoLanchita = new Asiento(this.comunicadorDeAerolineaLanchita);
 		asientoOceanic = new Asiento(this.comunicadorDeAerolineaOceanic);
 	}
@@ -94,35 +94,27 @@ public class ReservaTest {
 	@Test(expected = AsientoNoDisponibleException.class)
 	public void reservaUsuarioYCompraOtroUsuarioOceanicRompe() {
 		asientoOceanic.setCodigoDeVuelo("OC100");
-		asientoOceanic.setNumeroDeAsiento(10);
+		asientoOceanic.setNumeroDeAsiento(11);
 		asientoOceanic.setEstado("D");
 		usuarioEstandar.reservar(asientoOceanic);
 		assertEquals("R", asientoOceanic.getEstado());
 		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, otroUsuarioEstandar);
-	}
-	
-	@Test
-	public void reservanDosExpiroElPrimeroYElSegundoCompra() {
-		asientoOceanic.setCodigoDeVuelo("OC100");
-		asientoOceanic.setNumeroDeAsiento(10);
-		asientoOceanic.setEstado("D");
-		usuarioEstandar.reservar(asientoOceanic);
-		assertEquals("R", asientoOceanic.getEstado());
-		otroUsuarioEstandar.reservar(asientoOceanic);
-		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, otroUsuarioEstandar);
-		assertEquals("C", asientoOceanic.getEstado());
 	}
 	
 	@Test(expected = AsientoNoDisponibleException.class)
 	public void reservanDosCompraElPrimeroYElSegundoFalla() {
 		asientoOceanic.setCodigoDeVuelo("OC100");
-		asientoOceanic.setNumeroDeAsiento(10);
+		asientoOceanic.setNumeroDeAsiento(12);
 		asientoOceanic.setEstado("D");
-		usuarioEstandar.reservar(asientoOceanic);
-		assertEquals("R", asientoOceanic.getEstado());
-		otroUsuarioEstandar.reservar(asientoOceanic);
-		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, usuarioEstandar);
-		assertEquals("C", asientoOceanic.getEstado());
-		comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, otroUsuarioEstandar);
+		try{
+			usuarioEstandar.reservar(asientoOceanic);
+			assertEquals("R", asientoOceanic.getEstado());
+			otroUsuarioEstandar.reservar(asientoOceanic);
+		}catch(AsientoReservadoException are){
+			otroUsuarioEstandar.sobreReservar(asientoOceanic);
+			comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, usuarioEstandar);
+			assertEquals("C", asientoOceanic.getEstado());
+			comunicadorDeAerolineaOceanic.comprarAsiento(asientoOceanic, otroUsuarioEstandar);
+		}
 	}
 }

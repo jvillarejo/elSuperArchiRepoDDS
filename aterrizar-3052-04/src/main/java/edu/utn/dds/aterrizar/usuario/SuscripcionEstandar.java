@@ -14,4 +14,9 @@ public class SuscripcionEstandar extends TipoDeSuscripcion {
 	public void reservar(Asiento asiento, Usuario usuario) {
 		asiento.reservar(usuario);
 	}
+	
+	@Override
+	public void sobreReservar(Asiento asiento, Usuario usuario) {
+		asiento.sobreReservar(usuario);
+	}
 }

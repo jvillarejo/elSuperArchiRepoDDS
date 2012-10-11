@@ -22,4 +22,8 @@ public abstract class TipoDeSuscripcion {
 		throw new UsuarioNoDisponibleException("Este tipo de usuario no puede reservar");
 	}
 	
+	public void sobreReservar(Asiento asiento, Usuario usuario){
+		throw new UsuarioNoDisponibleException("Este tipo de usuario no puede reservar");
+	}
+	
 }

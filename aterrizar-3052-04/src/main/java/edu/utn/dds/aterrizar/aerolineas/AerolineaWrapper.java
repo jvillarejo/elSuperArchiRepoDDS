@@ -22,19 +22,23 @@ public abstract class AerolineaWrapper {
 		} else {
 			asiento.setEstado("R");
 			Reserva reserva = contieneCodigo(codigo);
-			if (reserva != null && !contieneUsuario(reserva, usuario.getDni()))
+			if (reserva != null && !contieneUsuario(reserva, usuario.getDni())){
+				throw new AsientoReservadoException("El asiento ya fue reservado");
+			}else{
+				reserva = new Reserva();
+				reserva.setCodigo(getCodigo(asiento));
 				reserva.addUsuario(usuario);
-			else
-				throw new AsientoReservadoException(
-						"El asiento ya fue reservado");
+				reservas.add(reserva);
+				usuario.addReserva(asiento);
+			}
 		}
 	}
 	
 	public void sobreReservarAsiento(Asiento asiento, Usuario usuario) {
-		Reserva reserva = new Reserva();
-		reserva.setCodigo(getCodigo(asiento));
+		String codigo = getCodigo(asiento);
+		Reserva reserva = contieneCodigo(codigo);
 		reserva.addUsuario(usuario);
-		reservas.add(reserva);
+		usuario.addReserva(asiento);
 	}
 	
 	private boolean esAsientoComprado(String codigo){
