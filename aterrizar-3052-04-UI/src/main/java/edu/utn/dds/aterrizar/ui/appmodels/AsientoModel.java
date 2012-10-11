@@ -1,11 +1,17 @@
 package edu.utn.dds.aterrizar.ui.appmodels;
 
-import edu.utn.dds.aterrizar.ui.transformers.EnumUtils;
+import org.uqbar.commons.utils.Observable;
+
+import edu.utn.dds.aterrizar.manejoDeFechas.DateParser;
+import edu.utn.dds.aterrizar.manejoDeFechas.SimpleDateParser;
+import edu.utn.dds.aterrizar.ui.utils.EnumUtils;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 
+@Observable
 public class AsientoModel {
 
 	private Asiento asientoOriginal;
+	private DateParser dateParser;
 
 	// *************************************************************************
 	// ** Constructor
@@ -13,6 +19,7 @@ public class AsientoModel {
 	
 	public AsientoModel(Asiento asientoOriginal) {
 		this.setAsientoOriginal(asientoOriginal);
+		this.dateParser = SimpleDateParser.LatinAmerican();
 	}
 	
 	// *************************************************************************
@@ -37,6 +44,14 @@ public class AsientoModel {
 
 	public String getClase() {
 		return EnumUtils.toPascalCase(this.getAsientoOriginal().getClase());
+	}
+	
+	public String getNumeroAsiento() {
+		return this.getAsientoOriginal().getNumeroDeAsiento().toString();
+	}
+	
+	public String getFechaSalida() {
+		return this.dateParser.toString(this.getAsientoOriginal().getBusqueda().getFechaSalida());
 	}
 	
 	// *************************************************************************

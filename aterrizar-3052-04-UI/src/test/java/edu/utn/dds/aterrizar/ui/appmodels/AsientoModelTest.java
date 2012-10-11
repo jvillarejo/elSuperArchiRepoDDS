@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import edu.utn.dds.aterrizar.aerolineas.Aerolinea;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
+import edu.utn.dds.aterrizar.vuelo.Busqueda;
 import edu.utn.dds.aterrizar.vuelo.Clase;
 import edu.utn.dds.aterrizar.vuelo.Ubicacion;
 
@@ -52,6 +53,17 @@ public class AsientoModelTest {
 		asientoEnVentanilla.setUbicacion(Ubicacion.VENTANILLA);
 		
 		assertEquals("Ventanilla", new AsientoModel(asientoEnVentanilla).getUbicacion());
+	}
+	
+	@Test
+	public void getFechaSalidaDeberiaDevolverLaFechaDeLaBusquedaEnFormatoLatinoamericano() {
+		Busqueda unaBusqueda = new Busqueda();
+		unaBusqueda.setFechaSalida("09/11/2001");
+		
+		Asiento asientoPeligroso = new Asiento();
+		asientoPeligroso.setBusqueda(unaBusqueda);
+		
+		assertEquals("09/11/2001", new AsientoModel(asientoPeligroso).getFechaSalida());
 	}
 
 }
