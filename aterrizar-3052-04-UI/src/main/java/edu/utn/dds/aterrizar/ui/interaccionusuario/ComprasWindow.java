@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.uqbar.arena.windows.WindowOwner;
 
-import edu.utn.dds.aterrizar.usuario.Usuario;
+import edu.utn.dds.aterrizar.ui.appmodels.UsuarioModel;
 import edu.utn.dds.aterrizar.vuelo.Asiento;
 
 public class ComprasWindow extends BaseUserWindow {
 
 	private static final long serialVersionUID = -3514713865890313537L;
 
-	public ComprasWindow(WindowOwner owner, Usuario model) {
-		super(owner, model);
+	public ComprasWindow(WindowOwner owner, UsuarioModel usuarioModel) {
+		super(owner, usuarioModel);
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class ComprasWindow extends BaseUserWindow {
 	}
 
 	@Override
-	protected List<Asiento> getResultados(Usuario usuario) {
+	protected List<Asiento> getAsientos(UsuarioModel usuario) {
 		return usuario.getComprasEfectuadas();
 	}
 
