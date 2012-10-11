@@ -62,7 +62,7 @@ public class AsientoModel {
 		return this.asientoOriginal;
 	}
 	
-	public void setAsientoOriginal(Asiento asientoOriginal) {
+	private void setAsientoOriginal(Asiento asientoOriginal) {
 		this.asientoOriginal = asientoOriginal;
 	}
 }
