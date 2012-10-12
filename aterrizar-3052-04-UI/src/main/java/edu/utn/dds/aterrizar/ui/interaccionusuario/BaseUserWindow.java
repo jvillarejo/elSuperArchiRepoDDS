@@ -38,6 +38,8 @@ abstract public class BaseUserWindow extends Window<UsuarioModel> {
 			.addColumn("Asiento", "numeroAsiento")
 			.addColumn("Precio", "precio");
 		
+		simpleTable.setHeigth(200);
+		simpleTable.setWidth(450);
 		simpleTable.bindItemsToProperty("resultados");
 		
 		

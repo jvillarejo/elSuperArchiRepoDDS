@@ -17,6 +17,9 @@ import org.uqbar.commons.model.UserException;
 
 import edu.utn.dds.aterrizar.ui.appmodels.AsientoModel;
 import edu.utn.dds.aterrizar.ui.componentes.SimpleTable;
+import edu.utn.dds.aterrizar.ui.mensajes.Accion;
+import edu.utn.dds.aterrizar.ui.mensajes.MessageWindowBuilder;
+import edu.utn.dds.aterrizar.ui.mensajes.SobreReservaMessageWindowBuilder;
 
 public class BusquedaVuelosWindow extends SimpleWindow<BuscadorVuelos>{
 
@@ -110,16 +113,40 @@ public class BusquedaVuelosWindow extends SimpleWindow<BuscadorVuelos>{
 	}
 
 	public void comprarAsiento(){
-		this.getModelObject().comprar();
-			}
+		try {
+			this.getModelObject().comprar();
+		} catch (RuntimeException e) {
+			this.showDialog(Accion.COMPRA, e);
+			return;
+		}
+		
+		this.showDialog(Accion.COMPRA);
+	}
 	
 	public void reservarAsiento() {
 		try {
 			this.getModelObject().reservar();
-		} catch (UserException are) {
-			this.openWindow(new SobreReservaWindow(this, this.getModelObject()
-					.getAsientoSeleccionado()));
+		} catch (UserException e) {
+			showSobreReservaDialog();
+			return;
+		} catch (RuntimeException e) {
+			showDialog(Accion.RESERVA, e);
+			return;
 		}
+		
+		this.showDialog(Accion.RESERVA);
+	}
+	
+	private void showSobreReservaDialog() {
+		this.openWindow(new SobreReservaMessageWindowBuilder().build(this, this.getModelObject().getAsientoSeleccionado()));
+	}
+	
+	private void showDialog(Accion accion) { 
+		this.openWindow(new MessageWindowBuilder(accion).build(this, this.getModelObject().getAsientoSeleccionado()));
+	}
+	
+	private void showDialog(Accion accion, RuntimeException e) {
+		this.openWindow(new MessageWindowBuilder(accion).build(this, e));
 	}
 	
 	private void openWindow(Window<?> window) {
